@@ -13,6 +13,9 @@ def _get_plot_libs():
 
 class NewmanGreedy:
     def __init__(self, graph, snapshot_size=None):
+        graph = self.remove_orphans(graph)
+        self.map = self.remap(graph)
+        nx.relabel_nodes(graph,self.map[0],copy=False)
         self.orig = graph
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
@@ -64,6 +67,22 @@ class NewmanGreedy:
         #    self.add_pair_to_cost_heap(id1, id2)
         self.reheapify()
         self.run_greedy_clustering(quality)
+
+    def remove_orphans(self,graph):
+        topop=[]
+        for x in graph.nodes():
+            if graph[x]=={}:
+                topop.append(x)
+        graph.remove_nodes_from(topop)
+        return graph
+            
+    def remap(self,graph):
+        mapping_to_int={}
+        mapping_to_orig={}
+        for n in range(len(graph.nodes())):
+            mapping_to_int[graph.nodes()[n]]=n
+            mapping_to_orig[n]=graph.nodes()[n]
+        return [mapping_to_int,mapping_to_orig]
         
     def reheapify(self):
         del self.pair_cost_heap
@@ -76,19 +95,26 @@ class NewmanGreedy:
         if self.snapshot_size == None or self.snapshot_size > self.super_graph.number_of_nodes():
             self.snapshot = self.super_graph.copy()
         last_heapify = self.super_graph.number_of_nodes()
-        for num_clusters in xrange(self.super_graph.number_of_nodes(), 1, -1):
-            if last_heapify > num_clusters + reheap_steps:
-                #print "HEAPIFY"
-                self.reheapify()
-                last_heapify = num_clusters
-            #print num_clusters
-            [id1, id2, qual_diff] = self.combine_top_clusters()
-            self.combine_clusters(id1, id2)
-            quality += qual_diff
-            if self.snapshot_size and len(self.super_graph) == self.snapshot_size:
-                self.snapshot = self.super_graph.copy()
-            self.quality_history.append(quality)
-    
+        while self.super_graph.number_of_nodes() > 1:
+            sumo = 0
+            while sumo ==0:
+                if len(self.pair_cost_heap) > 0:
+                    qd, id1, id2 = heapq.heappop(self.pair_cost_heap)
+                else:
+                    for x in self.super_graph.nodes():
+                        if x in self.super_graph.nodes():
+                            if self.super_graph[x]=={}:
+                                self.combine_clusters(x,max(self.super_graph.nodes()))
+                                self.quality_history.append(quality)
+                    sumo = 1
+                if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
+                    qual_diff = -qd
+                    sumo = 1
+            if self.super_graph.number_of_edges()>0:
+                quality += qual_diff
+                self.combine_clusters(id1, id2)
+                self.quality_history.append(quality)
+                
     def add_pair_to_cost_heap(self, id1, id2):
         qd = self.quality_difference(id1, id2)
         if(id2 < id1):
@@ -98,14 +124,6 @@ class NewmanGreedy:
         # Negate quality difference (to maximize), AND id1 < id2
         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
     
-    def combine_top_clusters(self):
-        while(True):
-            (qd, id1, id2) = heapq.heappop(self.pair_cost_heap)
-            # Ignore edges that do not exist anymore
-            if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
-                # Maximize quality difference is negated from add_pair_to_cost_heap
-                return [id1, id2, -qd]
-
     # The "Change in Q" as described by section II of the Newman paper
     def quality_difference(self, cluster_id1, cluster_id2):
         ai = float(self.super_graph.node[cluster_id1])
@@ -114,7 +132,13 @@ class NewmanGreedy:
         return 2.0*(eij - ai*aj)
 
     def combine_clusters(self, cluster_id1, cluster_id2):
-        combine_id = self.den_num #self.dendrogram.number_of_nodes()
+        maxid=0
+        for i in self.super_graph.nodes():
+            if isinstance(i,int):
+                if i > maxid:
+                    maxid = i
+                    
+        combine_id = maxid+1
         self.den_num += 1
         
         # Add combined node
@@ -242,14 +266,14 @@ class NewmanGreedy:
         if show:
             plt.show()
 
-    def plot_dendrogram(self):
+    def plot_dendrogram(self,filename='karate_dendrogram.png',fsize=10):
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
         plt.figure(figsize=(10,10))
-        nx.draw(self.dendrogram, pos, node_size=10,font_size=25, alpha=0.5, 
+        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5, 
                 node_color="blue", with_labels=True)
         plt.axis('equal')
-        plt.savefig('karate_dendrogram.png')
+        plt.savefig(filename)
         plt.show()
         
     @staticmethod
@@ -279,4 +303,3 @@ def main():
     
 if __name__ == '__main__':
     main()
-    
