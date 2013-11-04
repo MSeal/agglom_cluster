@@ -133,13 +133,6 @@ class NewmanGreedy:
         return 2.0*(eij - ai*aj)
 
     def combine_clusters(self, cluster_id1, cluster_id2):
-##        maxid=0
-##        for i in self.super_graph.nodes():
-##            if isinstance(i,int):
-##                if i > maxid:
-##                    maxid = i
-##                    
-##        combine_id = maxid+1
         combine_id = self.den_num
         self.den_num += 1
         
