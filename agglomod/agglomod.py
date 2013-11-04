@@ -67,6 +67,7 @@ class NewmanGreedy:
         #    self.add_pair_to_cost_heap(id1, id2)
         self.reheapify()
         self.run_greedy_clustering(quality)
+        nx.relabel_nodes(self.dendrogram,self.map[1],copy=False)
 
     def remove_orphans(self,graph):
         topop=[]
@@ -132,13 +133,14 @@ class NewmanGreedy:
         return 2.0*(eij - ai*aj)
 
     def combine_clusters(self, cluster_id1, cluster_id2):
-        maxid=0
-        for i in self.super_graph.nodes():
-            if isinstance(i,int):
-                if i > maxid:
-                    maxid = i
-                    
-        combine_id = maxid+1
+##        maxid=0
+##        for i in self.super_graph.nodes():
+##            if isinstance(i,int):
+##                if i > maxid:
+##                    maxid = i
+##                    
+##        combine_id = maxid+1
+        combine_id = self.den_num
         self.den_num += 1
         
         # Add combined node
@@ -178,7 +180,7 @@ class NewmanGreedy:
         self.dendrogram.add_edge(combine_id, cluster_id2)
         
     def _to_int_node_name(self, node, node_int_bimap):
-            return node_int_bimap[node] if not isinstance(node, int) else node
+        return node_int_bimap[node] if not isinstance(node, int) else node
         
     def _to_normal_node_name(self, node, node_int_bimap):
         return node_int_bimap[node] if isinstance(node, int) else node
