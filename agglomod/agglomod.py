@@ -13,6 +13,10 @@ def _get_plot_libs():
 
 class NewmanGreedy:
     def __init__(self, graph, snapshot_size=None):
+        self.nondept = ["miscellaneous","non departmental","non-departmental",\
+                   "non-departmental - appropriations to special purpose fund",\
+                   "non-departmental programs","none","not department specific",\
+                   "other","undefined","undistributed","unspecified"]
         graph = self.remove_orphans(graph)
         self.map = self.remap(graph)
         nx.relabel_nodes(graph,self.map[0],copy=False)
@@ -66,13 +70,29 @@ class NewmanGreedy:
         #for (id1, id2) in graph.edges_iter():
         #    self.add_pair_to_cost_heap(id1, id2)
         self.reheapify()
+        self.unspecifiedCluster()
         self.run_greedy_clustering(quality)
         nx.relabel_nodes(self.dendrogram,self.map[1],copy=False)
 
+    def unspecifiedCluster(self):
+        # create a cluster from "unspecified" nodes
+        nodes = []
+        for node in self.map[0].keys():
+            if node in self.nondept:
+                nodes.append(self.map[0][node])
+        if len(nodes)>1:
+            self.combine_clusters(nodes[0],nodes[1])
+            nodes=nodes[2:]
+            while len(nodes)>0:
+                self.combine_clusters(self.den_num-1,nodes[0])
+                nodes=nodes[1:]
+        
+        
     def remove_orphans(self,graph):
+        # remove orphan nodes except those in "unspecified" cluster
         topop=[]
         for x in graph.nodes():
-            if graph[x]=={}:
+            if graph[x]=={} and x not in self.nondept:
                 topop.append(x)
         graph.remove_nodes_from(topop)
         return graph
