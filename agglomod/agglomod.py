@@ -2,6 +2,7 @@ import networkx as nx
 import heapq
 import os
 import pickle
+from collections import namedtuple
 
 def _get_plot_libs():
     import matplotlib.pyplot as plt
@@ -12,14 +13,14 @@ def _get_plot_libs():
     return plt, graphviz_layout
 
 class NewmanGreedy:
-    def __init__(self, graph, snapshot_size=None):
-        self.nondept = ["miscellaneous","non departmental","non-departmental",\
-                   "non-departmental - appropriations to special purpose fund",\
-                   "non-departmental programs","none","not department specific",\
-                   "other","undefined","undistributed","unspecified"]
+
+    RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
+
+    def __init__(self, graph, snapshot_size=None, forced_clusters = None):
+        self.forced_clusters = set(forced_clusters)
         graph = self.remove_orphans(graph)
-        self.map = self.remap(graph)
-        nx.relabel_nodes(graph,self.map[0],copy=False)
+        self.rename_map = self.remap(graph)
+        nx.relabel_nodes(graph,self.rename_map.integer,copy=False)
         self.orig = graph
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
@@ -70,40 +71,40 @@ class NewmanGreedy:
         #for (id1, id2) in graph.edges_iter():
         #    self.add_pair_to_cost_heap(id1, id2)
         self.reheapify()
-        self.unspecifiedCluster()
+        self.build_forced_clusters()
         self.run_greedy_clustering(quality)
-        nx.relabel_nodes(self.dendrogram,self.map[1],copy=False)
+        nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
 
-    def unspecifiedCluster(self):
+    def build_forced_clusters(self):
         # create a cluster from "unspecified" nodes
-        nodes = []
-        for node in self.map[0].keys():
-            if node in self.nondept:
-                nodes.append(self.map[0][node])
-        if len(nodes)>1:
-            self.combine_clusters(nodes[0],nodes[1])
-            nodes=nodes[2:]
-            while len(nodes)>0:
-                self.combine_clusters(self.den_num-1,nodes[0])
-                nodes=nodes[1:]
+        precluster_nodes = []
+        for node in self.rename_map.integer.iterkeys():
+            if node in self.forced_clusters:
+                precluster_nodes.append(self.rename_map.integer[node])
+        while len(precluster_nodes) > 1:
+            self.combine_clusters(precluster_nodes[0], precluster_nodes[1])
+            precluster_nodes.pop(0)
+            precluster_nodes.pop(0)
+            while precluster_nodes:
+                self.combine_clusters(self.den_num-1, precluster_nodes[0])
+                precluster_nodes.pop(0)
         
-        
-    def remove_orphans(self,graph):
+    def remove_orphans(self, graph):
         # remove orphan nodes except those in "unspecified" cluster
-        topop=[]
+        orphans = []
         for x in graph.nodes():
-            if graph[x]=={} and x not in self.nondept:
-                topop.append(x)
-        graph.remove_nodes_from(topop)
+            if not graph.degree(x) and x not in self.forced_clusters:
+                orphans.append(x)
+        graph.remove_nodes_from(orphans)
         return graph
             
-    def remap(self,graph):
-        mapping_to_int={}
-        mapping_to_orig={}
-        for n in range(len(graph.nodes())):
-            mapping_to_int[graph.nodes()[n]]=n
-            mapping_to_orig[n]=graph.nodes()[n]
-        return [mapping_to_int,mapping_to_orig]
+    def remap(self, graph):
+        mapping_to_int = {}
+        mapping_to_orig = {}
+        for node_index, node in enumerate(graph.nodes_iter()):
+            mapping_to_int[node]= node_index
+            mapping_to_orig[node_index] = node
+        return self.RenameMapping(mapping_to_int,mapping_to_orig)
         
     def reheapify(self):
         del self.pair_cost_heap
@@ -116,21 +117,22 @@ class NewmanGreedy:
         if self.snapshot_size == None or self.snapshot_size > self.super_graph.number_of_nodes():
             self.snapshot = self.super_graph.copy()
         last_heapify = self.super_graph.number_of_nodes()
-        while self.super_graph.number_of_nodes() > 1:
-            sumo = 0
-            while sumo ==0:
-                if len(self.pair_cost_heap) > 0:
+        while len(self.super_graph) > 1:
+            while True:
+                if self.pair_cost_heap:
                     qd, id1, id2 = heapq.heappop(self.pair_cost_heap)
                 else:
                     for x in self.super_graph.nodes():
-                        if x in self.super_graph.nodes():
-                            if self.super_graph[x]=={}:
-                                self.combine_clusters(x,max(self.super_graph.nodes()))
+                        # combining nodes can cause x to be removed before
+                        # iteration completes, so need to check its existence
+                        if self.super_graph.has_node(x):
+                            if not self.super_graph[x]:
+                                self.combine_clusters(x, max(self.super_graph.nodes()))
                                 self.quality_history.append(quality)
-                    sumo = 1
+                    break
                 if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
                     qual_diff = -qd
-                    sumo = 1
+                    break
             if self.super_graph.number_of_edges()>0:
                 quality += qual_diff
                 self.combine_clusters(id1, id2)
@@ -160,6 +162,9 @@ class NewmanGreedy:
         c1_con = self.super_graph[cluster_id1]
         c2_con = self.super_graph[cluster_id2]
         c12_nodes = set(c1_con.keys()).union(set(c2_con.keys()))
+
+        self.rename_map.original[combine_id] = combine_id
+        self.rename_map.integer[combine_id] = combine_id
         
         self.super_graph.add_node(combine_id)
         combined_degree = self.super_graph.node[cluster_id1] + self.super_graph.node[cluster_id2]
@@ -281,7 +286,7 @@ class NewmanGreedy:
         if show:
             plt.show()
 
-    def plot_dendrogram(self,filename='karate_dendrogram.png',fsize=10):
+    def plot_dendrogram(self, filename, fsize=10):
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
         plt.figure(figsize=(10,10))
