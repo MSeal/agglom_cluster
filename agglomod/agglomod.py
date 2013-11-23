@@ -17,7 +17,8 @@ class NewmanGreedy:
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
     def __init__(self, graph, snapshot_size=None, forced_clusters = None):
-        self.forced_clusters = set(forced_clusters)
+        if forced_clusters:
+            self.forced_clusters = set(forced_clusters)
         graph = self.remove_orphans(graph)
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph,self.rename_map.integer,copy=False)
@@ -71,7 +72,8 @@ class NewmanGreedy:
         #for (id1, id2) in graph.edges_iter():
         #    self.add_pair_to_cost_heap(id1, id2)
         self.reheapify()
-        self.build_forced_clusters()
+        if forced_clusters:
+            self.build_forced_clusters()
         self.run_greedy_clustering(quality)
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
 
@@ -117,26 +119,32 @@ class NewmanGreedy:
         if self.snapshot_size == None or self.snapshot_size > self.super_graph.number_of_nodes():
             self.snapshot = self.super_graph.copy()
         last_heapify = self.super_graph.number_of_nodes()
-        while len(self.super_graph) > 1:
-            while True:
-                if self.pair_cost_heap:
-                    qd, id1, id2 = heapq.heappop(self.pair_cost_heap)
-                else:
-                    for x in self.super_graph.nodes():
-                        # combining nodes can cause x to be removed before
-                        # iteration completes, so need to check its existence
-                        if self.super_graph.has_node(x):
-                            if not self.super_graph[x]:
-                                self.combine_clusters(x, max(self.super_graph.nodes()))
-                                self.quality_history.append(quality)
-                    break
-                if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
-                    qual_diff = -qd
-                    break
-            if self.super_graph.number_of_edges()>0:
-                quality += qual_diff
+        for num_clusters in xrange(self.super_graph.number_of_nodes(), 1, -1):
+            if last_heapify > num_clusters + reheap_steps:
+                self.reheapify()
+                last_heapify = num_clusters
+            if self.pair_cost_heap:
+                [id1, id2, qual_diff] = self.combine_top_clusters()
                 self.combine_clusters(id1, id2)
+                quality += qual_diff
+                if self.snapshot_size and len(self.super_graph) == self.snapshot_size:
+                    self.snapshot = self.super_graph.copy()
                 self.quality_history.append(quality)
+        for x in self.super_graph.nodes():
+            # combining nodes in previous loop can remove edges from the original
+            # we add these to the super graph here.
+            if self.super_graph.has_node(x):
+                if not self.super_graph[x]:
+                    self.combine_clusters(x, max(self.super_graph.nodes()))
+                    self.quality_history.append(quality)
+        
+    def combine_top_clusters(self):
+        while True:
+            (qd, id1, id2) = heapq.heappop(self.pair_cost_heap)
+            # Ignore edges that do not exist anymore
+            if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
+                # Maximize quality difference is negated from add_pair_to_cost_heap
+                return [id1, id2, -qd]
                 
     def add_pair_to_cost_heap(self, id1, id2):
         qd = self.quality_difference(id1, id2)
