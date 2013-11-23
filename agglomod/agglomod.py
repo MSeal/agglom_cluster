@@ -131,8 +131,10 @@ class NewmanGreedy:
                     self.snapshot = self.super_graph.copy()
                 self.quality_history.append(quality)
         for x in self.super_graph.nodes():
-            # combining nodes in previous loop can remove edges from the original
-            # we add these to the super graph here.
+            # Combining nodes in the above loop can create orphan nodes (which
+            # may represent other clusters). We create edges to the main cluster
+            # constructed above. This is necessary for dendrogram_crawl to find
+            # and return these orphan nodes/clusters.
             if self.super_graph.has_node(x):
                 if not self.super_graph[x]:
                     self.combine_clusters(x, max(self.super_graph.nodes()))
@@ -205,34 +207,24 @@ class NewmanGreedy:
         self.dendrogram.add_edge(combine_id, cluster_id1)
         self.dendrogram.add_edge(combine_id, cluster_id2)
         
-    def _to_int_node_name(self, node, node_int_bimap):
-        return node_int_bimap[node] if not isinstance(node, int) else node
-        
-    def _to_normal_node_name(self, node, node_int_bimap):
-        return node_int_bimap[node] if isinstance(node, int) else node
-        
-    def dendrogram_crawl(self, start, node_int_bimap, priors=None, max_steps=None):
+    def dendrogram_crawl(self, start, priors=None, max_steps=None):
         if priors == None:
             priors = set()
         fringe = []
         
         # Helper function to push node neighbors into fringe
         def push_dend_list(fringe, priors, node):
-            priors.add(self._to_normal_node_name(node, node_int_bimap))
-            for n in self.dendrogram[self._to_normal_node_name(node, node_int_bimap)]:
-                # Convert to int if we have something else
-                inode = self._to_int_node_name(n, node_int_bimap)
+            priors.add(node)
+            for inode in self.dendrogram[node]:
                 if inode not in priors:
-                    #print "Adding", n, "From", node
                     heapq.heappush(fringe, -inode)
                     
         priors.add(start)
-        heapq.heappush(fringe, -self._to_int_node_name(start, node_int_bimap))
+        heapq.heappush(fringe, -start)
         
         step = 0
         while len(fringe) > 0 and (max_steps == None or step < max_steps):
-            node = -self._to_int_node_name(heapq.heappop(fringe), node_int_bimap)
-            #print "Removing", node
+            node = -heapq.heappop(fringe)
             push_dend_list(fringe, priors, node)
             step += 1
             
@@ -243,21 +235,10 @@ class NewmanGreedy:
             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
             num_clusters = len(self.quality_history) - index
         
-        node_int_bimap = {}
-        start_node = None
-        cur_int = 0
-        for dn in self.dendrogram.nodes_iter():
-            if isinstance(dn, int):
-                if start_node == None or dn > start_node:
-                    start_node = dn
-                node_int_bimap[dn] = dn
-            else:
-                node_int_bimap[dn] = cur_int
-                node_int_bimap[cur_int] = dn
-                cur_int += 1
+        nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
+        start_node = max(self.dendrogram.nodes())
         
         priors, fringe = self.dendrogram_crawl(start=start_node,
-                                               node_int_bimap=node_int_bimap,
                                                max_steps=num_clusters-1)
         # Double check we got the right number of values
         if len(fringe) != num_clusters:
@@ -267,12 +248,11 @@ class NewmanGreedy:
         clusters = []
         for neg_clust_start in fringe:
             clust_start = -neg_clust_start
-            #print clust_start
             cprior, cfringe = self.dendrogram_crawl(start=clust_start,
-                                                    node_int_bimap=node_int_bimap,
                                                     priors=priors.copy())
-            clusters.append(set(self._to_normal_node_name(n, node_int_bimap) for n in cprior 
-                                if self._to_int_node_name(n, node_int_bimap) <= clust_start))
+            clusters.append(set(self.rename_map.original[n] for n in cprior
+                                if n <= clust_start and self.orig.has_node(n)))
+        nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
     
     def get_super_graph(self, size=None):
