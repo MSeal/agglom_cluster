@@ -20,7 +20,7 @@ class NewmanGreedy:
         self.forced_clusters = set(forced_clusters) if forced_clusters else None
         graph = self.remove_orphans(graph)
         self.rename_map = self.remap(graph)
-        nx.relabel_nodes(graph,self.rename_map.integer,copy=False)
+        nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
         self.orig = graph
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
@@ -30,7 +30,7 @@ class NewmanGreedy:
         self.den_num = self.super_graph.number_of_nodes()
         for node in graph.node:
             if (isinstance(node, int)) and node > self.den_num:
-                self.den_num = node+1
+                self.den_num = node + 1
 
         def e_weight(graph, e):
             edge = graph[e[0]][e[1]]
@@ -40,7 +40,7 @@ class NewmanGreedy:
                 return edge['weight']
             else:
                 return 1
-        num_edges = 2*sum(e_weight(graph, e) for e in graph.edges_iter()) #2*graph.number_of_edges()
+        num_edges = 2 * sum(e_weight(graph, e) for e in graph.edges_iter()) #2*graph.number_of_edges()
 
         quality = 0.0
         for cluster_id in graph.nodes_iter():
@@ -56,7 +56,7 @@ class NewmanGreedy:
             self.super_graph.node[cluster_id] = ai
             self.dendrogram.add_node(cluster_id)
             # From equation (1) in secion II of the Newman paper
-            quality -= float(node_degree*node_degree)/(num_edges*num_edges)
+            quality -= float(node_degree * node_degree) / (num_edges * num_edges)
 
         for (cluster_id1, cluster_id2) in graph.edges_iter():
             if isinstance(graph[cluster_id1][cluster_id2], (int, float)):
@@ -106,7 +106,7 @@ class NewmanGreedy:
         for node_index, node in enumerate(graph.nodes_iter()):
             mapping_to_int[node]= node_index
             mapping_to_orig[node_index] = node
-        return self.RenameMapping(mapping_to_int,mapping_to_orig)
+        return self.RenameMapping(mapping_to_int, mapping_to_orig)
 
     def reheapify(self):
         del self.pair_cost_heap
