@@ -17,8 +17,7 @@ class NewmanGreedy:
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
     def __init__(self, graph, snapshot_size=None, forced_clusters = None):
-        if forced_clusters:
-            self.forced_clusters = set(forced_clusters)
+        self.forced_clusters = set(forced_clusters) if forced_clusters else None
         graph = self.remove_orphans(graph)
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph,self.rename_map.integer,copy=False)
@@ -32,7 +31,7 @@ class NewmanGreedy:
         for node in graph.node:
             if (isinstance(node, int)) and node > self.den_num:
                 self.den_num = node+1
-        
+
         def e_weight(graph, e):
             edge = graph[e[0]][e[1]]
             if isinstance(edge, int):
@@ -42,7 +41,7 @@ class NewmanGreedy:
             else:
                 return 1
         num_edges = 2*sum(e_weight(graph, e) for e in graph.edges_iter()) #2*graph.number_of_edges()
-            
+
         quality = 0.0
         for cluster_id in graph.nodes_iter():
             #node_degree = graph.degree(cluster_id)
@@ -52,12 +51,13 @@ class NewmanGreedy:
                     node_degree += tags['weight']
                 else:
                     node_degree += 1
-            
-            ai = float(node_degree) / num_edges  
+
+            ai = float(node_degree) / num_edges
             self.super_graph.node[cluster_id] = ai
             self.dendrogram.add_node(cluster_id)
             # From equation (1) in secion II of the Newman paper
             quality -= float(node_degree*node_degree)/(num_edges*num_edges)
+
         for (cluster_id1, cluster_id2) in graph.edges_iter():
             if isinstance(graph[cluster_id1][cluster_id2], (int, float)):
                 old_e_ij = graph[cluster_id1][cluster_id2]
@@ -72,7 +72,7 @@ class NewmanGreedy:
         #for (id1, id2) in graph.edges_iter():
         #    self.add_pair_to_cost_heap(id1, id2)
         self.reheapify()
-        if forced_clusters:
+        if self.forced_clusters:
             self.build_forced_clusters()
         self.run_greedy_clustering(quality)
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
@@ -90,7 +90,7 @@ class NewmanGreedy:
             while precluster_nodes:
                 self.combine_clusters(self.den_num-1, precluster_nodes[0])
                 precluster_nodes.pop(0)
-        
+
     def remove_orphans(self, graph):
         # remove orphan nodes except those in "unspecified" cluster
         orphans = []
@@ -99,7 +99,7 @@ class NewmanGreedy:
                 orphans.append(x)
         graph.remove_nodes_from(orphans)
         return graph
-            
+
     def remap(self, graph):
         mapping_to_int = {}
         mapping_to_orig = {}
@@ -107,7 +107,7 @@ class NewmanGreedy:
             mapping_to_int[node]= node_index
             mapping_to_orig[node_index] = node
         return self.RenameMapping(mapping_to_int,mapping_to_orig)
-        
+
     def reheapify(self):
         del self.pair_cost_heap
         self.pair_cost_heap = []
@@ -139,7 +139,7 @@ class NewmanGreedy:
                 if not self.super_graph[x]:
                     self.combine_clusters(x, max(self.super_graph.nodes()))
                     self.quality_history.append(quality)
-        
+
     def combine_top_clusters(self):
         while True:
             (qd, id1, id2) = heapq.heappop(self.pair_cost_heap)
@@ -147,7 +147,7 @@ class NewmanGreedy:
             if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
                 # Maximize quality difference is negated from add_pair_to_cost_heap
                 return [id1, id2, -qd]
-                
+
     def add_pair_to_cost_heap(self, id1, id2):
         qd = self.quality_difference(id1, id2)
         if(id2 < id1):
@@ -156,7 +156,7 @@ class NewmanGreedy:
             id2 = temp
         # Negate quality difference (to maximize), AND id1 < id2
         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
-    
+
     # The "Change in Q" as described by section II of the Newman paper
     def quality_difference(self, cluster_id1, cluster_id2):
         ai = float(self.super_graph.node[cluster_id1])
@@ -167,7 +167,7 @@ class NewmanGreedy:
     def combine_clusters(self, cluster_id1, cluster_id2):
         combine_id = self.den_num
         self.den_num += 1
-        
+
         # Add combined node
         c1_con = self.super_graph[cluster_id1]
         c2_con = self.super_graph[cluster_id2]
@@ -175,7 +175,7 @@ class NewmanGreedy:
 
         self.rename_map.original[combine_id] = combine_id
         self.rename_map.integer[combine_id] = combine_id
-        
+
         self.super_graph.add_node(combine_id)
         combined_degree = self.super_graph.node[cluster_id1] + self.super_graph.node[cluster_id2]
         self.super_graph.node[combine_id] = combined_degree
@@ -194,57 +194,57 @@ class NewmanGreedy:
             self.super_graph[combine_id][outer_node] = total
             self.super_graph[outer_node][combine_id] = total
             self.add_pair_to_cost_heap(combine_id, outer_node)
-        
+
         # Remove old nodes
         # TODO the except should be removed and the initial weights bug solved...
         try: self.super_graph.remove_node(cluster_id1)
         except nx.exception.NetworkXError: pass
         try: self.super_graph.remove_node(cluster_id2)
         except nx.exception.NetworkXError: pass
-        
+
         # Update dendrogram
         self.dendrogram.add_node(combine_id)
         self.dendrogram.add_edge(combine_id, cluster_id1)
         self.dendrogram.add_edge(combine_id, cluster_id2)
-        
+
     def dendrogram_crawl(self, start, priors=None, max_steps=None):
         if priors == None:
             priors = set()
         fringe = []
-        
+
         # Helper function to push node neighbors into fringe
         def push_dend_list(fringe, priors, node):
             priors.add(node)
             for inode in self.dendrogram[node]:
                 if inode not in priors:
                     heapq.heappush(fringe, -inode)
-                    
+
         priors.add(start)
         heapq.heappush(fringe, -start)
-        
+
         step = 0
         while len(fringe) > 0 and (max_steps == None or step < max_steps):
             node = -heapq.heappop(fringe)
             push_dend_list(fringe, priors, node)
             step += 1
-            
+
         return priors, fringe
-        
+
     def get_clusters(self, num_clusters=None):
         if num_clusters == None:
             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
             num_clusters = len(self.quality_history) - index
-        
+
         nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
         start_node = max(self.dendrogram.nodes())
-        
+
         priors, fringe = self.dendrogram_crawl(start=start_node,
                                                max_steps=num_clusters-1)
         # Double check we got the right number of values
         if len(fringe) != num_clusters:
             raise ValueError("get_clusters failed to retrieve "+
                 "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
-        
+
         clusters = []
         for neg_clust_start in fringe:
             clust_start = -neg_clust_start
@@ -254,11 +254,11 @@ class NewmanGreedy:
                                 if n <= clust_start and self.orig.has_node(n)))
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
-    
+
     def get_super_graph(self, size=None):
         if size == None:
             return self.super_graph
-        
+
         clusters = self.get_clusters(size)
         #TODO recombine nodes...
 
@@ -278,12 +278,12 @@ class NewmanGreedy:
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
         plt.figure(figsize=(10,10))
-        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5, 
+        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5,
                 node_color="blue", with_labels=True)
         plt.axis('equal')
         plt.savefig(filename)
         plt.show()
-        
+
     @staticmethod
     def build_load(graph, graph_name, regen_clustering=False, snapshot_size=None):
         name, ext = os.path.splitext(graph_name)
@@ -308,6 +308,6 @@ def main():
         N.plot_quality_history('Karate', os.path.join(os.path.dirname(__file__), 'pics', 'karate'))
     except:
         pass
-    
+
 if __name__ == '__main__':
     main()
