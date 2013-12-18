@@ -130,15 +130,16 @@ class NewmanGreedy:
                 if self.snapshot_size and len(self.super_graph) == self.snapshot_size:
                     self.snapshot = self.super_graph.copy()
                 self.quality_history.append(quality)
-        for x in self.super_graph.nodes():
-            # Combining nodes in the above loop can create orphan nodes (which
-            # may represent other clusters). We create edges to the main cluster
-            # constructed above. This is necessary for dendrogram_crawl to find
-            # and return these orphan nodes/clusters.
-            if self.super_graph.has_node(x):
-                if not self.super_graph[x]:
-                    self.combine_clusters(x, max(self.super_graph.nodes()))
-                    self.quality_history.append(quality)
+        if len(self.super_graph) > 1:
+            for x in self.super_graph.nodes():
+                # Combining nodes in the above loop can create orphan nodes (which
+                # may represent other clusters). We create edges to the main cluster
+                # constructed above. This is necessary for dendrogram_crawl to find
+                # and return these orphan nodes/clusters.
+                if self.super_graph.has_node(x):
+                    if not self.super_graph[x]:
+                        self.combine_clusters(x, max(self.super_graph.nodes()))
+                        self.quality_history.append(quality)
 
     def combine_top_clusters(self):
         while True:
@@ -240,6 +241,7 @@ class NewmanGreedy:
 
         priors, fringe = self.dendrogram_crawl(start=start_node,
                                                max_steps=num_clusters-1)
+
         # Double check we got the right number of values
         if len(fringe) != num_clusters:
             raise ValueError("get_clusters failed to retrieve "+
