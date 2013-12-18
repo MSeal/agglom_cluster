@@ -93,10 +93,7 @@ class NewmanGreedy:
 
     def remove_orphans(self, graph):
         # remove orphan nodes except those in "unspecified" cluster
-        orphans = []
-        for x in graph.nodes():
-            if not graph.degree(x) and x not in self.forced_clusters:
-                orphans.append(x)
+        orphans = [node for node in graph if not graph.degree(node) and node not in self.forced_clusters]
         graph.remove_nodes_from(orphans)
         return graph
 
@@ -130,15 +127,14 @@ class NewmanGreedy:
                 if self.snapshot_size and len(self.super_graph) == self.snapshot_size:
                     self.snapshot = self.super_graph.copy()
                 self.quality_history.append(quality)
-        for x in self.super_graph.nodes():
+        for node in self.super_graph:
             # Combining nodes in the above loop can create orphan nodes (which
             # may represent other clusters). We create edges to the main cluster
             # constructed above. This is necessary for dendrogram_crawl to find
             # and return these orphan nodes/clusters.
-            if self.super_graph.has_node(x):
-                if not self.super_graph[x]:
-                    self.combine_clusters(x, max(self.super_graph.nodes()))
-                    self.quality_history.append(quality)
+            if node != max(self.super_graph):
+                self.combine_clusters(x, max(self.super_graph))
+                self.quality_history.append(quality)
 
     def combine_top_clusters(self):
         while True:
@@ -236,10 +232,11 @@ class NewmanGreedy:
             num_clusters = len(self.quality_history) - index
 
         nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
-        start_node = max(self.dendrogram.nodes())
+        start_node = max(self.dendrogram)
 
         priors, fringe = self.dendrogram_crawl(start=start_node,
                                                max_steps=num_clusters-1)
+
         # Double check we got the right number of values
         if len(fringe) != num_clusters:
             raise ValueError("get_clusters failed to retrieve "+
