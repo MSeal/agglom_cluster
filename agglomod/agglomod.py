@@ -277,16 +277,16 @@ class NewmanGreedy:
     @staticmethod
     def build_load(graph, graph_name, regen_clustering=False, snapshot_size=None):
         name, ext = os.path.splitext(graph_name)
-        pickleFName = name + '.pkl'
+        pkl_file_name = name + '.pkl'
         try:
             if regen_clustering:
                 raise Exception("Skip loading")
-            with open(pickleFName, 'rb') as pklFile:
-                cluster_graph = pickle.load(pklFile)
+            with open(pkl_file_name, 'rb') as pkl_file:
+                cluster_graph = pickle.load(pkl_file)
         except:
             cluster_graph = NewmanGreedy(graph, snapshot_size=snapshot_size)
-            with open(pickleFName, 'wb') as pklFile:
-                pickle.dump(cluster_graph, pklFile)
+            with open(pkl_file_name, 'wb') as pkl_file:
+                pickle.dump(cluster_graph, pkl_file)
         return cluster_graph
 
 def main():
