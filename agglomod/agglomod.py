@@ -16,11 +16,13 @@ class NewmanGreedy:
 
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
-    def __init__(self, graph, snapshot_size=None, forced_clusters = None):
+    def __init__(self, graph, snapshot_size=None, forced_clusters=None):
         self.forced_clusters = set(forced_clusters) if forced_clusters else None
-        graph = self.remove_orphans(graph)
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
+
+        self.orphans = self.remove_orphans(graph)
+        
         self.orig = graph
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
@@ -75,6 +77,7 @@ class NewmanGreedy:
         if self.forced_clusters:
             self.build_forced_clusters()
         self.run_greedy_clustering(quality)
+        self.dendrogram.add_nodes_from(self.orphans)
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
 
     def build_forced_clusters(self):
@@ -95,7 +98,7 @@ class NewmanGreedy:
         # remove orphan nodes except those in "unspecified" cluster
         orphans = [node for node in graph if not graph.degree(node) and node not in self.forced_clusters]
         graph.remove_nodes_from(orphans)
-        return graph
+        return orphans
 
     def remap(self, graph):
         mapping_to_int = {}
@@ -235,13 +238,15 @@ class NewmanGreedy:
             raise ValueError("get_clusters failed to retrieve "+
                 "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
 
-        clusters = []
+        clusters = [set([self.rename_map.original[n]]) for n in self.orphans]
         for neg_clust_start in fringe:
             clust_start = -neg_clust_start
             cprior, cfringe = self.dendrogram_crawl(start=clust_start,
                                                     priors=priors.copy())
-            clusters.append(set(self.rename_map.original[n] for n in cprior
-                                if n <= clust_start and self.orig.has_node(n)))
+            cluster_set = set(self.rename_map.original[n] for n in cprior
+                              if n <= clust_start and self.orig.has_node(n))
+            if cluster_set:
+                clusters.append(cluster_set)
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
 
