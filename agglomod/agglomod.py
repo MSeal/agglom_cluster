@@ -132,11 +132,11 @@ class NewmanGreedy:
                 if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
                     qual_diff = -qd
                     break
-            if self.super_graph.number_of_edges()>0:
+            if self.super_graph.number_of_edges() > 0:
                 quality += qual_diff
                 self.combine_clusters(id1, id2)
                 self.quality_history.append(quality)
-                
+
     def add_pair_to_cost_heap(self, id1, id2):
         qd = self.quality_difference(id1, id2)
         if(id2 < id1):
@@ -145,7 +145,7 @@ class NewmanGreedy:
             id2 = temp
         # Negate quality difference (to maximize), AND id1 < id2
         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
-    
+
     # The "Change in Q" as described by section II of the Newman paper
     def quality_difference(self, cluster_id1, cluster_id2):
         ai = float(self.super_graph.node[cluster_id1])
@@ -195,7 +195,7 @@ class NewmanGreedy:
         self.dendrogram.add_node(combine_id)
         self.dendrogram.add_edge(combine_id, cluster_id1)
         self.dendrogram.add_edge(combine_id, cluster_id2)
-        
+
     def dendrogram_crawl(self, start, priors=None, max_steps=None):
         if priors == None:
             priors = set()
@@ -244,7 +244,7 @@ class NewmanGreedy:
                                 if n <= clust_start and self.orig.has_node(n)))
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
-    
+
     def get_super_graph(self, size=None):
         if size == None:
             return self.super_graph
@@ -268,12 +268,12 @@ class NewmanGreedy:
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
         plt.figure(figsize=(10,10))
-        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5, 
+        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5,
                 node_color="blue", with_labels=True)
         plt.axis('equal')
         plt.savefig(filename)
         plt.show()
-        
+
     @staticmethod
     def build_load(graph, graph_name, regen_clustering=False, snapshot_size=None):
         name, ext = os.path.splitext(graph_name)
