@@ -116,34 +116,27 @@ class NewmanGreedy:
         if self.snapshot_size == None or self.snapshot_size > self.super_graph.number_of_nodes():
             self.snapshot = self.super_graph.copy()
         last_heapify = self.super_graph.number_of_nodes()
-        for num_clusters in xrange(self.super_graph.number_of_nodes(), 1, -1):
-            if last_heapify > num_clusters + reheap_steps:
-                self.reheapify()
-                last_heapify = num_clusters
-            if self.pair_cost_heap:
-                [id1, id2, qual_diff] = self.combine_top_clusters()
-                self.combine_clusters(id1, id2)
+        while len(self.super_graph) > 1:
+            while True:
+                if self.pair_cost_heap:
+                    qd, id1, id2 = heapq.heappop(self.pair_cost_heap)
+                else:
+                    for x in self.super_graph.nodes():
+                        # combining nodes can cause x to be removed before
+                        # iteration completes, so need to check its existence
+                        if self.super_graph.has_node(x):
+                            if not self.super_graph[x]:
+                                self.combine_clusters(x, max(self.super_graph.nodes()))
+                                self.quality_history.append(quality)
+                    break
+                if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
+                    qual_diff = -qd
+                    break
+            if self.super_graph.number_of_edges()>0:
                 quality += qual_diff
-                if self.snapshot_size and len(self.super_graph) == self.snapshot_size:
-                    self.snapshot = self.super_graph.copy()
+                self.combine_clusters(id1, id2)
                 self.quality_history.append(quality)
-        for node in self.super_graph:
-            # Combining nodes in the above loop can create orphan nodes (which
-            # may represent other clusters). We create edges to the main cluster
-            # constructed above. This is necessary for dendrogram_crawl to find
-            # and return these orphan nodes/clusters.
-            if node != max(self.super_graph):
-                self.combine_clusters(x, max(self.super_graph))
-                self.quality_history.append(quality)
-
-    def combine_top_clusters(self):
-        while True:
-            (qd, id1, id2) = heapq.heappop(self.pair_cost_heap)
-            # Ignore edges that do not exist anymore
-            if(self.super_graph.has_node(id1) and self.super_graph.has_node(id2)):
-                # Maximize quality difference is negated from add_pair_to_cost_heap
-                return [id1, id2, -qd]
-
+                
     def add_pair_to_cost_heap(self, id1, id2):
         qd = self.quality_difference(id1, id2)
         if(id2 < id1):
@@ -152,7 +145,7 @@ class NewmanGreedy:
             id2 = temp
         # Negate quality difference (to maximize), AND id1 < id2
         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
-
+    
     # The "Change in Q" as described by section II of the Newman paper
     def quality_difference(self, cluster_id1, cluster_id2):
         ai = float(self.super_graph.node[cluster_id1])
@@ -163,7 +156,7 @@ class NewmanGreedy:
     def combine_clusters(self, cluster_id1, cluster_id2):
         combine_id = self.den_num
         self.den_num += 1
-
+        
         # Add combined node
         c1_con = self.super_graph[cluster_id1]
         c2_con = self.super_graph[cluster_id2]
@@ -171,7 +164,7 @@ class NewmanGreedy:
 
         self.rename_map.original[combine_id] = combine_id
         self.rename_map.integer[combine_id] = combine_id
-
+        
         self.super_graph.add_node(combine_id)
         combined_degree = self.super_graph.node[cluster_id1] + self.super_graph.node[cluster_id2]
         self.super_graph.node[combine_id] = combined_degree
@@ -190,19 +183,19 @@ class NewmanGreedy:
             self.super_graph[combine_id][outer_node] = total
             self.super_graph[outer_node][combine_id] = total
             self.add_pair_to_cost_heap(combine_id, outer_node)
-
+        
         # Remove old nodes
         # TODO the except should be removed and the initial weights bug solved...
         try: self.super_graph.remove_node(cluster_id1)
         except nx.exception.NetworkXError: pass
         try: self.super_graph.remove_node(cluster_id2)
         except nx.exception.NetworkXError: pass
-
+        
         # Update dendrogram
         self.dendrogram.add_node(combine_id)
         self.dendrogram.add_edge(combine_id, cluster_id1)
         self.dendrogram.add_edge(combine_id, cluster_id2)
-
+        
     def dendrogram_crawl(self, start, priors=None, max_steps=None):
         if priors == None:
             priors = set()
@@ -251,11 +244,11 @@ class NewmanGreedy:
                                 if n <= clust_start and self.orig.has_node(n)))
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
-
+    
     def get_super_graph(self, size=None):
         if size == None:
             return self.super_graph
-
+        
         clusters = self.get_clusters(size)
         #TODO recombine nodes...
 
@@ -275,12 +268,12 @@ class NewmanGreedy:
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
         plt.figure(figsize=(10,10))
-        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5,
+        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5, 
                 node_color="blue", with_labels=True)
         plt.axis('equal')
         plt.savefig(filename)
         plt.show()
-
+        
     @staticmethod
     def build_load(graph, graph_name, regen_clustering=False, snapshot_size=None):
         name, ext = os.path.splitext(graph_name)
@@ -305,6 +298,6 @@ def main():
         N.plot_quality_history('Karate', os.path.join(os.path.dirname(__file__), 'pics', 'karate'))
     except:
         pass
-
+    
 if __name__ == '__main__':
     main()
