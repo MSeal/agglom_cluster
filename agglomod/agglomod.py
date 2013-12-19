@@ -18,11 +18,12 @@ class NewmanGreedy:
 
     def __init__(self, graph, snapshot_size=None, forced_clusters=None):
         self.forced_clusters = set(forced_clusters) if forced_clusters else None
+
+        self.orphans = self.remove_orphans(graph)
+
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
 
-        self.orphans = self.remove_orphans(graph)
-        
         self.orig = graph
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
@@ -77,7 +78,6 @@ class NewmanGreedy:
         if self.forced_clusters:
             self.build_forced_clusters()
         self.run_greedy_clustering(quality)
-        self.dendrogram.add_nodes_from(self.orphans)
         nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
 
     def build_forced_clusters(self):
@@ -227,27 +227,29 @@ class NewmanGreedy:
             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
             num_clusters = len(self.quality_history) - index
 
+        clusters = [set([n]) for n in self.orphans]
         nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
-        start_node = max(self.dendrogram)
 
-        priors, fringe = self.dendrogram_crawl(start=start_node,
-                                               max_steps=num_clusters-1)
+        if self.dendrogram:
+            start_node = max(self.dendrogram)
 
-        # Double check we got the right number of values
-        if len(fringe) != num_clusters:
-            raise ValueError("get_clusters failed to retrieve "+
-                "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
+            priors, fringe = self.dendrogram_crawl(start=start_node,
+                                                   max_steps=num_clusters-1)
 
-        clusters = [set([self.rename_map.original[n]]) for n in self.orphans]
-        for neg_clust_start in fringe:
-            clust_start = -neg_clust_start
-            cprior, cfringe = self.dendrogram_crawl(start=clust_start,
-                                                    priors=priors.copy())
-            cluster_set = set(self.rename_map.original[n] for n in cprior
-                              if n <= clust_start and self.orig.has_node(n))
-            if cluster_set:
-                clusters.append(cluster_set)
-        nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
+            # Double check we got the right number of values
+            if len(fringe) != num_clusters:
+                raise ValueError("get_clusters failed to retrieve "+
+                    "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
+
+            for neg_clust_start in fringe:
+                clust_start = -neg_clust_start
+                cprior, cfringe = self.dendrogram_crawl(start=clust_start,
+                                                        priors=priors.copy())
+                cluster_set = set(self.rename_map.original[n] for n in cprior
+                                  if n <= clust_start and self.orig.has_node(n))
+                if cluster_set:
+                    clusters.append(cluster_set)
+            nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
 
     def get_super_graph(self, size=None):
