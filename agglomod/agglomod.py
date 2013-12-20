@@ -16,11 +16,14 @@ class NewmanGreedy:
 
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
-    def __init__(self, graph, snapshot_size=None, forced_clusters = None):
+    def __init__(self, graph, snapshot_size=None, forced_clusters=None):
         self.forced_clusters = set(forced_clusters) if forced_clusters else None
-        graph = self.remove_orphans(graph)
+
+        self.orphans = self.remove_orphans(graph)
+
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
+
         self.orig = graph
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
@@ -95,7 +98,7 @@ class NewmanGreedy:
         # remove orphan nodes except those in "unspecified" cluster
         orphans = [node for node in graph if not graph.degree(node) and node not in self.forced_clusters]
         graph.remove_nodes_from(orphans)
-        return graph
+        return orphans
 
     def remap(self, graph):
         mapping_to_int = {}
@@ -224,25 +227,29 @@ class NewmanGreedy:
             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
             num_clusters = len(self.quality_history) - index
 
+        clusters = [set([n]) for n in self.orphans]
         nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
-        start_node = max(self.dendrogram)
 
-        priors, fringe = self.dendrogram_crawl(start=start_node,
-                                               max_steps=num_clusters-1)
+        if self.dendrogram:
+            start_node = max(self.dendrogram)
 
-        # Double check we got the right number of values
-        if len(fringe) != num_clusters:
-            raise ValueError("get_clusters failed to retrieve "+
-                "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
+            priors, fringe = self.dendrogram_crawl(start=start_node,
+                                                   max_steps=num_clusters-1)
 
-        clusters = []
-        for neg_clust_start in fringe:
-            clust_start = -neg_clust_start
-            cprior, cfringe = self.dendrogram_crawl(start=clust_start,
-                                                    priors=priors.copy())
-            clusters.append(set(self.rename_map.original[n] for n in cprior
-                                if n <= clust_start and self.orig.has_node(n)))
-        nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
+            # Double check we got the right number of values
+            if len(fringe) != num_clusters:
+                raise ValueError("get_clusters failed to retrieve "+
+                    "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
+
+            for neg_clust_start in fringe:
+                clust_start = -neg_clust_start
+                cprior, cfringe = self.dendrogram_crawl(start=clust_start,
+                                                        priors=priors.copy())
+                cluster_set = set(self.rename_map.original[n] for n in cprior
+                                  if n <= clust_start and self.orig.has_node(n))
+                if cluster_set:
+                    clusters.append(cluster_set)
+            nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
 
     def get_super_graph(self, size=None):
@@ -277,16 +284,16 @@ class NewmanGreedy:
     @staticmethod
     def build_load(graph, graph_name, regen_clustering=False, snapshot_size=None):
         name, ext = os.path.splitext(graph_name)
-        pickleFName = name + '.pkl'
+        pkl_file_name = name + '.pkl'
         try:
             if regen_clustering:
                 raise Exception("Skip loading")
-            with open(pickleFName, 'rb') as pklFile:
-                cluster_graph = pickle.load(pklFile)
+            with open(pkl_file_name, 'rb') as pkl_file:
+                cluster_graph = pickle.load(pkl_file)
         except:
             cluster_graph = NewmanGreedy(graph, snapshot_size=snapshot_size)
-            with open(pickleFName, 'wb') as pklFile:
-                pickle.dump(cluster_graph, pklFile)
+            with open(pkl_file_name, 'wb') as pkl_file:
+                pickle.dump(cluster_graph, pkl_file)
         return cluster_graph
 
 def main():
