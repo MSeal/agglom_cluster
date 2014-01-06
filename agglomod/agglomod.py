@@ -25,6 +25,7 @@ class NewmanGreedy:
         nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
 
         self.orig = graph
+        self.max_clusters = len(graph)
         self.super_graph = graph.copy()
         self.dendrogram = nx.Graph()
         self.snapshot_size = snapshot_size
@@ -227,19 +228,24 @@ class NewmanGreedy:
             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
             num_clusters = len(self.quality_history) - index
 
+        if num_clusters < 1:
+            raise ValueError("Cannot return less than one cluster")
+
+        if num_clusters > self.max_clusters:
+            raise ValueError("Cannot return more clusters than nodes: %d nodes, %d requested"
+                % (self.max_clusters, num_clusters))
+
         clusters = [set([n]) for n in self.orphans]
         nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
 
         if self.dendrogram:
             start_node = max(self.dendrogram)
-
-            priors, fringe = self.dendrogram_crawl(start=start_node,
-                                                   max_steps=num_clusters-1)
+            priors, fringe = self.dendrogram_crawl(start=start_node, max_steps=num_clusters-1)
 
             # Double check we got the right number of values
             if len(fringe) != num_clusters:
-                raise ValueError("get_clusters failed to retrieve "+
-                    "%d clusters correctly (got %d instead)" % (num_clusters, len(fringe)))
+                raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)" 
+                    % (num_clusters, len(fringe)))
 
             for neg_clust_start in fringe:
                 clust_start = -neg_clust_start
@@ -271,7 +277,7 @@ class NewmanGreedy:
         if show:
             plt.show()
 
-    def plot_dendrogram(self, filename, fsize=10):
+    def plot_dendrogram(self, filename, fsize=10, show=True):
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
         plt.figure(figsize=(10,10))
@@ -279,7 +285,8 @@ class NewmanGreedy:
                 node_color="blue", with_labels=True)
         plt.axis('equal')
         plt.savefig(filename)
-        plt.show()
+        if show:
+            plt.show()
 
     @staticmethod
     def build_load(graph, graph_name, regen_clustering=False, snapshot_size=None):
@@ -297,12 +304,13 @@ class NewmanGreedy:
         return cluster_graph
 
 def main():
-    G = nx.karate_club_graph();
-    N = NewmanGreedy(G)
-    print N.quality_history
+    graph = nx.karate_club_graph();
+    newman = NewmanGreedy(graph)
+    print newman.quality_history
+    print newman.get_clusters()
     try:
-        N.plot_dendrogram()
-        N.plot_quality_history('Karate', os.path.join(os.path.dirname(__file__), 'pics', 'karate'))
+        newman.plot_dendrogram(os.path.join(os.path.dirname(__file__), '..', 'pics', 'karate_dend.png'), show=False)   
+        newman.plot_quality_history('Karate', os.path.join(os.path.dirname(__file__), '..', 'pics', 'karate'), show=False)
     except:
         pass
     

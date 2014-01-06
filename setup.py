@@ -22,7 +22,7 @@ setup(
     description = ("Performs greedy agglomerative clustering on network-x graphs"),
     packages=['agglomod'],
     install_requires = ['networkx'],
-    #test_suite = 'tests',
+    test_suite = 'tests',
     zip_safe = False,
     long_description=read('README.md'),
 )
