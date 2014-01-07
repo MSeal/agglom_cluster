@@ -16,9 +16,11 @@ class NewmanGreedy:
 
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
-    def __init__(self, graph, snapshot_size=None, forced_clusters=None):
-        self.forced_clusters = set(forced_clusters) if forced_clusters else None
+    def __init__(self, graph, snapshot_size=None, forced_clusters=None, copy_original=True):
+        if copy_original:
+            graph = graph.copy()
 
+        self.forced_clusters = set(forced_clusters) if forced_clusters else None
         self.orphans = self.remove_orphans(graph)
 
         self.rename_map = self.remap(graph)
@@ -277,11 +279,11 @@ class NewmanGreedy:
         if show:
             plt.show()
 
-    def plot_dendrogram(self, filename, fsize=10, show=True):
+    def plot_dendrogram(self, filename, figure_size=(10,10), font_size=10, show=True):
         plt, graphviz_layout = _get_plot_libs()
         pos = graphviz_layout(self.dendrogram, prog='twopi', args='')
-        plt.figure(figsize=(10,10))
-        nx.draw(self.dendrogram, pos, node_size=10,font_size=fsize, alpha=0.5,
+        plt.figure(figsize=figure_size)
+        nx.draw(self.dendrogram, pos, node_size=10, font_size=font_size, alpha=0.5,
                 node_color="blue", with_labels=True)
         plt.axis('equal')
         plt.savefig(filename)
@@ -309,7 +311,7 @@ def main():
     print newman.quality_history
     print newman.get_clusters()
     try:
-        newman.plot_dendrogram(os.path.join(os.path.dirname(__file__), '..', 'pics', 'karate_dend.png'), show=False)   
+        newman.plot_dendrogram(os.path.join(os.path.dirname(__file__), '..', 'pics', 'karate_dend.png'), show=False)
         newman.plot_quality_history('Karate', os.path.join(os.path.dirname(__file__), '..', 'pics', 'karate'), show=False)
     except:
         pass
