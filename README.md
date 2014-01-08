@@ -16,7 +16,7 @@ This implementation uses a heap to select the best pair to cluster at each itera
 ## Problems
 * The actual Modularity score does not exactly match the Modularity score of the example on the wikipedia page
    - http://en.wikipedia.org/wiki/Modularity_(networks)
-* Does not work for directed graphs
+* Does not work for directed graphs (TODO operate on the undirected graph)
 * Does not work for negative graphs (TODO add this capability)
 
 Stores the following information
@@ -39,6 +39,6 @@ Stores the following information
 ## Author
 Author(s): Ethan Lozano & Matthew Seal
 
-Collaborator(s):
+Collaborator(s): Zubin Jelveh
 
 #### (C) Copyright 2013, [Opengov](http://opengov.com)
