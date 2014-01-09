@@ -20,7 +20,8 @@ class NewmanGreedy:
         if copy_original:
             graph = graph.copy()
 
-        self.forced_clusters = set(forced_clusters) if forced_clusters else None
+        self.forced_clusters = [set(cluster) for cluster in forced_clusters] if forced_clusters else []
+        # TODO change to separating into connected components
         self.orphans = self.remove_orphans(graph)
 
         self.rename_map = self.remap(graph)
@@ -85,21 +86,23 @@ class NewmanGreedy:
 
     def build_forced_clusters(self):
         # create a cluster from "unspecified" nodes
-        precluster_nodes = []
-        for node in self.rename_map.integer.iterkeys():
-            if node in self.forced_clusters:
-                precluster_nodes.append(self.rename_map.integer[node])
-        while len(precluster_nodes) > 1:
-            self.combine_clusters(precluster_nodes[0], precluster_nodes[1])
-            precluster_nodes.pop(0)
-            precluster_nodes.pop(0)
-            while precluster_nodes:
-                self.combine_clusters(self.den_num-1, precluster_nodes[0])
+        for cluster in self.forced_clusters:
+            precluster_nodes = []
+            for node in self.rename_map.integer.iterkeys():
+                if node in cluster:
+                    precluster_nodes.append(self.rename_map.integer[node])
+            while len(precluster_nodes) > 1:
+                self.combine_clusters(precluster_nodes[0], precluster_nodes[1])
                 precluster_nodes.pop(0)
+                precluster_nodes.pop(0)
+                while precluster_nodes:
+                    self.combine_clusters(self.den_num-1, precluster_nodes[0])
+                    precluster_nodes.pop(0)
 
     def remove_orphans(self, graph):
         # remove orphan nodes except those in "unspecified" cluster
-        orphans = [node for node in graph if not graph.degree(node) and node not in self.forced_clusters]
+        orphans = [node for node in graph if 
+                (not graph.degree(node) and not any(node in cluster for cluster in self.forced_clusters))]
         graph.remove_nodes_from(orphans)
         return orphans
 
@@ -202,7 +205,7 @@ class NewmanGreedy:
         self.dendrogram.add_edge(combine_id, cluster_id1)
         self.dendrogram.add_edge(combine_id, cluster_id2)
 
-    def dendrogram_crawl(self, start, priors=None, max_steps=None):
+    def dendrogram_crawl(self, start, priors=None, max_fringe_size=None):
         if priors == None:
             priors = set()
         fringe = []
@@ -218,7 +221,7 @@ class NewmanGreedy:
         heapq.heappush(fringe, -start)
 
         step = 0
-        while len(fringe) > 0 and (max_steps == None or step < max_steps):
+        while len(fringe) > 0 and (max_fringe_size == None or len(fringe) < max_fringe_size):
             node = -heapq.heappop(fringe)
             push_dend_list(fringe, priors, node)
             step += 1
@@ -238,26 +241,26 @@ class NewmanGreedy:
                 % (self.max_clusters, num_clusters))
 
         clusters = [set([n]) for n in self.orphans]
-        nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
-
         if self.dendrogram:
-            start_node = max(self.dendrogram)
-            priors, fringe = self.dendrogram_crawl(start=start_node, max_steps=num_clusters-1)
+            nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
+            try:
+                start_node = max(self.dendrogram)
+                priors, fringe = self.dendrogram_crawl(start=start_node, max_fringe_size=num_clusters)
 
-            # Double check we got the right number of values
-            if len(fringe) != num_clusters:
-                raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)" 
-                    % (num_clusters, len(fringe)))
+                # Double check we got the right number of values
+                if len(fringe) != num_clusters:
+                    raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)" 
+                        % (num_clusters, len(fringe)))
 
-            for neg_clust_start in fringe:
-                clust_start = -neg_clust_start
-                cprior, cfringe = self.dendrogram_crawl(start=clust_start,
-                                                        priors=priors.copy())
-                cluster_set = set(self.rename_map.original[n] for n in cprior
-                                  if n <= clust_start and self.orig.has_node(n))
-                if cluster_set:
-                    clusters.append(cluster_set)
-            nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
+                for neg_clust_start in fringe:
+                    clust_start = -neg_clust_start
+                    cprior, cfringe = self.dendrogram_crawl(start=clust_start, priors=priors.copy())
+                    cluster_set = set(self.rename_map.original[n] for n in cprior
+                                      if n <= clust_start and self.orig.has_node(n))
+                    if cluster_set:
+                        clusters.append(cluster_set)
+            finally:
+                nx.relabel_nodes(self.dendrogram, self.rename_map.original, copy=False)
         return sorted(clusters, key=lambda c: -len(c))
 
     def get_super_graph(self, size=None):

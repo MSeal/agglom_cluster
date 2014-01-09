@@ -38,5 +38,9 @@ class HACTest(unittest.TestCase):
         self.assertRaises(ValueError, self.newman.get_clusters, 35)
         self.assertRaises(ValueError, self.newman.get_clusters, 0)
 
+    #TODO test graphs of size 0 and 1
+    #TODO test disconnected graphs
+    #TODO test forced clusters
+
 if __name__ == "__main__":
     unittest.main()

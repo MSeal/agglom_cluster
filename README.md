@@ -18,6 +18,10 @@ This implementation uses a heap to select the best pair to cluster at each itera
    - http://en.wikipedia.org/wiki/Modularity_(networks)
 * Does not work for directed graphs (TODO operate on the undirected graph)
 * Does not work for negative graphs (TODO add this capability)
+* Does not handle disconnected components (unless than are components of size 1)
+* Clustering needs to move to a function call rather than an object holder (return dendrogram object)
+* Node relabeling is messy
+* Dendrogram crawling is used for two separate purposes which aren't clearly defined/called
 
 Stores the following information
 * Supergraph
