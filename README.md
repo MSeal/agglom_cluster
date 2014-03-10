@@ -1,5 +1,4 @@
-agglom_cluster
-==============
+# agglom_cluster
 Agglomerative clustering tool for network-x graphs
 
 ## Clustering
@@ -44,5 +43,3 @@ Stores the following information
 Author(s): Ethan Lozano & Matthew Seal
 
 Collaborator(s): Zubin Jelveh
-
-#### (C) Copyright 2013, [Opengov](http://opengov.com)
