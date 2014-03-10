@@ -1,1 +1,2 @@
+allset==1.0.0
 networkx==1.8.1
