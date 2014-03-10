@@ -1,28 +1,46 @@
 import os
 import shutil
-from setuptools import setup
+from setuptools import setup, find_packages
 
-# Utility function to read the README file.
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    with open(fname) as fhandle:
+            return fhandle.read()
 
-# Cleanup builds so changes don't persist into setup
-build_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'build'))
-dist_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'dist'))
-if (os.path.isdir(build_dir)):
-    shutil.rmtree(build_dir)
-if (os.path.isdir(dist_dir)):
-    shutil.rmtree(dist_dir)
+def readMD(fname):
+    # Utility function to read the README file.
+    full_fname = os.path.join(os.path.dirname(__file__), fname)
+    if 'PANDOC_PATH' in os.environ:
+        import pandoc
+        pandoc.core.PANDOC_PATH = os.environ['PANDOC_PATH']
+        doc = pandoc.Document()
+        with open(full_fname) as fhandle:
+            doc.markdown = fhandle.read()
+        return doc.rst
+    else:
+        return read(fname)
+
+required = [req.strip() for req in read('requirements.txt').splitlines() if req.strip()]
 
 setup(
-    name = "AgglomCluster",
-    version = "1.0.0",
-    author = "Matthew Seal",
-    author_email = "mseal@opengov.com",
-    description = ("Performs greedy agglomerative clustering on network-x graphs"),
-    packages=['agglomod'],
-    install_requires = ['networkx'],
-    test_suite = 'tests',
-    zip_safe = False,
-    long_description=read('README.md'),
+    name="AgglomCluster",
+    version="1.0.0",
+    author="Matthew Seal",
+    author_email="mseal@opengov.com",
+    description="Performs greedy agglomerative clustering on network-x graphs",
+    packages=find_packages(),
+    long_description=readMD('README.md'),
+    install_requires=required,
+    license='LGPL 2.1',
+    test_suite='tests',
+    url='https://github.com/MSeal/agglom_cluster',
+    download_url='https://github.com/MSeal/agglom_cluster/tarball/v1.0.0',
+    zip_safe=False,
+    keywords=['network-x', 'data', 'graphs', 'clustering', 'agglomerative'],
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Topic :: Utilities',
+        'License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 2 :: Only'
+    ]
 )
