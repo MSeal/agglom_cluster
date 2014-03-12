@@ -27,7 +27,7 @@ setup(
     author="Matthew Seal",
     author_email="mseal@opengov.com",
     description="Performs greedy agglomerative clustering on network-x graphs",
-    packages=find_packages(),
+    packages=['agglomod'],
     long_description=readMD('README.md'),
     install_requires=required,
     license='LGPL 2.1',
