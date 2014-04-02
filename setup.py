@@ -23,7 +23,7 @@ required = [req.strip() for req in read('requirements.txt').splitlines() if req.
 
 setup(
     name="AgglomCluster",
-    version="1.0.0",
+    version="1.0.1",
     author="Matthew Seal",
     author_email="mseal@opengov.com",
     description="Performs greedy agglomerative clustering on network-x graphs",
@@ -33,7 +33,7 @@ setup(
     license='LGPL 2.1',
     test_suite='tests',
     url='https://github.com/MSeal/agglom_cluster',
-    download_url='https://github.com/MSeal/agglom_cluster/tarball/v1.0.0',
+    download_url='https://github.com/MSeal/agglom_cluster/tarball/v1.0.1',
     zip_safe=False,
     keywords=['network-x', 'data', 'graphs', 'clustering', 'agglomerative'],
     classifiers=[
