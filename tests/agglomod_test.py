@@ -4,12 +4,12 @@ import parentpath
 import unittest
 import os
 import networkx as nx
-from agglomod import agglomod
+from agglomcluster import NewmanGreedy
 
 class HACTest(unittest.TestCase):
     def setUp(self):
         self.graph = nx.karate_club_graph();
-        self.newman = agglomod.NewmanGreedy(self.graph)
+        self.newman = NewmanGreedy(self.graph)
 
     def test_quality_history(self):
         self.assertListEqual(self.newman.quality_history,
