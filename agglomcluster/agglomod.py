@@ -232,16 +232,10 @@ class NewmanGreedy:
         if num_clusters == None:
             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
             num_clusters = len(self.quality_history) - index
-
-        if num_clusters < 1:
-            raise ValueError("Cannot return less than one cluster")
-
-        if num_clusters > self.max_clusters:
-            raise ValueError("Cannot return more clusters than nodes: %d nodes, %d requested"
-                % (self.max_clusters, num_clusters))
+        num_clusters = max(min(num_clusters, self.max_clusters), 0)
 
         clusters = [set([n]) for n in self.orphans]
-        if self.dendrogram:
+        if self.dendrogram and num_clusters:
             nx.relabel_nodes(self.dendrogram, self.rename_map.integer, copy=False)
             try:
                 start_node = max(self.dendrogram)
