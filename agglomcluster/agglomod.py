@@ -148,10 +148,8 @@ class NewmanGreedy:
 
     def add_pair_to_cost_heap(self, id1, id2):
         qd = self.quality_difference(id1, id2)
-        if(id2 < id1):
-            temp = id1
-            id1 = id2
-            id2 = temp
+        if id2 < id1:
+            id1, id2 = id2, id1
         # Negate quality difference (to maximize), AND id1 < id2
         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
 
