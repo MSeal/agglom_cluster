@@ -16,13 +16,16 @@ class NewmanGreedy:
 
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
-    def __init__(self, graph, snapshot_size=None, forced_clusters=None, copy_original=True):
+    def __init__(self, graph, golden_mention, snapshot_size=None, forced_clusters=None, copy_original=True):
         if copy_original:
             graph = graph.copy()
 
         self.forced_clusters = [set(cluster) for cluster in forced_clusters] if forced_clusters else []
         # TODO change to separating into connected components
         self.orphans = self.remove_orphans(graph)
+
+        for n,d in graph.nodes_iter(data=True):
+            graph.node[n]['golden'] = isinstance(n, golden_mention)
 
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
@@ -50,7 +53,7 @@ class NewmanGreedy:
         num_edges = 2 * sum(e_weight(graph, e) for e in graph.edges_iter()) #2*graph.number_of_edges()
 
         quality = 0.0
-        for cluster_id in graph.nodes_iter():
+        for cluster_id, data in graph.nodes_iter(data=True):
             #node_degree = graph.degree(cluster_id)
             node_degree = 0
             for tags in graph[cluster_id].itervalues():
@@ -60,8 +63,11 @@ class NewmanGreedy:
                     node_degree += 1
 
             ai = float(node_degree) / num_edges
-            self.super_graph.node[cluster_id] = ai
-            self.dendrogram.add_node(cluster_id)
+            flag = self.super_graph.node[cluster_id]
+            self.super_graph.remove_node(cluster_id)
+            self.super_graph.add_node(cluster_id, degree=ai, golden=flag['golden'])
+
+            self.dendrogram.add_node(cluster_id, data)
             # From equation (1) in secion II of the Newman paper
             quality -= float(node_degree * node_degree) / (num_edges * num_edges)
 
@@ -101,7 +107,7 @@ class NewmanGreedy:
 
     def remove_orphans(self, graph):
         # remove orphan nodes except those in "unspecified" cluster
-        orphans = [node for node in graph if 
+        orphans = [node for node in graph if
                 (not graph.degree(node) and not any(node in cluster for cluster in self.forced_clusters))]
         graph.remove_nodes_from(orphans)
         return orphans
@@ -155,15 +161,22 @@ class NewmanGreedy:
 
     # The "Change in Q" as described by section II of the Newman paper
     def quality_difference(self, cluster_id1, cluster_id2):
-        ai = float(self.super_graph.node[cluster_id1])
-        aj = float(self.super_graph.node[cluster_id2])
+        if self.super_graph.node[cluster_id1]['golden'] and self.super_graph.node[cluster_id2]['golden']:
+            return 0
+        ai = float(self.super_graph.node[cluster_id1]['degree'])
+        aj = float(self.super_graph.node[cluster_id2]['degree'])
         eij = float(self.super_graph[cluster_id1][cluster_id2])
         return 2.0*(eij - ai*aj)
 
     def combine_clusters(self, cluster_id1, cluster_id2):
         combine_id = self.den_num
         self.den_num += 1
-        
+
+        golden_flag = False
+
+        if self.super_graph.node[cluster_id1]['golden'] or self.super_graph.node[cluster_id2]['golden']:
+            golden_flag = True
+
         # Add combined node
         c1_con = self.super_graph[cluster_id1]
         c2_con = self.super_graph[cluster_id2]
@@ -171,10 +184,13 @@ class NewmanGreedy:
 
         self.rename_map.original[combine_id] = combine_id
         self.rename_map.integer[combine_id] = combine_id
-        
+
         self.super_graph.add_node(combine_id)
-        combined_degree = self.super_graph.node[cluster_id1] + self.super_graph.node[cluster_id2]
-        self.super_graph.node[combine_id] = combined_degree
+        combined_degree = self.super_graph.node[cluster_id1]['degree'] + self.super_graph.node[cluster_id2]['degree']
+        self.super_graph.node[combine_id]['degree'] = combined_degree
+        self.super_graph.node[combine_id]['golden'] = golden_flag
+
+
         for outer_node in c12_nodes:
             total = 0.0
             # ignore edges between the two clusters
@@ -190,14 +206,14 @@ class NewmanGreedy:
             self.super_graph[combine_id][outer_node] = total
             self.super_graph[outer_node][combine_id] = total
             self.add_pair_to_cost_heap(combine_id, outer_node)
-        
+
         # Remove old nodes
         # TODO the except should be removed and the initial weights bug solved...
         try: self.super_graph.remove_node(cluster_id1)
         except nx.exception.NetworkXError: pass
         try: self.super_graph.remove_node(cluster_id2)
         except nx.exception.NetworkXError: pass
-        
+
         # Update dendrogram
         self.dendrogram.add_node(combine_id)
         self.dendrogram.add_edge(combine_id, cluster_id1)
@@ -241,7 +257,7 @@ class NewmanGreedy:
 
                 # Double check we got the right number of values
                 if len(fringe) != num_clusters:
-                    raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)" 
+                    raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)"
                         % (num_clusters, len(fringe)))
 
                 for neg_clust_start in fringe:
@@ -258,7 +274,7 @@ class NewmanGreedy:
     def get_super_graph(self, size=None):
         if size == None:
             return self.super_graph
-        
+
         clusters = self.get_clusters(size)
         #TODO recombine nodes...
 
@@ -310,6 +326,6 @@ def main():
         newman.plot_quality_history('Karate', os.path.join(os.path.dirname(__file__), '..', 'pics', 'karate'), show=False)
     except:
         pass
-    
+
 if __name__ == '__main__':
     main()
