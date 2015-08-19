@@ -16,17 +16,13 @@ class NewmanGreedy:
 
     RenameMapping = namedtuple('RenameMapping', ['integer', 'original'])
 
-    def __init__(self, graph, golden_mention, snapshot_size=None, forced_clusters=None, copy_original=True):
+    def __init__(self, graph, unique_string=None, snapshot_size=None, forced_clusters=None, copy_original=True):
         if copy_original:
             graph = graph.copy()
-
+        self.unique_string = unique_string
         self.forced_clusters = [set(cluster) for cluster in forced_clusters] if forced_clusters else []
         # TODO change to separating into connected components
         self.orphans = self.remove_orphans(graph)
-
-        for n,d in graph.nodes_iter(data=True):
-            graph.node[n]['golden'] = isinstance(n, golden_mention)
-
         self.rename_map = self.remap(graph)
         nx.relabel_nodes(graph, self.rename_map.integer, copy=False)
 
@@ -65,7 +61,11 @@ class NewmanGreedy:
             ai = float(node_degree) / num_edges
             flag = self.super_graph.node[cluster_id]
             self.super_graph.remove_node(cluster_id)
-            self.super_graph.add_node(cluster_id, degree=ai, golden=flag['golden'])
+            if unique_string:
+                self.super_graph.add_node(cluster_id, degree=ai, **{unique_string:flag[self.unique_string]})
+            else:
+                self.super_graph.add_node(cluster_id, degree=ai)
+
 
             self.dendrogram.add_node(cluster_id, data)
             # From equation (1) in secion II of the Newman paper
@@ -116,7 +116,7 @@ class NewmanGreedy:
         mapping_to_int = {}
         mapping_to_orig = {}
         for node_index, node in enumerate(graph.nodes_iter()):
-            mapping_to_int[node]= node_index
+            mapping_to_int[node] = node_index
             mapping_to_orig[node_index] = node
         return self.RenameMapping(mapping_to_int, mapping_to_orig)
 
@@ -161,8 +161,9 @@ class NewmanGreedy:
 
     # The "Change in Q" as described by section II of the Newman paper
     def quality_difference(self, cluster_id1, cluster_id2):
-        if self.super_graph.node[cluster_id1]['golden'] and self.super_graph.node[cluster_id2]['golden']:
-            return 0
+        if self.unique_string:
+            if self.super_graph.node[cluster_id1][self.unique_string] and self.super_graph.node[cluster_id2][self.unique_string]:
+                return 0
         ai = float(self.super_graph.node[cluster_id1]['degree'])
         aj = float(self.super_graph.node[cluster_id2]['degree'])
         eij = float(self.super_graph[cluster_id1][cluster_id2])
@@ -172,10 +173,11 @@ class NewmanGreedy:
         combine_id = self.den_num
         self.den_num += 1
 
-        golden_flag = False
-
-        if self.super_graph.node[cluster_id1]['golden'] or self.super_graph.node[cluster_id2]['golden']:
-            golden_flag = True
+        flag = False
+        # if either have a flag then make sure the combined cluster also gets the flag
+        if self.unique_string:
+            if self.super_graph.node[cluster_id1][self.unique_string] or self.super_graph.node[cluster_id2][self.unique_string]:
+                flag = True
 
         # Add combined node
         c1_con = self.super_graph[cluster_id1]
@@ -185,11 +187,9 @@ class NewmanGreedy:
         self.rename_map.original[combine_id] = combine_id
         self.rename_map.integer[combine_id] = combine_id
 
-        self.super_graph.add_node(combine_id)
+        # NEEDS REVIEW HERE!
         combined_degree = self.super_graph.node[cluster_id1]['degree'] + self.super_graph.node[cluster_id2]['degree']
-        self.super_graph.node[combine_id]['degree'] = combined_degree
-        self.super_graph.node[combine_id]['golden'] = golden_flag
-
+        self.super_graph.add_node(combine_id, degree=combined_degree, **{self.unique_string:flag})
 
         for outer_node in c12_nodes:
             total = 0.0
