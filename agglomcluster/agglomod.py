@@ -60,12 +60,8 @@ class NewmanGreedy:
 
             ai = float(node_degree) / num_edges
             flag = self.super_graph.node[cluster_id]
-            self.super_graph.remove_node(cluster_id)
-            if unique_string:
-                self.super_graph.add_node(cluster_id, degree=ai, **{unique_string:flag[self.unique_string]})
-            else:
-                self.super_graph.add_node(cluster_id, degree=ai)
-
+            flags = {unique_string: flag[self.unique_string]} if unique_string else {}
+            self.super_graph.add_node(cluster_id, degree=ai, **flags)
 
             self.dendrogram.add_node(cluster_id, data)
             # From equation (1) in secion II of the Newman paper
@@ -173,12 +169,8 @@ class NewmanGreedy:
         combine_id = self.den_num
         self.den_num += 1
 
-        flag = False
-        # if either have a flag then make sure the combined cluster also gets the flag
-        if self.unique_string:
-            if self.super_graph.node[cluster_id1][self.unique_string] or self.super_graph.node[cluster_id2][self.unique_string]:
-                flag = True
-
+        flag = self.unique_string and (self.super_graph.node[cluster_id1][self.unique_string] or
+            self.super_graph.node[cluster_id2][self.unique_string])
         # Add combined node
         c1_con = self.super_graph[cluster_id1]
         c2_con = self.super_graph[cluster_id2]
@@ -187,9 +179,9 @@ class NewmanGreedy:
         self.rename_map.original[combine_id] = combine_id
         self.rename_map.integer[combine_id] = combine_id
 
-        # NEEDS REVIEW HERE!
+        flags = {self.unique_string: flag} if self.unique_string else {}
         combined_degree = self.super_graph.node[cluster_id1]['degree'] + self.super_graph.node[cluster_id2]['degree']
-        self.super_graph.add_node(combine_id, degree=combined_degree, **{self.unique_string:flag})
+        self.super_graph.add_node(combine_id, degree=combined_degree, **flags)
 
         for outer_node in c12_nodes:
             total = 0.0
