@@ -1,2 +1,2 @@
 allset<2.0.0
-networkx==1.8.1
+networkx>1.7
