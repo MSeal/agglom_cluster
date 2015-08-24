@@ -2,7 +2,7 @@ import os
 import shutil
 from setuptools import setup, find_packages
 
-VERSION = '1.0.2'
+VERSION = '1.0.3'
 
 def read(fname):
     with open(fname) as fhandle:
