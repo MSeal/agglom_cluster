@@ -1,6 +1,5 @@
 import os
 import sys
-from find_library import pkgconfig
 from collections import defaultdict
 from setuptools import setup, find_packages, Extension
 
@@ -56,7 +55,7 @@ if building:
         Extension(
             'hac.cluster',
             [os.path.join('hac', 'cluster.pyx')],
-            **pkgconfig('hac', language='c')
+            language='c'
         )
     ], force=True)
 else:
@@ -65,7 +64,7 @@ else:
         Extension(
             'hac.cluster',
             [os.path.join('hac', 'cluster.c')],
-            **pkgconfig('hac', language='c')
+            language='c'
         )
     ]
 

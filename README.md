@@ -14,6 +14,10 @@ This implementation uses a heap to select the best pair to cluster at each itera
 - A naive implementation considers all "n" edges in the graph (O(n))
 - A heap reduces this search dramatically (O(log(n))
 
+## Installation
+
+    pip install agglomcluster
+
 ## Dependencies
 networkx -- supported graphing library
 
@@ -84,10 +88,11 @@ The clustered result from an agglomerative clustering pass. Use `.clusters()` an
 ## Performance
 
 Approximate performance runs on natural graph sizes on high-end machine:
-Nodes     | Edges     | Time      | Memory
-1000      | 6000      | 1.5 s     | 28 MB
-10000     | 80000     | 350 s     | 2.5 GB
-TODO More sizes
+
+    Nodes     | Edges     | Time      | Memory
+    1000      | 6000      | 1.5 s     | 28 MB
+    10000     | 80000     | 350 s     | 2.5 GB
+    TODO More sizes
 
 ## Author
 Author(s): Matthew Seal
