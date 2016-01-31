@@ -1,3 +1,6 @@
+# This import fixes sys.path issues
+import parentpath
+
 import networkx as nx
 import random
 import time

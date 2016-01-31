@@ -116,6 +116,24 @@ class GreedyAgglomTest(unittest.TestCase):
         for num_clusters in range(0, -4, -1):
             self.assertListEqual(karate.clusters(num_clusters), [])
 
+    def test_labeling(self):
+        karate = self.karate_clustering()
+        self.assertDictEqual(karate.labels(1), { n: 0 for n in xrange(34) })
+
+        self.assertDictEqual(karate.labels(2),
+            { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 1, 9: 0, 10: 0, 11: 0,
+              12: 0, 13: 0, 14: 1, 15: 1, 16: 0, 17: 0, 18: 1, 19: 0, 20: 1, 21: 0, 22: 1,
+              23: 1, 24: 1, 25: 1, 26: 1, 27: 1, 28: 1, 29: 1, 30: 1, 31: 1, 32: 1, 33: 1 })
+
+        self.assertDictEqual(karate.labels(3),
+            { 0: 2, 1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 1, 8: 0, 9: 1, 10: 2, 11: 2,
+              12: 1, 13: 1, 14: 0, 15: 0, 16: 2, 17: 1, 18: 0, 19: 2, 20: 0, 21: 1, 22: 0,
+              23: 0, 24: 0, 25: 0, 26: 0, 27: 0, 28: 0, 29: 0, 30: 0, 31: 0, 32: 0, 33: 0 })
+
+        # Requesting more clusters than are available returns the maximum possible instead
+        self.assertEqual(len(karate.labels(40).keys()), 34)
+        self.assertEqual(len(set(karate.labels(40).values())), 34)
+
     def test_orphans(self):
         graph = nx.Graph();
         graph.add_nodes_from(range(10))
