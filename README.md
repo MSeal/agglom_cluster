@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MSeal/agglom_cluster.svg?branch=master)](https://travis-ci.org/MSeal/agglom_cluster)
+
 # hac
 Agglomerative clustering tool for network-x graphs
 
