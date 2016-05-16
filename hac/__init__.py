@@ -1,3 +1,3 @@
 __all__ = ['cluster']
 
-from cluster import GreedyAgglomerativeClusterer
+from .cluster import GreedyAgglomerativeClusterer
