@@ -9,7 +9,8 @@ from hac.cluster import (
     weight,
     weighted_edge_count,
     remove_orphans,
-    int_graph_mapping)
+    int_graph_mapping,
+    max_int_elem)
 
 class GreedyAgglomTest(unittest.TestCase):
     def karate_clustering(self, *args, **kwargs):
@@ -82,6 +83,20 @@ class GreedyAgglomTest(unittest.TestCase):
         self.assertEqual(sorted(nx.all_neighbors(repaired_club, '33')),
             sorted(['26', '27', '20', '14', '22', '23', '19', '32', '31', '30', '28',
                 '29', '15', '18', '9', '8', '13']))
+
+    def test_max_int_elem(self):
+        orig_club = nx.karate_club_graph()
+        self.assertEqual(max_int_elem(orig_club), 33)
+        club = nx.relabel_nodes(orig_club, { n: str(n) for n in orig_club.nodes_iter() })
+        self.assertEqual(max_int_elem(club), 0)
+
+    def test_clustering_integer_nodes(self):
+        # This tests an error that would happen when a node had an integer value
+        # greater than the size of the graph
+        orig_club = nx.karate_club_graph()
+        club = nx.relabel_nodes(orig_club, { n: n + 5 for n in orig_club.nodes_iter() })
+        dendrogram = GreedyAgglomerativeClusterer().cluster(club)
+        dendrogram.clusters() # This would crash
 
     def test_quality_history(self):
         expected_quality = [-0.04980276134122286, -0.03763971071663378, -0.013971071663379343,

@@ -1,6 +1,7 @@
 import networkx as nx
 import heapq
 import os
+import sys
 import pickle
 from collections import namedtuple
 
@@ -47,6 +48,15 @@ cpdef set remove_orphans(graph, ignored=None):
             orphans.add(node)
     graph.remove_nodes_from(orphans)
     return orphans
+
+cpdef int max_int_elem(graph):
+    # We just care about non-zero max values
+    cdef int max_int = 0
+    for node in graph.nodes_iter():
+        if isinstance(node, int):
+            if node > max_int:
+                max_int = node
+    return max_int
 
 def int_graph_mapping(graph):
     cdef dict mapping_to_int = {}
@@ -112,13 +122,14 @@ cdef class GreedyAgglomerativeClusterer(object):
         self.super_graph = graph.copy()
         # TODO change to separating into connected components
         self.orphans = remove_orphans(self.super_graph, self.ignored_nodes)
+        # TODO do better than remapping
         self.rename_map = int_graph_mapping(self.super_graph)
         nx.relabel_nodes(self.super_graph, self.rename_map.integer, copy=False)
 
         self.dendrogram_graph = nx.Graph()
         self.pair_cost_heap = []
         self.quality_history = []
-        self.den_num = self.super_graph.number_of_nodes()
+        self.den_num = max(max_int_elem(graph), graph.number_of_nodes()) + 1
 
         num_edges = weighted_edge_count(self.super_graph)
         quality = 0.0
@@ -144,6 +155,7 @@ cdef class GreedyAgglomerativeClusterer(object):
             self.build_forced_clusters()
         self.run_greedy_clustering(quality)
         nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)
+
         return Dendrogram(self.dendrogram_graph, self.quality_history,
             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters)
 
