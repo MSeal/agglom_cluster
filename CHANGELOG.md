@@ -1,5 +1,12 @@
 agglom_cluster Changelog
 =======================
+2.0.1 - 05/16/2016
+### Bug
+- Fixed bug where graphs with integer nodes would sometimes generate damaged dendrograms
+
+### Improvement
+- Fixed line-endings and added gitattributes for better cross-platform development
+
 2.0.0 - 01/30/2016
 ------------------
 ### Improvements

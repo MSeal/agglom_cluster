@@ -3,7 +3,7 @@ import sys
 from collections import defaultdict
 from setuptools import setup, find_packages, Extension
 
-VERSION = '2.0.0'
+VERSION = '2.0.1'
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 BUILD_ARGS = defaultdict(lambda: ['-O3', '-g0'])
 BUILD_ARGS['msvc'] = ['/EHsc']
