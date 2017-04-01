@@ -3,13 +3,13 @@ import sys
 from collections import defaultdict
 from setuptools import setup, find_packages, Extension
 
-VERSION = '2.0.1'
+VERSION = '2.0.2'
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 BUILD_ARGS = defaultdict(lambda: ['-O3', '-g0'])
 BUILD_ARGS['msvc'] = ['/EHsc']
 
 def cleanup_pycs():
-    file_tree = os.walk(os.path.join(BASE_DIR, 'hunspell'))
+    file_tree = os.walk(os.path.join(BASE_DIR, 'hac'))
     to_delete = []
     for root, directory, file_list in file_tree:
         if len(file_list):
@@ -30,14 +30,16 @@ def readMD(fname):
     # Utility function to read the README file.
     full_fname = os.path.join(os.path.dirname(__file__), fname)
     if 'PANDOC_PATH' in os.environ:
-        import pandoc
-        pandoc.core.PANDOC_PATH = os.environ['PANDOC_PATH']
-        doc = pandoc.Document()
-        with open(full_fname) as fhandle:
-            doc.markdown = fhandle.read()
-        return doc.rst
-    else:
-        return read(fname)
+        try:
+            import pandoc
+            pandoc.core.PANDOC_PATH = os.environ['PANDOC_PATH']
+            doc = pandoc.Document()
+            with open(full_fname) as fhandle:
+                doc.markdown = fhandle.read()
+            return doc.rst
+        except ImportError:
+            pass
+    return read(fname)
 
 profiling = '--profile' in sys.argv or '-p' in sys.argv
 linetrace = '--linetrace' in sys.argv or '-l' in sys.argv

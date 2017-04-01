@@ -1,5 +1,5 @@
 # This import fixes sys.path issues
-import parentpath
+from . import parentpath
 
 import unittest
 import networkx as nx
@@ -126,14 +126,14 @@ class GreedyAgglomTest(unittest.TestCase):
 
         # Requesting more clusters than are available returns the maximum possible instead
         for num_clusters in range(34, 40):
-            self.assertListEqual(sorted(karate.clusters(num_clusters), key=lambda c: iter(c).next()),
+            self.assertListEqual(sorted(karate.clusters(num_clusters), key=lambda c: next(iter(c))),
                 [set([index]) for index in range(34)])
         for num_clusters in range(0, -4, -1):
             self.assertListEqual(karate.clusters(num_clusters), [])
 
     def test_labeling(self):
         karate = self.karate_clustering()
-        self.assertDictEqual(karate.labels(1), { n: 0 for n in xrange(34) })
+        self.assertDictEqual(karate.labels(1), { n: 0 for n in range(34) })
 
         self.assertDictEqual(karate.labels(2),
             { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 1, 9: 0, 10: 0, 11: 0,
@@ -176,7 +176,7 @@ class GreedyAgglomTest(unittest.TestCase):
         clusters = karate.clusters()
 
         for fc in forced_clusters:
-            first_elem = iter(fc).next()
+            first_elem = next(iter(fc))
             match_cluster = None
             for cluster in clusters:
                 if first_elem in cluster:

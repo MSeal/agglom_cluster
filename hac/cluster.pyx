@@ -115,7 +115,7 @@ cdef class GreedyAgglomerativeClusterer(object):
             A fixed set of graph associations to not cluster.
             Useful for adding pre-computed clusters.
         '''
-        self.forced_clusters = map(setify, forced_clusters or [])
+        self.forced_clusters = list(map(setify, forced_clusters or []))
         self.original_nodes = set(graph.nodes_iter())
         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)
         # TODO use sparse matrix representation?

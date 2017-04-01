@@ -25,6 +25,7 @@ networkx -- supported graphing library
 
 ## Examples
 
+    import networkx as nx
     from hac import GreedyAgglomerativeClusterer
     clusterer = GreedyAgglomerativeClusterer()
     # This cluster call is where most of the heavy lifting happens
