@@ -22,24 +22,38 @@ def cleanup_pycs():
         except:
             pass
 
+python_2 = sys.version_info[0] == 2
 def read(fname):
-    with open(fname) as fhandle:
-            return fhandle.read()
+    with open(fname, 'rU' if python_2 else 'r') as fhandle:
+        return fhandle.read()
 
-def readMD(fname):
+def pandoc_read_md(fname):
+    if 'PANDOC_PATH' not in os.environ:
+        raise ImportError("No pandoc path to use")
+    import pandoc
+    pandoc.core.PANDOC_PATH = os.environ['PANDOC_PATH']
+    doc = pandoc.Document()
+    doc.markdown = read(fname)
+    return doc.rst
+
+def pypandoc_read_md(fname):
+    import pypandoc
+    os.environ.setdefault('PYPANDOC_PANDOC', os.environ['PANDOC_PATH'])
+    return pypandoc.convert_text(read(fname), 'rst', format='md')
+
+def read_md(fname):
     # Utility function to read the README file.
     full_fname = os.path.join(os.path.dirname(__file__), fname)
-    if 'PANDOC_PATH' in os.environ:
+
+    try:
+        return pandoc_read_md(full_fname)
+    except (ImportError, AttributeError):
         try:
-            import pandoc
-            pandoc.core.PANDOC_PATH = os.environ['PANDOC_PATH']
-            doc = pandoc.Document()
-            with open(full_fname) as fhandle:
-                doc.markdown = fhandle.read()
-            return doc.rst
-        except ImportError:
-            pass
-    return read(fname)
+            return pypandoc_read_md(full_fname)
+        except (ImportError, AttributeError):
+            return read(fname)
+    else:
+        return read(fname)
 
 profiling = '--profile' in sys.argv or '-p' in sys.argv
 linetrace = '--linetrace' in sys.argv or '-l' in sys.argv
@@ -89,7 +103,7 @@ setup(
     author_email="mseal@opengov.com",
     description="Performs greedy agglomerative clustering on network-x graphs",
     packages=packages,
-    long_description=readMD('README.md'),
+    long_description=read_md('README.md'),
     ext_modules=ext_modules,
     install_requires=required,
     cmdclass={ 'build_ext': build_ext_compiler_check },
