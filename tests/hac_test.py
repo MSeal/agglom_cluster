@@ -187,6 +187,17 @@ class GreedyAgglomTest(unittest.TestCase):
             for elem in fc:
                 self.assertIn(elem, match_cluster)
 
+    def test_non_integer_clustering(self):
+        graph = nx.Graph();
+        graph.add_nodes_from(map(lambda i: chr(i), range(10)))
+        graph.add_edges_from([['a', 'b'], ['b', 'c'], ['a', 'c']])
+        dendrogram = GreedyAgglomerativeClusterer().cluster(graph)
+
+        clusters = dendrogram.clusters()
+        self.assertIn(set(['a', 'b', 'c']), clusters)
+        for node_index in range(3, 10):
+            self.assertIn(set([chr(node_index)]), clusters)
+
     def test_clusterer_pickling(self):
         clusterer = GreedyAgglomerativeClusterer()
         p_clusterer = pickle.loads(pickle.dumps(clusterer))
