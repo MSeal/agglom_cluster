@@ -2,6 +2,7 @@
 from . import parentpath
 
 import unittest
+import pickle
 import networkx as nx
 from hac.cluster import (
     GreedyAgglomerativeClusterer,
@@ -185,6 +186,21 @@ class GreedyAgglomTest(unittest.TestCase):
             self.assertIsNotNone(match_cluster)
             for elem in fc:
                 self.assertIn(elem, match_cluster)
+
+    def test_clusterer_pickling(self):
+        clusterer = GreedyAgglomerativeClusterer()
+        p_clusterer = pickle.loads(pickle.dumps(clusterer))
+        self.assertEqual(clusterer.optimal_clusters, p_clusterer.optimal_clusters)
+
+        clusterer = GreedyAgglomerativeClusterer(100)
+        p_clusterer = pickle.loads(pickle.dumps(clusterer))
+        self.assertEqual(clusterer.optimal_clusters, p_clusterer.optimal_clusters)
+
+    def test_dendrogram_pickling(self):
+        dendrogram = self.karate_clustering()
+        p_dendrogram = pickle.loads(pickle.dumps(dendrogram))
+        self.assertEqual(dendrogram.clusters(), p_dendrogram.clusters())
+
 
 if __name__ == "__main__":
     unittest.main()

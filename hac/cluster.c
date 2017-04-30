@@ -643,7 +643,7 @@ struct __pyx_obj_3hac_7cluster___pyx_scope_struct__cluster;
 struct __pyx_obj_3hac_7cluster___pyx_scope_struct_1_genexpr;
 struct __pyx_opt_args_3hac_7cluster_remove_orphans;
 
-/* "hac/cluster.pyx":44
+/* "hac/cluster.pyx":39
  *     return 2.0 * edges
  * 
  * cpdef set remove_orphans(graph, ignored=None):             # <<<<<<<<<<<<<<
@@ -655,7 +655,7 @@ struct __pyx_opt_args_3hac_7cluster_remove_orphans {
   PyObject *ignored;
 };
 
-/* "hac/cluster.pyx":70
+/* "hac/cluster.pyx":65
  *     return RenameMapping(mapping_to_int, mapping_to_orig, node_index)
  * 
  * cdef class GreedyAgglomerativeClusterer(object):             # <<<<<<<<<<<<<<
@@ -664,6 +664,7 @@ struct __pyx_opt_args_3hac_7cluster_remove_orphans {
  */
 struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer {
   PyObject_HEAD
+  struct __pyx_vtabstruct_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_vtab;
   int optimal_clusters;
   PyObject *forced_clusters;
   PyObject *original_nodes;
@@ -678,7 +679,7 @@ struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer {
 };
 
 
-/* "hac/cluster.pyx":263
+/* "hac/cluster.pyx":289
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id2)
  * 
  * cdef class Dendrogram(object):             # <<<<<<<<<<<<<<
@@ -687,6 +688,7 @@ struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer {
  */
 struct __pyx_obj_3hac_7cluster_Dendrogram {
   PyObject_HEAD
+  struct __pyx_vtabstruct_3hac_7cluster_Dendrogram *__pyx_vtab;
   int optimal_clusters;
   PyObject *quality_history;
   int max_clusters;
@@ -697,8 +699,8 @@ struct __pyx_obj_3hac_7cluster_Dendrogram {
 };
 
 
-/* "hac/cluster.pyx":106
- *         self.optimal_clusters = num_clusters or 0
+/* "hac/cluster.pyx":132
+ *         return self.get_state() == other.get_state()
  * 
  *     def cluster(self, graph, forced_clusters=None):             # <<<<<<<<<<<<<<
  *         '''
@@ -710,7 +712,7 @@ struct __pyx_obj_3hac_7cluster___pyx_scope_struct__cluster {
 };
 
 
-/* "hac/cluster.pyx":120
+/* "hac/cluster.pyx":146
  *         self.forced_clusters = list(map(setify, forced_clusters or []))
  *         self.original_nodes = set(graph.nodes_iter())
  *         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)             # <<<<<<<<<<<<<<
@@ -724,6 +726,34 @@ struct __pyx_obj_3hac_7cluster___pyx_scope_struct_1_genexpr {
   PyObject *__pyx_v_node;
 };
 
+
+
+/* "hac/cluster.pyx":65
+ *     return RenameMapping(mapping_to_int, mapping_to_orig, node_index)
+ * 
+ * cdef class GreedyAgglomerativeClusterer(object):             # <<<<<<<<<<<<<<
+ *     '''
+ *     Greedy Agglomerative Clustering
+ */
+
+struct __pyx_vtabstruct_3hac_7cluster_GreedyAgglomerativeClusterer {
+  int (*__pyx___eq)(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *, struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *);
+};
+static struct __pyx_vtabstruct_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_vtabptr_3hac_7cluster_GreedyAgglomerativeClusterer;
+
+
+/* "hac/cluster.pyx":289
+ *         self.dendrogram_graph.add_edge(combine_id, cluster_id2)
+ * 
+ * cdef class Dendrogram(object):             # <<<<<<<<<<<<<<
+ *     cdef public int optimal_clusters
+ *     cdef public list quality_history
+ */
+
+struct __pyx_vtabstruct_3hac_7cluster_Dendrogram {
+  int (*__pyx___eq)(struct __pyx_obj_3hac_7cluster_Dendrogram *, struct __pyx_obj_3hac_7cluster_Dendrogram *);
+};
+static struct __pyx_vtabstruct_3hac_7cluster_Dendrogram *__pyx_vtabptr_3hac_7cluster_Dendrogram;
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -915,6 +945,14 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func);
 #else
 #define __Pyx_PyObject_CallNoArg(func) __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL)
 #endif
+
+/* PyIntBinop.proto */
+#if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, int inplace);
+#else
+#define __Pyx_PyInt_EqObjC(op1, op2, intval, inplace)\
+    PyObject_RichCompare(op1, op2, Py_EQ)
+    #endif
 
 /* None.proto */
 static CYTHON_INLINE void __Pyx_RaiseClosureNameError(const char *varname);
@@ -1190,11 +1228,17 @@ static CYTHON_INLINE void __Pyx_ExceptionSwap(PyObject **type, PyObject **value,
 /* IncludeStringH.proto */
 #include <string.h>
 
+/* SetVTable.proto */
+static int __Pyx_SetVtable(PyObject *dict, void *vtable);
+
 /* Import.proto */
 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level);
 
 /* ImportFrom.proto */
 static PyObject* __Pyx_ImportFrom(PyObject* module, PyObject* name);
+
+/* GetNameInClass.proto */
+static PyObject *__Pyx_GetNameInClass(PyObject *nmspace, PyObject *name);
 
 /* CodeObjectCache.proto */
 typedef struct {
@@ -1276,6 +1320,8 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
+static int __pyx_f_3hac_7cluster_28GreedyAgglomerativeClusterer___eq(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_other); /* proto*/
+static int __pyx_f_3hac_7cluster_10Dendrogram___eq(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_other); /* proto*/
 
 /* Module declarations from 'hac.cluster' */
 static PyTypeObject *__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer = 0;
@@ -1301,8 +1347,8 @@ static PyObject *__pyx_builtin_range;
 static const char __pyx_k_e[] = "e";
 static const char __pyx_k__7[] = "";
 static const char __pyx_k__9[] = "*";
+static const char __pyx_k_eq[] = "__eq";
 static const char __pyx_k_nx[] = "nx";
-static const char __pyx_k_os[] = "os";
 static const char __pyx_k_add[] = "add";
 static const char __pyx_k_get[] = "get";
 static const char __pyx_k_id1[] = "id1";
@@ -1312,7 +1358,6 @@ static const char __pyx_k_map[] = "map";
 static const char __pyx_k_max[] = "max";
 static const char __pyx_k_plt[] = "plt";
 static const char __pyx_k_pop[] = "pop";
-static const char __pyx_k_sys[] = "sys";
 static const char __pyx_k_args[] = "args";
 static const char __pyx_k_axis[] = "axis";
 static const char __pyx_k_blue[] = "blue";
@@ -1329,6 +1374,7 @@ static const char __pyx_k_show[] = "show";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_Graph[] = "Graph";
 static const char __pyx_k_alpha[] = "alpha";
+static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_close[] = "close";
 static const char __pyx_k_crawl[] = "crawl";
 static const char __pyx_k_edges[] = "edges";
@@ -1346,7 +1392,6 @@ static const char __pyx_k_degree[] = "degree";
 static const char __pyx_k_figure[] = "figure";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_kwargs[] = "kwargs";
-static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_priors[] = "priors";
 static const char __pyx_k_setify[] = "setify";
 static const char __pyx_k_sorted[] = "sorted";
@@ -1363,37 +1408,42 @@ static const char __pyx_k_add_edge[] = "add_edge";
 static const char __pyx_k_add_node[] = "add_node";
 static const char __pyx_k_clusters[] = "clusters";
 static const char __pyx_k_filename[] = "filename";
+static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_has_node[] = "has_node";
 static const char __pyx_k_heappush[] = "heappush";
 static const char __pyx_k_iterkeys[] = "iterkeys";
-static const char __pyx_k_max_node[] = "max_node";
 static const char __pyx_k_networkx[] = "networkx";
 static const char __pyx_k_original[] = "original";
+static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_enumerate[] = "enumerate";
 static const char __pyx_k_exception[] = "exception";
 static const char __pyx_k_font_size[] = "font_size";
+static const char __pyx_k_get_state[] = "get_state";
 static const char __pyx_k_node_size[] = "node_size";
 static const char __pyx_k_plot_name[] = "plot_name";
 static const char __pyx_k_reheapify[] = "reheapify";
+static const char __pyx_k_renamemap[] = "renamemap";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_edges_iter[] = "edges_iter";
+static const char __pyx_k_getstate_2[] = "getstate";
 static const char __pyx_k_itervalues[] = "itervalues";
-static const char __pyx_k_namedtuple[] = "namedtuple";
 static const char __pyx_k_node_color[] = "node_color";
 static const char __pyx_k_node_index[] = "node_index";
 static const char __pyx_k_nodes_iter[] = "nodes_iter";
+static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_rename_map[] = "rename_map";
 static const char __pyx_k_set_xlabel[] = "set_xlabel";
 static const char __pyx_k_set_ylabel[] = "set_ylabel";
+static const char __pyx_k_setstate_2[] = "setstate";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_add_subplot[] = "add_subplot";
 static const char __pyx_k_cluster_id1[] = "cluster_id1";
 static const char __pyx_k_cluster_id2[] = "cluster_id2";
-static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_figure_size[] = "figure_size";
 static const char __pyx_k_hac_cluster[] = "hac.cluster";
 static const char __pyx_k_remove_node[] = "remove_node";
 static const char __pyx_k_with_labels[] = "with_labels";
+static const char __pyx_k_max_clusters[] = "max_clusters";
 static const char __pyx_k_num_clusters[] = "num_clusters";
 static const char __pyx_k_reheap_steps[] = "reheap_steps";
 static const char __pyx_k_NetworkXError[] = "NetworkXError";
@@ -1412,6 +1462,7 @@ static const char __pyx_k_quality_history[] = "quality_history";
 static const char __pyx_k_Modularity_Score[] = "Modularity Score";
 static const char __pyx_k_combine_clusters[] = "combine_clusters";
 static const char __pyx_k_dendrogram_graph[] = "dendrogram_graph";
+static const char __pyx_k_optimal_clusters[] = "optimal_clusters";
 static const char __pyx_k_int_graph_mapping[] = "int_graph_mapping";
 static const char __pyx_k_matplotlib_pyplot[] = "matplotlib.pyplot";
 static const char __pyx_k_remove_nodes_from[] = "remove_nodes_from";
@@ -1449,13 +1500,13 @@ static PyObject *__pyx_n_s_args;
 static PyObject *__pyx_n_s_axis;
 static PyObject *__pyx_n_s_blue;
 static PyObject *__pyx_n_s_build_forced_clusters;
+static PyObject *__pyx_n_s_class;
 static PyObject *__pyx_n_s_close;
 static PyObject *__pyx_n_s_cluster_id1;
 static PyObject *__pyx_n_s_cluster_id2;
 static PyObject *__pyx_n_s_cluster_locals_genexpr;
 static PyObject *__pyx_n_s_clusters;
 static PyObject *__pyx_n_s_clusters_locals_lambda;
-static PyObject *__pyx_n_s_collections;
 static PyObject *__pyx_n_s_combine_clusters;
 static PyObject *__pyx_n_s_copy;
 static PyObject *__pyx_n_s_crawl;
@@ -1467,6 +1518,7 @@ static PyObject *__pyx_n_s_e;
 static PyObject *__pyx_n_s_edges;
 static PyObject *__pyx_n_s_edges_iter;
 static PyObject *__pyx_n_s_enumerate;
+static PyObject *__pyx_n_s_eq;
 static PyObject *__pyx_n_s_equal;
 static PyObject *__pyx_n_s_exception;
 static PyObject *__pyx_n_s_figsize;
@@ -1477,6 +1529,9 @@ static PyObject *__pyx_n_s_font_size;
 static PyObject *__pyx_n_s_forced_clusters;
 static PyObject *__pyx_n_s_genexpr;
 static PyObject *__pyx_n_s_get;
+static PyObject *__pyx_n_s_get_state;
+static PyObject *__pyx_n_s_getstate;
+static PyObject *__pyx_n_s_getstate_2;
 static PyObject *__pyx_n_s_graph;
 static PyObject *__pyx_n_s_graphviz_layout;
 static PyObject *__pyx_n_s_hac_cluster;
@@ -1501,9 +1556,8 @@ static PyObject *__pyx_n_s_mapping_to_int;
 static PyObject *__pyx_n_s_mapping_to_orig;
 static PyObject *__pyx_n_s_matplotlib_pyplot;
 static PyObject *__pyx_n_s_max;
+static PyObject *__pyx_n_s_max_clusters;
 static PyObject *__pyx_n_s_max_fringe_size;
-static PyObject *__pyx_n_s_max_node;
-static PyObject *__pyx_n_s_namedtuple;
 static PyObject *__pyx_n_s_networkx;
 static PyObject *__pyx_n_s_node;
 static PyObject *__pyx_n_s_node_color;
@@ -1515,18 +1569,18 @@ static PyObject *__pyx_n_s_num_clusters;
 static PyObject *__pyx_n_s_number_of_edges;
 static PyObject *__pyx_n_s_number_of_nodes;
 static PyObject *__pyx_n_s_nx;
+static PyObject *__pyx_n_s_optimal_clusters;
 static PyObject *__pyx_n_s_original;
 static PyObject *__pyx_n_s_original_nodes;
 static PyObject *__pyx_n_s_orphans;
-static PyObject *__pyx_n_s_os;
 static PyObject *__pyx_n_s_out_file_name;
-static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_plot;
 static PyObject *__pyx_n_s_plot_name;
 static PyObject *__pyx_n_s_plt;
 static PyObject *__pyx_n_s_pop;
 static PyObject *__pyx_n_s_priors;
 static PyObject *__pyx_n_s_prog;
+static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_quality;
 static PyObject *__pyx_n_s_quality_difference;
 static PyObject *__pyx_n_s_quality_history;
@@ -1537,16 +1591,18 @@ static PyObject *__pyx_n_s_relabel_nodes;
 static PyObject *__pyx_n_s_remove_node;
 static PyObject *__pyx_n_s_remove_nodes_from;
 static PyObject *__pyx_n_s_rename_map;
+static PyObject *__pyx_n_s_renamemap;
 static PyObject *__pyx_n_s_run_greedy_clustering;
 static PyObject *__pyx_n_s_savefig;
 static PyObject *__pyx_n_s_send;
 static PyObject *__pyx_n_s_set_xlabel;
 static PyObject *__pyx_n_s_set_ylabel;
 static PyObject *__pyx_n_s_setify;
+static PyObject *__pyx_n_s_setstate;
+static PyObject *__pyx_n_s_setstate_2;
 static PyObject *__pyx_n_s_show;
 static PyObject *__pyx_n_s_sorted;
 static PyObject *__pyx_n_s_start;
-static PyObject *__pyx_n_s_sys;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_throw;
 static PyObject *__pyx_n_s_title;
@@ -1563,24 +1619,34 @@ static PyObject *__pyx_pf_3hac_7cluster_10remove_orphans(CYTHON_UNUSED PyObject 
 static PyObject *__pyx_pf_3hac_7cluster_12max_int_elem(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_graph); /* proto */
 static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_graph); /* proto */
 static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer___init__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_num_clusters); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2__getstate__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4__setstate__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_state); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6__reduce__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
+static Py_hash_t __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8__hash__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_cmp_op); /* proto */
 static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_genexpr(PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_graph, PyObject *__pyx_v_forced_clusters); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_forced_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapify(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_greedy_clustering(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_quality, CYTHON_UNUSED PyObject *__pyx_v_reheap_steps); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pair_to_cost_heap(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_id1, PyObject *__pyx_v_id2); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality_difference(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12cluster(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_graph, PyObject *__pyx_v_forced_clusters); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14build_forced_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16reheapify(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_18run_greedy_clustering(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_quality, CYTHON_UNUSED PyObject *__pyx_v_reheap_steps); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_20add_pair_to_cost_heap(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_id1, PyObject *__pyx_v_id2); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_22quality_difference(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_24combine_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2); /* proto */
 static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16optimal_clusters___get__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self); /* proto */
 static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16optimal_clusters_2__set__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_dendrogram_graph, PyObject *__pyx_v_quality_history, PyObject *__pyx_v_original_nodes, PyObject *__pyx_v_orphans, PyObject *__pyx_v_rename_map, PyObject *__pyx_v_num_clusters); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_start, PyObject *__pyx_v_priors, PyObject *__pyx_v_max_fringe_size); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2__getstate__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4__setstate__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_state); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6__reduce__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self); /* proto */
+static Py_hash_t __pyx_pf_3hac_7cluster_10Dendrogram_8__hash__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_cmp_op); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_12crawl(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_start, PyObject *__pyx_v_priors, PyObject *__pyx_v_max_fringe_size); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_iv); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_c); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_plot_name, PyObject *__pyx_v_out_file_name, PyObject *__pyx_v_show); /* proto */
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_filename, PyObject *__pyx_v_figure_size, PyObject *__pyx_v_font_size, PyObject *__pyx_v_show); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_14clusters(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_16labels(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_18plot_quality_history(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_plot_name, PyObject *__pyx_v_out_file_name, PyObject *__pyx_v_show); /* proto */
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_20plot(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_filename, PyObject *__pyx_v_figure_size, PyObject *__pyx_v_font_size, PyObject *__pyx_v_show); /* proto */
 static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_16optimal_clusters___get__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self); /* proto */
 static int __pyx_pf_3hac_7cluster_10Dendrogram_16optimal_clusters_2__set__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_15quality_history___get__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self); /* proto */
@@ -1601,6 +1667,8 @@ static PyObject *__pyx_float_0_5;
 static PyObject *__pyx_float_1_0;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
+static PyObject *__pyx_int_2;
+static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_10;
 static PyObject *__pyx_int_111;
 static PyObject *__pyx_int_500;
@@ -1619,7 +1687,7 @@ static PyObject *__pyx_codeobj__11;
 static PyObject *__pyx_codeobj__13;
 static PyObject *__pyx_codeobj__15;
 
-/* "hac/cluster.pyx":12
+/* "hac/cluster.pyx":9
  *     import matplotlib.pyplot as plt
  * except ImportError, e:
  *     def plt(*args, **kwargs):             # <<<<<<<<<<<<<<
@@ -1654,20 +1722,20 @@ static PyObject *__pyx_pf_3hac_7cluster_plt(CYTHON_UNUSED PyObject *__pyx_self, 
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("plt", 0);
 
-  /* "hac/cluster.pyx":13
+  /* "hac/cluster.pyx":10
  * except ImportError, e:
  *     def plt(*args, **kwargs):
  *         raise e             # <<<<<<<<<<<<<<
  * try:
  *     from networkx import graphviz_layout
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_e); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_e); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_ERR(0, 13, __pyx_L1_error)
+  __PYX_ERR(0, 10, __pyx_L1_error)
 
-  /* "hac/cluster.pyx":12
+  /* "hac/cluster.pyx":9
  *     import matplotlib.pyplot as plt
  * except ImportError, e:
  *     def plt(*args, **kwargs):             # <<<<<<<<<<<<<<
@@ -1685,7 +1753,7 @@ static PyObject *__pyx_pf_3hac_7cluster_plt(CYTHON_UNUSED PyObject *__pyx_self, 
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":17
+/* "hac/cluster.pyx":14
  *     from networkx import graphviz_layout
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):             # <<<<<<<<<<<<<<
@@ -1720,20 +1788,20 @@ static PyObject *__pyx_pf_3hac_7cluster_2graphviz_layout(CYTHON_UNUSED PyObject 
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("graphviz_layout", 0);
 
-  /* "hac/cluster.pyx":18
+  /* "hac/cluster.pyx":15
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):
  *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")             # <<<<<<<<<<<<<<
  * 
- * RenameMapping = namedtuple('RenameMapping', ['integer', 'original', 'max_node'])
+ * cpdef set setify(elems):
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_Raise(__pyx_t_1, 0, 0, 0);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __PYX_ERR(0, 18, __pyx_L1_error)
+  __PYX_ERR(0, 15, __pyx_L1_error)
 
-  /* "hac/cluster.pyx":17
+  /* "hac/cluster.pyx":14
  *     from networkx import graphviz_layout
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):             # <<<<<<<<<<<<<<
@@ -1751,8 +1819,8 @@ static PyObject *__pyx_pf_3hac_7cluster_2graphviz_layout(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":22
- * RenameMapping = namedtuple('RenameMapping', ['integer', 'original', 'max_node'])
+/* "hac/cluster.pyx":17
+ *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
  * 
  * cpdef set setify(elems):             # <<<<<<<<<<<<<<
  *     if isinstance(elems, set):
@@ -1768,7 +1836,7 @@ static PyObject *__pyx_f_3hac_7cluster_setify(PyObject *__pyx_v_elems, CYTHON_UN
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("setify", 0);
 
-  /* "hac/cluster.pyx":23
+  /* "hac/cluster.pyx":18
  * 
  * cpdef set setify(elems):
  *     if isinstance(elems, set):             # <<<<<<<<<<<<<<
@@ -1779,7 +1847,7 @@ static PyObject *__pyx_f_3hac_7cluster_setify(PyObject *__pyx_v_elems, CYTHON_UN
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "hac/cluster.pyx":24
+    /* "hac/cluster.pyx":19
  * cpdef set setify(elems):
  *     if isinstance(elems, set):
  *         return elems             # <<<<<<<<<<<<<<
@@ -1787,12 +1855,12 @@ static PyObject *__pyx_f_3hac_7cluster_setify(PyObject *__pyx_v_elems, CYTHON_UN
  * 
  */
     __Pyx_XDECREF(__pyx_r);
-    if (!(likely(PySet_CheckExact(__pyx_v_elems))||((__pyx_v_elems) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_elems)->tp_name), 0))) __PYX_ERR(0, 24, __pyx_L1_error)
+    if (!(likely(PySet_CheckExact(__pyx_v_elems))||((__pyx_v_elems) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_elems)->tp_name), 0))) __PYX_ERR(0, 19, __pyx_L1_error)
     __Pyx_INCREF(__pyx_v_elems);
     __pyx_r = ((PyObject*)__pyx_v_elems);
     goto __pyx_L0;
 
-    /* "hac/cluster.pyx":23
+    /* "hac/cluster.pyx":18
  * 
  * cpdef set setify(elems):
  *     if isinstance(elems, set):             # <<<<<<<<<<<<<<
@@ -1801,7 +1869,7 @@ static PyObject *__pyx_f_3hac_7cluster_setify(PyObject *__pyx_v_elems, CYTHON_UN
  */
   }
 
-  /* "hac/cluster.pyx":25
+  /* "hac/cluster.pyx":20
  *     if isinstance(elems, set):
  *         return elems
  *     return set(elems)             # <<<<<<<<<<<<<<
@@ -1809,14 +1877,14 @@ static PyObject *__pyx_f_3hac_7cluster_setify(PyObject *__pyx_v_elems, CYTHON_UN
  * cpdef float weight(edge):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PySet_New(__pyx_v_elems); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_3 = PySet_New(__pyx_v_elems); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":22
- * RenameMapping = namedtuple('RenameMapping', ['integer', 'original', 'max_node'])
+  /* "hac/cluster.pyx":17
+ *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
  * 
  * cpdef set setify(elems):             # <<<<<<<<<<<<<<
  *     if isinstance(elems, set):
@@ -1853,7 +1921,7 @@ static PyObject *__pyx_pf_3hac_7cluster_4setify(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("setify", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_3hac_7cluster_setify(__pyx_v_elems, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3hac_7cluster_setify(__pyx_v_elems, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1870,7 +1938,7 @@ static PyObject *__pyx_pf_3hac_7cluster_4setify(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":27
+/* "hac/cluster.pyx":22
  *     return set(elems)
  * 
  * cpdef float weight(edge):             # <<<<<<<<<<<<<<
@@ -1890,7 +1958,7 @@ static float __pyx_f_3hac_7cluster_weight(PyObject *__pyx_v_edge, CYTHON_UNUSED 
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("weight", 0);
 
-  /* "hac/cluster.pyx":28
+  /* "hac/cluster.pyx":23
  * 
  * cpdef float weight(edge):
  *     if isinstance(edge, (int, float)):             # <<<<<<<<<<<<<<
@@ -1911,18 +1979,18 @@ static float __pyx_f_3hac_7cluster_weight(PyObject *__pyx_v_edge, CYTHON_UNUSED 
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "hac/cluster.pyx":29
+    /* "hac/cluster.pyx":24
  * cpdef float weight(edge):
  *     if isinstance(edge, (int, float)):
  *         return edge             # <<<<<<<<<<<<<<
  *     elif isinstance(edge, dict):
  *         return edge.get('weight', 1.0)
  */
-    __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_edge); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L1_error)
+    __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_edge); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 24, __pyx_L1_error)
     __pyx_r = __pyx_t_4;
     goto __pyx_L0;
 
-    /* "hac/cluster.pyx":28
+    /* "hac/cluster.pyx":23
  * 
  * cpdef float weight(edge):
  *     if isinstance(edge, (int, float)):             # <<<<<<<<<<<<<<
@@ -1931,7 +1999,7 @@ static float __pyx_f_3hac_7cluster_weight(PyObject *__pyx_v_edge, CYTHON_UNUSED 
  */
   }
 
-  /* "hac/cluster.pyx":30
+  /* "hac/cluster.pyx":25
  *     if isinstance(edge, (int, float)):
  *         return edge
  *     elif isinstance(edge, dict):             # <<<<<<<<<<<<<<
@@ -1942,24 +2010,24 @@ static float __pyx_f_3hac_7cluster_weight(PyObject *__pyx_v_edge, CYTHON_UNUSED 
   __pyx_t_1 = (__pyx_t_2 != 0);
   if (__pyx_t_1) {
 
-    /* "hac/cluster.pyx":31
+    /* "hac/cluster.pyx":26
  *         return edge
  *     elif isinstance(edge, dict):
  *         return edge.get('weight', 1.0)             # <<<<<<<<<<<<<<
  *     else:
  *         return 1.0
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_edge, __pyx_n_s_get); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_edge, __pyx_n_s_get); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_t_6); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
+    __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_t_6); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_r = __pyx_t_4;
     goto __pyx_L0;
 
-    /* "hac/cluster.pyx":30
+    /* "hac/cluster.pyx":25
  *     if isinstance(edge, (int, float)):
  *         return edge
  *     elif isinstance(edge, dict):             # <<<<<<<<<<<<<<
@@ -1968,7 +2036,7 @@ static float __pyx_f_3hac_7cluster_weight(PyObject *__pyx_v_edge, CYTHON_UNUSED 
  */
   }
 
-  /* "hac/cluster.pyx":33
+  /* "hac/cluster.pyx":28
  *         return edge.get('weight', 1.0)
  *     else:
  *         return 1.0             # <<<<<<<<<<<<<<
@@ -1980,7 +2048,7 @@ static float __pyx_f_3hac_7cluster_weight(PyObject *__pyx_v_edge, CYTHON_UNUSED 
     goto __pyx_L0;
   }
 
-  /* "hac/cluster.pyx":27
+  /* "hac/cluster.pyx":22
  *     return set(elems)
  * 
  * cpdef float weight(edge):             # <<<<<<<<<<<<<<
@@ -2018,7 +2086,7 @@ static PyObject *__pyx_pf_3hac_7cluster_6weight(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("weight", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weight(__pyx_v_edge, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weight(__pyx_v_edge, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2035,7 +2103,7 @@ static PyObject *__pyx_pf_3hac_7cluster_6weight(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":35
+/* "hac/cluster.pyx":30
  *         return 1.0
  * 
  * cpdef float weighted_edge_count(graph):             # <<<<<<<<<<<<<<
@@ -2063,7 +2131,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
   int __pyx_t_10;
   __Pyx_RefNannySetupContext("weighted_edge_count", 0);
 
-  /* "hac/cluster.pyx":37
+  /* "hac/cluster.pyx":32
  * cpdef float weighted_edge_count(graph):
  *     # 2 * graph.number_of_edges()
  *     cdef float edges = 0.0             # <<<<<<<<<<<<<<
@@ -2072,19 +2140,19 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
  */
   __pyx_v_edges = 0.0;
 
-  /* "hac/cluster.pyx":38
+  /* "hac/cluster.pyx":33
  *     # 2 * graph.number_of_edges()
  *     cdef float edges = 0.0
  *     for _e1, _e2, d in graph.edges_iter(data=True):             # <<<<<<<<<<<<<<
  *         edges += weight(d)
  *     if edges <= 0.00000001:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_edges_iter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_edges_iter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_data, Py_True) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_data, Py_True) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -2092,9 +2160,9 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
     __pyx_t_2 = __pyx_t_3; __Pyx_INCREF(__pyx_t_2); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 38, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   for (;;) {
@@ -2102,17 +2170,17 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 38, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 38, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_3); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -2122,7 +2190,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 38, __pyx_L1_error)
+          else __PYX_ERR(0, 33, __pyx_L1_error)
         }
         break;
       }
@@ -2138,7 +2206,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 38, __pyx_L1_error)
+        __PYX_ERR(0, 33, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -2154,17 +2222,17 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
       __Pyx_INCREF(__pyx_t_6);
       __Pyx_INCREF(__pyx_t_7);
       #else
-      __pyx_t_1 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_1 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 33, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_7 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 33, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       #endif
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_8 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 38, __pyx_L1_error)
+      __pyx_t_8 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 33, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_9 = Py_TYPE(__pyx_t_8)->tp_iternext;
@@ -2174,7 +2242,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
       __Pyx_GOTREF(__pyx_t_6);
       index = 2; __pyx_t_7 = __pyx_t_9(__pyx_t_8); if (unlikely(!__pyx_t_7)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_7);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 3) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_9(__pyx_t_8), 3) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
       __pyx_t_9 = NULL;
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       goto __pyx_L6_unpacking_done;
@@ -2182,7 +2250,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_t_9 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 38, __pyx_L1_error)
+      __PYX_ERR(0, 33, __pyx_L1_error)
       __pyx_L6_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v__e1, __pyx_t_1);
@@ -2192,7 +2260,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
     __Pyx_XDECREF_SET(__pyx_v_d, __pyx_t_7);
     __pyx_t_7 = 0;
 
-    /* "hac/cluster.pyx":39
+    /* "hac/cluster.pyx":34
  *     cdef float edges = 0.0
  *     for _e1, _e2, d in graph.edges_iter(data=True):
  *         edges += weight(d)             # <<<<<<<<<<<<<<
@@ -2201,7 +2269,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
  */
     __pyx_v_edges = (__pyx_v_edges + __pyx_f_3hac_7cluster_weight(__pyx_v_d, 0));
 
-    /* "hac/cluster.pyx":38
+    /* "hac/cluster.pyx":33
  *     # 2 * graph.number_of_edges()
  *     cdef float edges = 0.0
  *     for _e1, _e2, d in graph.edges_iter(data=True):             # <<<<<<<<<<<<<<
@@ -2211,7 +2279,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":40
+  /* "hac/cluster.pyx":35
  *     for _e1, _e2, d in graph.edges_iter(data=True):
  *         edges += weight(d)
  *     if edges <= 0.00000001:             # <<<<<<<<<<<<<<
@@ -2221,7 +2289,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
   __pyx_t_10 = ((__pyx_v_edges <= 0.00000001) != 0);
   if (__pyx_t_10) {
 
-    /* "hac/cluster.pyx":41
+    /* "hac/cluster.pyx":36
  *         edges += weight(d)
  *     if edges <= 0.00000001:
  *         return 1.0             # <<<<<<<<<<<<<<
@@ -2231,7 +2299,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
     __pyx_r = 1.0;
     goto __pyx_L0;
 
-    /* "hac/cluster.pyx":40
+    /* "hac/cluster.pyx":35
  *     for _e1, _e2, d in graph.edges_iter(data=True):
  *         edges += weight(d)
  *     if edges <= 0.00000001:             # <<<<<<<<<<<<<<
@@ -2240,7 +2308,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
  */
   }
 
-  /* "hac/cluster.pyx":42
+  /* "hac/cluster.pyx":37
  *     if edges <= 0.00000001:
  *         return 1.0
  *     return 2.0 * edges             # <<<<<<<<<<<<<<
@@ -2250,7 +2318,7 @@ static float __pyx_f_3hac_7cluster_weighted_edge_count(PyObject *__pyx_v_graph, 
   __pyx_r = (2.0 * __pyx_v_edges);
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":35
+  /* "hac/cluster.pyx":30
  *         return 1.0
  * 
  * cpdef float weighted_edge_count(graph):             # <<<<<<<<<<<<<<
@@ -2295,7 +2363,7 @@ static PyObject *__pyx_pf_3hac_7cluster_8weighted_edge_count(CYTHON_UNUSED PyObj
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("weighted_edge_count", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weighted_edge_count(__pyx_v_graph, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weighted_edge_count(__pyx_v_graph, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2312,7 +2380,7 @@ static PyObject *__pyx_pf_3hac_7cluster_8weighted_edge_count(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":44
+/* "hac/cluster.pyx":39
  *     return 2.0 * edges
  * 
  * cpdef set remove_orphans(graph, ignored=None):             # <<<<<<<<<<<<<<
@@ -2345,19 +2413,19 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
     }
   }
 
-  /* "hac/cluster.pyx":45
+  /* "hac/cluster.pyx":40
  * 
  * cpdef set remove_orphans(graph, ignored=None):
  *     orphans = set()             # <<<<<<<<<<<<<<
  *     for node in graph:
  *         if not graph.degree(node) and (not ignored or node not in ignored):
  */
-  __pyx_t_1 = PySet_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = PySet_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_orphans = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":46
+  /* "hac/cluster.pyx":41
  * cpdef set remove_orphans(graph, ignored=None):
  *     orphans = set()
  *     for node in graph:             # <<<<<<<<<<<<<<
@@ -2368,26 +2436,26 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
     __pyx_t_1 = __pyx_v_graph; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 41, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2397,7 +2465,7 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 46, __pyx_L1_error)
+          else __PYX_ERR(0, 41, __pyx_L1_error)
         }
         break;
       }
@@ -2406,14 +2474,14 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
     __Pyx_XDECREF_SET(__pyx_v_node, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "hac/cluster.pyx":47
+    /* "hac/cluster.pyx":42
  *     orphans = set()
  *     for node in graph:
  *         if not graph.degree(node) and (not ignored or node not in ignored):             # <<<<<<<<<<<<<<
  *             orphans.add(node)
  *     graph.remove_nodes_from(orphans)
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_degree); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_degree); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_7 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -2426,13 +2494,13 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
       }
     }
     if (!__pyx_t_7) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_node); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_node); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_6)) {
         PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_node};
-        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else
@@ -2440,25 +2508,25 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
         PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_node};
-        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else
       #endif
       {
-        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
         __Pyx_INCREF(__pyx_v_node);
         __Pyx_GIVEREF(__pyx_v_node);
         PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_v_node);
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_10 = ((!__pyx_t_9) != 0);
     if (__pyx_t_10) {
@@ -2466,29 +2534,29 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
       __pyx_t_5 = __pyx_t_10;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_ignored); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_ignored); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
     __pyx_t_9 = ((!__pyx_t_10) != 0);
     if (!__pyx_t_9) {
     } else {
       __pyx_t_5 = __pyx_t_9;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_ignored, Py_NE)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __pyx_t_9 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_ignored, Py_NE)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 42, __pyx_L1_error)
     __pyx_t_10 = (__pyx_t_9 != 0);
     __pyx_t_5 = __pyx_t_10;
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_5) {
 
-      /* "hac/cluster.pyx":48
+      /* "hac/cluster.pyx":43
  *     for node in graph:
  *         if not graph.degree(node) and (not ignored or node not in ignored):
  *             orphans.add(node)             # <<<<<<<<<<<<<<
  *     graph.remove_nodes_from(orphans)
  *     return orphans
  */
-      __pyx_t_11 = PySet_Add(__pyx_v_orphans, __pyx_v_node); if (unlikely(__pyx_t_11 == -1)) __PYX_ERR(0, 48, __pyx_L1_error)
+      __pyx_t_11 = PySet_Add(__pyx_v_orphans, __pyx_v_node); if (unlikely(__pyx_t_11 == -1)) __PYX_ERR(0, 43, __pyx_L1_error)
 
-      /* "hac/cluster.pyx":47
+      /* "hac/cluster.pyx":42
  *     orphans = set()
  *     for node in graph:
  *         if not graph.degree(node) and (not ignored or node not in ignored):             # <<<<<<<<<<<<<<
@@ -2497,7 +2565,7 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
  */
     }
 
-    /* "hac/cluster.pyx":46
+    /* "hac/cluster.pyx":41
  * cpdef set remove_orphans(graph, ignored=None):
  *     orphans = set()
  *     for node in graph:             # <<<<<<<<<<<<<<
@@ -2507,14 +2575,14 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":49
+  /* "hac/cluster.pyx":44
  *         if not graph.degree(node) and (not ignored or node not in ignored):
  *             orphans.add(node)
  *     graph.remove_nodes_from(orphans)             # <<<<<<<<<<<<<<
  *     return orphans
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_remove_nodes_from); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_remove_nodes_from); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_6 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -2527,13 +2595,13 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
     }
   }
   if (!__pyx_t_6) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_orphans); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_orphans); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_orphans};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -2541,19 +2609,19 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_orphans};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 49, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
       __Pyx_INCREF(__pyx_v_orphans);
       __Pyx_GIVEREF(__pyx_v_orphans);
       PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_v_orphans);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -2561,7 +2629,7 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":50
+  /* "hac/cluster.pyx":45
  *             orphans.add(node)
  *     graph.remove_nodes_from(orphans)
  *     return orphans             # <<<<<<<<<<<<<<
@@ -2573,7 +2641,7 @@ static PyObject *__pyx_f_3hac_7cluster_remove_orphans(PyObject *__pyx_v_graph, C
   __pyx_r = __pyx_v_orphans;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":44
+  /* "hac/cluster.pyx":39
  *     return 2.0 * edges
  * 
  * cpdef set remove_orphans(graph, ignored=None):             # <<<<<<<<<<<<<<
@@ -2631,7 +2699,7 @@ static PyObject *__pyx_pw_3hac_7cluster_11remove_orphans(PyObject *__pyx_self, P
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "remove_orphans") < 0)) __PYX_ERR(0, 44, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "remove_orphans") < 0)) __PYX_ERR(0, 39, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2646,7 +2714,7 @@ static PyObject *__pyx_pw_3hac_7cluster_11remove_orphans(PyObject *__pyx_self, P
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("remove_orphans", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 44, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("remove_orphans", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 39, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.remove_orphans", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2668,7 +2736,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10remove_orphans(CYTHON_UNUSED PyObject 
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.ignored = __pyx_v_ignored;
-  __pyx_t_1 = __pyx_f_3hac_7cluster_remove_orphans(__pyx_v_graph, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3hac_7cluster_remove_orphans(__pyx_v_graph, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2685,7 +2753,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10remove_orphans(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":52
+/* "hac/cluster.pyx":47
  *     return orphans
  * 
  * cpdef int max_int_elem(graph):             # <<<<<<<<<<<<<<
@@ -2709,7 +2777,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("max_int_elem", 0);
 
-  /* "hac/cluster.pyx":54
+  /* "hac/cluster.pyx":49
  * cpdef int max_int_elem(graph):
  *     # We just care about non-zero max values
  *     cdef int max_int = 0             # <<<<<<<<<<<<<<
@@ -2718,14 +2786,14 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
  */
   __pyx_v_max_int = 0;
 
-  /* "hac/cluster.pyx":55
+  /* "hac/cluster.pyx":50
  *     # We just care about non-zero max values
  *     cdef int max_int = 0
  *     for node in graph.nodes_iter():             # <<<<<<<<<<<<<<
  *         if isinstance(node, int):
  *             if node > max_int:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_nodes_iter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_nodes_iter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -2738,10 +2806,10 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -2749,9 +2817,9 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
     __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -2759,17 +2827,17 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 50, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -2779,7 +2847,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 55, __pyx_L1_error)
+          else __PYX_ERR(0, 50, __pyx_L1_error)
         }
         break;
       }
@@ -2788,7 +2856,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
     __Pyx_XDECREF_SET(__pyx_v_node, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":56
+    /* "hac/cluster.pyx":51
  *     cdef int max_int = 0
  *     for node in graph.nodes_iter():
  *         if isinstance(node, int):             # <<<<<<<<<<<<<<
@@ -2799,32 +2867,32 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
     __pyx_t_7 = (__pyx_t_6 != 0);
     if (__pyx_t_7) {
 
-      /* "hac/cluster.pyx":57
+      /* "hac/cluster.pyx":52
  *     for node in graph.nodes_iter():
  *         if isinstance(node, int):
  *             if node > max_int:             # <<<<<<<<<<<<<<
  *                 max_int = node
  *     return max_int
  */
-      __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_max_int); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_max_int); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_3 = PyObject_RichCompare(__pyx_v_node, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_node, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 57, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 52, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (__pyx_t_7) {
 
-        /* "hac/cluster.pyx":58
+        /* "hac/cluster.pyx":53
  *         if isinstance(node, int):
  *             if node > max_int:
  *                 max_int = node             # <<<<<<<<<<<<<<
  *     return max_int
  * 
  */
-        __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_node); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 58, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyInt_As_int(__pyx_v_node); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L1_error)
         __pyx_v_max_int = __pyx_t_8;
 
-        /* "hac/cluster.pyx":57
+        /* "hac/cluster.pyx":52
  *     for node in graph.nodes_iter():
  *         if isinstance(node, int):
  *             if node > max_int:             # <<<<<<<<<<<<<<
@@ -2833,7 +2901,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
  */
       }
 
-      /* "hac/cluster.pyx":56
+      /* "hac/cluster.pyx":51
  *     cdef int max_int = 0
  *     for node in graph.nodes_iter():
  *         if isinstance(node, int):             # <<<<<<<<<<<<<<
@@ -2842,7 +2910,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
  */
     }
 
-    /* "hac/cluster.pyx":55
+    /* "hac/cluster.pyx":50
  *     # We just care about non-zero max values
  *     cdef int max_int = 0
  *     for node in graph.nodes_iter():             # <<<<<<<<<<<<<<
@@ -2852,7 +2920,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":59
+  /* "hac/cluster.pyx":54
  *             if node > max_int:
  *                 max_int = node
  *     return max_int             # <<<<<<<<<<<<<<
@@ -2862,7 +2930,7 @@ static int __pyx_f_3hac_7cluster_max_int_elem(PyObject *__pyx_v_graph, CYTHON_UN
   __pyx_r = __pyx_v_max_int;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":52
+  /* "hac/cluster.pyx":47
  *     return orphans
  * 
  * cpdef int max_int_elem(graph):             # <<<<<<<<<<<<<<
@@ -2902,7 +2970,7 @@ static PyObject *__pyx_pf_3hac_7cluster_12max_int_elem(CYTHON_UNUSED PyObject *_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("max_int_elem", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_3hac_7cluster_max_int_elem(__pyx_v_graph, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_f_3hac_7cluster_max_int_elem(__pyx_v_graph, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2919,7 +2987,7 @@ static PyObject *__pyx_pf_3hac_7cluster_12max_int_elem(CYTHON_UNUSED PyObject *_
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":61
+/* "hac/cluster.pyx":56
  *     return max_int
  * 
  * def int_graph_mapping(graph):             # <<<<<<<<<<<<<<
@@ -2958,31 +3026,31 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("int_graph_mapping", 0);
 
-  /* "hac/cluster.pyx":62
+  /* "hac/cluster.pyx":57
  * 
  * def int_graph_mapping(graph):
  *     cdef dict mapping_to_int = {}             # <<<<<<<<<<<<<<
  *     cdef dict mapping_to_orig = {}
  *     cdef int node_index = 0
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_mapping_to_int = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":63
+  /* "hac/cluster.pyx":58
  * def int_graph_mapping(graph):
  *     cdef dict mapping_to_int = {}
  *     cdef dict mapping_to_orig = {}             # <<<<<<<<<<<<<<
  *     cdef int node_index = 0
  *     for node_index, node in enumerate(graph.nodes_iter()):
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_mapping_to_orig = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":64
+  /* "hac/cluster.pyx":59
  *     cdef dict mapping_to_int = {}
  *     cdef dict mapping_to_orig = {}
  *     cdef int node_index = 0             # <<<<<<<<<<<<<<
@@ -2991,7 +3059,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
  */
   __pyx_v_node_index = 0;
 
-  /* "hac/cluster.pyx":65
+  /* "hac/cluster.pyx":60
  *     cdef dict mapping_to_orig = {}
  *     cdef int node_index = 0
  *     for node_index, node in enumerate(graph.nodes_iter()):             # <<<<<<<<<<<<<<
@@ -2999,7 +3067,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
  *         mapping_to_orig[node_index] = node
  */
   __pyx_t_2 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_nodes_iter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_nodes_iter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -3012,10 +3080,10 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -3023,9 +3091,9 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
     __pyx_t_3 = __pyx_t_1; __Pyx_INCREF(__pyx_t_3); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 60, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -3033,17 +3101,17 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_3, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -3053,7 +3121,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 65, __pyx_L1_error)
+          else __PYX_ERR(0, 60, __pyx_L1_error)
         }
         break;
       }
@@ -3064,31 +3132,31 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
     __pyx_v_node_index = __pyx_t_2;
     __pyx_t_2 = (__pyx_t_2 + 1);
 
-    /* "hac/cluster.pyx":66
+    /* "hac/cluster.pyx":61
  *     cdef int node_index = 0
  *     for node_index, node in enumerate(graph.nodes_iter()):
  *         mapping_to_int[node] = node_index             # <<<<<<<<<<<<<<
  *         mapping_to_orig[node_index] = node
  *     return RenameMapping(mapping_to_int, mapping_to_orig, node_index)
  */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_node_index); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_node_index); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    if (unlikely(PyDict_SetItem(__pyx_v_mapping_to_int, __pyx_v_node, __pyx_t_1) < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
+    if (unlikely(PyDict_SetItem(__pyx_v_mapping_to_int, __pyx_v_node, __pyx_t_1) < 0)) __PYX_ERR(0, 61, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":67
+    /* "hac/cluster.pyx":62
  *     for node_index, node in enumerate(graph.nodes_iter()):
  *         mapping_to_int[node] = node_index
  *         mapping_to_orig[node_index] = node             # <<<<<<<<<<<<<<
  *     return RenameMapping(mapping_to_int, mapping_to_orig, node_index)
  * 
  */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_node_index); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_node_index); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    if (unlikely(PyDict_SetItem(__pyx_v_mapping_to_orig, __pyx_t_1, __pyx_v_node) < 0)) __PYX_ERR(0, 67, __pyx_L1_error)
+    if (unlikely(PyDict_SetItem(__pyx_v_mapping_to_orig, __pyx_t_1, __pyx_v_node) < 0)) __PYX_ERR(0, 62, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":65
+    /* "hac/cluster.pyx":60
  *     cdef dict mapping_to_orig = {}
  *     cdef int node_index = 0
  *     for node_index, node in enumerate(graph.nodes_iter()):             # <<<<<<<<<<<<<<
@@ -3098,7 +3166,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":68
+  /* "hac/cluster.pyx":63
  *         mapping_to_int[node] = node_index
  *         mapping_to_orig[node_index] = node
  *     return RenameMapping(mapping_to_int, mapping_to_orig, node_index)             # <<<<<<<<<<<<<<
@@ -3106,9 +3174,9 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
  * cdef class GreedyAgglomerativeClusterer(object):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_RenameMapping); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_RenameMapping); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_node_index); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_node_index); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_7 = NULL;
   __pyx_t_2 = 0;
@@ -3125,7 +3193,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_v_mapping_to_int, __pyx_v_mapping_to_orig, __pyx_t_4};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_2, 3+__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_2, 3+__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -3134,14 +3202,14 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[4] = {__pyx_t_7, __pyx_v_mapping_to_int, __pyx_v_mapping_to_orig, __pyx_t_4};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_2, 3+__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_2, 3+__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(3+__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(3+__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (__pyx_t_7) {
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -3155,7 +3223,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_2, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
@@ -3164,7 +3232,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":61
+  /* "hac/cluster.pyx":56
  *     return max_int
  * 
  * def int_graph_mapping(graph):             # <<<<<<<<<<<<<<
@@ -3190,7 +3258,7 @@ static PyObject *__pyx_pf_3hac_7cluster_14int_graph_mapping(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":96
+/* "hac/cluster.pyx":91
  *     cdef int den_num
  * 
  *     def __init__(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -3230,7 +3298,7 @@ static int __pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_1__init__(PyObj
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 96, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 91, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3243,7 +3311,7 @@ static int __pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_1__init__(PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 96, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 91, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3264,17 +3332,17 @@ static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer___init__(struct
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "hac/cluster.pyx":104
+  /* "hac/cluster.pyx":99
  *             The number of clusters to compute. Default to auto-detection of optimal number.
  *         '''
  *         self.optimal_clusters = num_clusters or 0             # <<<<<<<<<<<<<<
  * 
- *     def cluster(self, graph, forced_clusters=None):
+ *     def __getstate__(self):
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_num_clusters); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_num_clusters); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 99, __pyx_L1_error)
   if (!__pyx_t_2) {
   } else {
-    __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_num_clusters); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 104, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_num_clusters); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 99, __pyx_L1_error)
     __pyx_t_1 = __pyx_t_3;
     goto __pyx_L3_bool_binop_done;
   }
@@ -3282,7 +3350,7 @@ static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer___init__(struct
   __pyx_L3_bool_binop_done:;
   __pyx_v_self->optimal_clusters = __pyx_t_1;
 
-  /* "hac/cluster.pyx":96
+  /* "hac/cluster.pyx":91
  *     cdef int den_num
  * 
  *     def __init__(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -3301,8 +3369,680 @@ static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer___init__(struct
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":106
+/* "hac/cluster.pyx":101
  *         self.optimal_clusters = num_clusters or 0
+ * 
+ *     def __getstate__(self):             # <<<<<<<<<<<<<<
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3__getstate__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3__getstate__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__getstate__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2__getstate__(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2__getstate__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  __Pyx_RefNannySetupContext("__getstate__", 0);
+
+  /* "hac/cluster.pyx":102
+ * 
+ *     def __getstate__(self):
+ *         return {             # <<<<<<<<<<<<<<
+ *             'optimal_clusters': self.optimal_clusters
+ *         }
+ */
+  __Pyx_XDECREF(__pyx_r);
+
+  /* "hac/cluster.pyx":103
+ *     def __getstate__(self):
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters             # <<<<<<<<<<<<<<
+ *         }
+ *     getstate = __getstate__
+ */
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_optimal_clusters, __pyx_t_2) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":101
+ *         self.optimal_clusters = num_clusters or 0
+ * 
+ *     def __getstate__(self):             # <<<<<<<<<<<<<<
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__getstate__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":107
+ *     getstate = __getstate__
+ * 
+ *     def __setstate__(self, state):             # <<<<<<<<<<<<<<
+ *         self.optimal_clusters = state['optimal_clusters']
+ *     setstate = __setstate__
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_5__setstate__(PyObject *__pyx_v_self, PyObject *__pyx_v_state); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_5__setstate__(PyObject *__pyx_v_self, PyObject *__pyx_v_state) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__setstate__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4__setstate__(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), ((PyObject *)__pyx_v_state));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4__setstate__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  __Pyx_RefNannySetupContext("__setstate__", 0);
+
+  /* "hac/cluster.pyx":108
+ * 
+ *     def __setstate__(self, state):
+ *         self.optimal_clusters = state['optimal_clusters']             # <<<<<<<<<<<<<<
+ *     setstate = __setstate__
+ * 
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 108, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_self->optimal_clusters = __pyx_t_2;
+
+  /* "hac/cluster.pyx":107
+ *     getstate = __getstate__
+ * 
+ *     def __setstate__(self, state):             # <<<<<<<<<<<<<<
+ *         self.optimal_clusters = state['optimal_clusters']
+ *     setstate = __setstate__
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__setstate__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":111
+ *     setstate = __setstate__
+ * 
+ *     def __reduce__(self):             # <<<<<<<<<<<<<<
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.optimal_clusters, ))
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_7__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_7__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6__reduce__(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6__reduce__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("__reduce__", 0);
+
+  /* "hac/cluster.pyx":113
+ *     def __reduce__(self):
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.optimal_clusters, ))             # <<<<<<<<<<<<<<
+ * 
+ *     def __hash__(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_class); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":111
+ *     setstate = __setstate__
+ * 
+ *     def __reduce__(self):             # <<<<<<<<<<<<<<
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.optimal_clusters, ))
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__reduce__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":115
+ *         return (self.__class__, (self.optimal_clusters, ))
+ * 
+ *     def __hash__(self):             # <<<<<<<<<<<<<<
+ *         return hash(self.optimal_clusters)
+ * 
+ */
+
+/* Python wrapper */
+static Py_hash_t __pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9__hash__(PyObject *__pyx_v_self); /*proto*/
+static Py_hash_t __pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9__hash__(PyObject *__pyx_v_self) {
+  Py_hash_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__hash__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8__hash__(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static Py_hash_t __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8__hash__(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
+  Py_hash_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  Py_hash_t __pyx_t_2;
+  __Pyx_RefNannySetupContext("__hash__", 0);
+
+  /* "hac/cluster.pyx":116
+ * 
+ *     def __hash__(self):
+ *         return hash(self.optimal_clusters)             # <<<<<<<<<<<<<<
+ * 
+ *     def __richcmp__(self, other, cmp_op):
+ */
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyObject_Hash(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_2;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":115
+ *         return (self.__class__, (self.optimal_clusters, ))
+ * 
+ *     def __hash__(self):             # <<<<<<<<<<<<<<
+ *         return hash(self.optimal_clusters)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__hash__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  if (unlikely(__pyx_r == -1) && !PyErr_Occurred()) __pyx_r = -2;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":118
+ *         return hash(self.optimal_clusters)
+ * 
+ *     def __richcmp__(self, other, cmp_op):             # <<<<<<<<<<<<<<
+ *         if self is other:
+ *             return True
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_cmp_op); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_cmp_op) {
+  PyObject *__pyx_v_cmp_op = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__richcmp__ (wrapper)", 0);
+  __pyx_v_cmp_op = __Pyx_PyInt_From_int(__pyx_arg_cmp_op); if (unlikely(!__pyx_v_cmp_op)) __PYX_ERR(0, 118, __pyx_L3_error)
+  __Pyx_GOTREF(__pyx_v_cmp_op);
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__richcmp__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10__richcmp__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other), ((PyObject *)__pyx_v_cmp_op));
+
+  /* function exit code */
+  __Pyx_XDECREF(__pyx_v_cmp_op);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_cmp_op) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  __Pyx_RefNannySetupContext("__richcmp__", 0);
+
+  /* "hac/cluster.pyx":119
+ * 
+ *     def __richcmp__(self, other, cmp_op):
+ *         if self is other:             # <<<<<<<<<<<<<<
+ *             return True
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):
+ */
+  __pyx_t_1 = (__pyx_v_self == __pyx_v_other);
+  __pyx_t_2 = (__pyx_t_1 != 0);
+  if (__pyx_t_2) {
+
+    /* "hac/cluster.pyx":120
+ *     def __richcmp__(self, other, cmp_op):
+ *         if self is other:
+ *             return True             # <<<<<<<<<<<<<<
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):
+ *             return False
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(Py_True);
+    __pyx_r = Py_True;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":119
+ * 
+ *     def __richcmp__(self, other, cmp_op):
+ *         if self is other:             # <<<<<<<<<<<<<<
+ *             return True
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):
+ */
+  }
+
+  /* "hac/cluster.pyx":121
+ *         if self is other:
+ *             return True
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):             # <<<<<<<<<<<<<<
+ *             return False
+ *         elif cmp_op == 2:
+ */
+  __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer); 
+  __pyx_t_1 = ((!(__pyx_t_2 != 0)) != 0);
+  if (__pyx_t_1) {
+
+    /* "hac/cluster.pyx":122
+ *             return True
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):
+ *             return False             # <<<<<<<<<<<<<<
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(Py_False);
+    __pyx_r = Py_False;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":121
+ *         if self is other:
+ *             return True
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):             # <<<<<<<<<<<<<<
+ *             return False
+ *         elif cmp_op == 2:
+ */
+  }
+
+  /* "hac/cluster.pyx":123
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):
+ *             return False
+ *         elif cmp_op == 2:             # <<<<<<<<<<<<<<
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:
+ */
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_cmp_op, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__pyx_t_1) {
+
+    /* "hac/cluster.pyx":124
+ *             return False
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)             # <<<<<<<<<<<<<<
+ *         elif cmp_op == 3:
+ *             return not self.__eq(other)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_eq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
+      }
+    }
+    if (!__pyx_t_5) {
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_other); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      {
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_6);
+        __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
+        __Pyx_INCREF(__pyx_v_other);
+        __Pyx_GIVEREF(__pyx_v_other);
+        PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_other);
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_r = __pyx_t_3;
+    __pyx_t_3 = 0;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":123
+ *         elif not isinstance(other, GreedyAgglomerativeClusterer):
+ *             return False
+ *         elif cmp_op == 2:             # <<<<<<<<<<<<<<
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:
+ */
+  }
+
+  /* "hac/cluster.pyx":125
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:             # <<<<<<<<<<<<<<
+ *             return not self.__eq(other)
+ *         return False
+ */
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_cmp_op, __pyx_int_3, 3, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__pyx_t_1) {
+
+    /* "hac/cluster.pyx":126
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:
+ *             return not self.__eq(other)             # <<<<<<<<<<<<<<
+ *         return False
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_eq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_6)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_6);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
+      }
+    }
+    if (!__pyx_t_6) {
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_other); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      {
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_6); __pyx_t_6 = NULL;
+        __Pyx_INCREF(__pyx_v_other);
+        __Pyx_GIVEREF(__pyx_v_other);
+        PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_other);
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyBool_FromLong((!__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_r = __pyx_t_3;
+    __pyx_t_3 = 0;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":125
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:             # <<<<<<<<<<<<<<
+ *             return not self.__eq(other)
+ *         return False
+ */
+  }
+
+  /* "hac/cluster.pyx":127
+ *         elif cmp_op == 3:
+ *             return not self.__eq(other)
+ *         return False             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __eq(self, GreedyAgglomerativeClusterer other):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(Py_False);
+  __pyx_r = Py_False;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":118
+ *         return hash(self.optimal_clusters)
+ * 
+ *     def __richcmp__(self, other, cmp_op):             # <<<<<<<<<<<<<<
+ *         if self is other:
+ *             return True
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.__richcmp__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":129
+ *         return False
+ * 
+ *     cdef bint __eq(self, GreedyAgglomerativeClusterer other):             # <<<<<<<<<<<<<<
+ *         return self.get_state() == other.get_state()
+ * 
+ */
+
+static int __pyx_f_3hac_7cluster_28GreedyAgglomerativeClusterer___eq(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_other) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  __Pyx_RefNannySetupContext("__eq", 0);
+
+  /* "hac/cluster.pyx":130
+ * 
+ *     cdef bint __eq(self, GreedyAgglomerativeClusterer other):
+ *         return self.get_state() == other.get_state()             # <<<<<<<<<<<<<<
+ * 
+ *     def cluster(self, graph, forced_clusters=None):
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_state); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_other), __pyx_n_s_get_state); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  if (__pyx_t_4) {
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  } else {
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
+  }
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 130, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_5;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":129
+ *         return False
+ * 
+ *     cdef bint __eq(self, GreedyAgglomerativeClusterer other):             # <<<<<<<<<<<<<<
+ *         return self.get_state() == other.get_state()
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_WriteUnraisable("hac.cluster.GreedyAgglomerativeClusterer.__eq", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":132
+ *         return self.get_state() == other.get_state()
  * 
  *     def cluster(self, graph, forced_clusters=None):             # <<<<<<<<<<<<<<
  *         '''
@@ -3310,9 +4050,9 @@ static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer___init__(struct
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3cluster(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster[] = "\n        Performs clustering analysis to generate a dendrogram object on the graph\n\n        Parameters:\n        graph : networkx.graph\n            The networkx graph to be clustered.\n\n        forced_cluster : iterable<set>, default=None\n            A fixed set of graph associations to not cluster.\n            Useful for adding pre-computed clusters.\n        ";
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3cluster(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13cluster(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_3hac_7cluster_28GreedyAgglomerativeClusterer_12cluster[] = "\n        Performs clustering analysis to generate a dendrogram object on the graph\n\n        Parameters:\n        graph : networkx.graph\n            The networkx graph to be clustered.\n\n        forced_cluster : iterable<set>, default=None\n            A fixed set of graph associations to not cluster.\n            Useful for adding pre-computed clusters.\n        ";
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13cluster(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_graph = 0;
   PyObject *__pyx_v_forced_clusters = 0;
   PyObject *__pyx_r = 0;
@@ -3343,7 +4083,7 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3cluster(
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cluster") < 0)) __PYX_ERR(0, 106, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "cluster") < 0)) __PYX_ERR(0, 132, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3358,13 +4098,13 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3cluster(
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("cluster", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 106, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("cluster", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 132, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.cluster", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_graph, __pyx_v_forced_clusters);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12cluster(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_graph, __pyx_v_forced_clusters);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
@@ -3372,7 +4112,7 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3cluster(
 }
 static PyObject *__pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_2generator(__pyx_CoroutineObject *__pyx_generator, PyObject *__pyx_sent_value); /* proto */
 
-/* "hac/cluster.pyx":120
+/* "hac/cluster.pyx":146
  *         self.forced_clusters = list(map(setify, forced_clusters or []))
  *         self.original_nodes = set(graph.nodes_iter())
  *         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)             # <<<<<<<<<<<<<<
@@ -3389,7 +4129,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_3hac_7cluster___pyx_scope_struct_1_genexpr *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 120, __pyx_L1_error)
+    __PYX_ERR(0, 146, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -3397,7 +4137,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
   __Pyx_INCREF(((PyObject *)__pyx_cur_scope->__pyx_outer_scope));
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_outer_scope);
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_2generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_genexpr, __pyx_n_s_cluster_locals_genexpr, __pyx_n_s_hac_cluster); if (unlikely(!gen)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_2generator, (PyObject *) __pyx_cur_scope, __pyx_n_s_genexpr, __pyx_n_s_cluster_locals_genexpr, __pyx_n_s_hac_cluster); if (unlikely(!gen)) __PYX_ERR(0, 146, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -3432,21 +4172,21 @@ static PyObject *__pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 120, __pyx_L1_error)
-  __pyx_r = PySet_New(NULL); if (unlikely(!__pyx_r)) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_r = PySet_New(NULL); if (unlikely(!__pyx_r)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_r);
-  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_self)) { __Pyx_RaiseClosureNameError("self"); __PYX_ERR(0, 120, __pyx_L1_error) }
+  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_self)) { __Pyx_RaiseClosureNameError("self"); __PYX_ERR(0, 146, __pyx_L1_error) }
   if (unlikely(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_self->forced_clusters == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 120, __pyx_L1_error)
+    __PYX_ERR(0, 146, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_self->forced_clusters; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
     if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 146, __pyx_L1_error)
     #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 146, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_cluster);
@@ -3457,26 +4197,26 @@ static PyObject *__pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
       __pyx_t_3 = __pyx_cur_scope->__pyx_v_cluster; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
       __pyx_t_5 = NULL;
     } else {
-      __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_cluster); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_cur_scope->__pyx_v_cluster); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 146, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 146, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_5)) {
         if (likely(PyList_CheckExact(__pyx_t_3))) {
           if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 120, __pyx_L1_error)
+          __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 146, __pyx_L1_error)
           #else
-          __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
+          __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 146, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           #endif
         } else {
           if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 120, __pyx_L1_error)
+          __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_6); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 146, __pyx_L1_error)
           #else
-          __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
+          __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 146, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           #endif
         }
@@ -3486,7 +4226,7 @@ static PyObject *__pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 120, __pyx_L1_error)
+            else __PYX_ERR(0, 146, __pyx_L1_error)
           }
           break;
         }
@@ -3496,7 +4236,7 @@ static PyObject *__pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
       __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_node, __pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_6);
       __pyx_t_6 = 0;
-      if (unlikely(PySet_Add(__pyx_r, (PyObject*)__pyx_cur_scope->__pyx_v_node))) __PYX_ERR(0, 120, __pyx_L1_error)
+      if (unlikely(PySet_Add(__pyx_r, (PyObject*)__pyx_cur_scope->__pyx_v_node))) __PYX_ERR(0, 146, __pyx_L1_error)
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
@@ -3519,15 +4259,15 @@ static PyObject *__pyx_gb_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":106
- *         self.optimal_clusters = num_clusters or 0
+/* "hac/cluster.pyx":132
+ *         return self.get_state() == other.get_state()
  * 
  *     def cluster(self, graph, forced_clusters=None):             # <<<<<<<<<<<<<<
  *         '''
  *         Performs clustering analysis to generate a dendrogram object on the graph
  */
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_graph, PyObject *__pyx_v_forced_clusters) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12cluster(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_graph, PyObject *__pyx_v_forced_clusters) {
   struct __pyx_obj_3hac_7cluster___pyx_scope_struct__cluster *__pyx_cur_scope;
   PyObject *__pyx_v_num_edges = NULL;
   PyObject *__pyx_v_quality = NULL;
@@ -3561,7 +4301,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_3hac_7cluster___pyx_scope_struct__cluster *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 106, __pyx_L1_error)
+    __PYX_ERR(0, 132, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -3569,29 +4309,29 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_INCREF((PyObject *)__pyx_cur_scope->__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_cur_scope->__pyx_v_self);
 
-  /* "hac/cluster.pyx":118
+  /* "hac/cluster.pyx":144
  *             Useful for adding pre-computed clusters.
  *         '''
  *         self.forced_clusters = list(map(setify, forced_clusters or []))             # <<<<<<<<<<<<<<
  *         self.original_nodes = set(graph.nodes_iter())
  *         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_setify); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_setify); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_forced_clusters); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_forced_clusters); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 144, __pyx_L1_error)
   if (!__pyx_t_3) {
   } else {
     __Pyx_INCREF(__pyx_v_forced_clusters);
     __pyx_t_2 = __pyx_v_forced_clusters;
     goto __pyx_L3_bool_binop_done;
   }
-  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_t_4);
   __pyx_t_2 = __pyx_t_4;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_L3_bool_binop_done:;
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
@@ -3599,10 +4339,10 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_2);
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_map, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_map, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_4 = PySequence_List(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_GIVEREF(__pyx_t_4);
@@ -3611,14 +4351,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->forced_clusters = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":119
+  /* "hac/cluster.pyx":145
  *         '''
  *         self.forced_clusters = list(map(setify, forced_clusters or []))
  *         self.original_nodes = set(graph.nodes_iter())             # <<<<<<<<<<<<<<
  *         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)
  *         # TODO use sparse matrix representation?
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_nodes_iter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_nodes_iter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3631,14 +4371,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (__pyx_t_1) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 145, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
-    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 145, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PySet_New(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_t_2 = PySet_New(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_GIVEREF(__pyx_t_2);
@@ -3647,16 +4387,16 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->original_nodes = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":120
+  /* "hac/cluster.pyx":146
  *         self.forced_clusters = list(map(setify, forced_clusters or []))
  *         self.original_nodes = set(graph.nodes_iter())
  *         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)             # <<<<<<<<<<<<<<
  *         # TODO use sparse matrix representation?
  *         self.super_graph = graph.copy()
  */
-  __pyx_t_2 = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_2 = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_7cluster_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_Generator_Next(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Generator_Next(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 146, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_GIVEREF(__pyx_t_4);
@@ -3665,14 +4405,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->ignored_nodes = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":122
+  /* "hac/cluster.pyx":148
  *         self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)
  *         # TODO use sparse matrix representation?
  *         self.super_graph = graph.copy()             # <<<<<<<<<<<<<<
  *         # TODO change to separating into connected components
  *         self.orphans = remove_orphans(self.super_graph, self.ignored_nodes)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_copy); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -3685,10 +4425,10 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (__pyx_t_1) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
-    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -3698,7 +4438,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->super_graph = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":124
+  /* "hac/cluster.pyx":150
  *         self.super_graph = graph.copy()
  *         # TODO change to separating into connected components
  *         self.orphans = remove_orphans(self.super_graph, self.ignored_nodes)             # <<<<<<<<<<<<<<
@@ -3711,7 +4451,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_INCREF(__pyx_t_2);
   __pyx_t_5.__pyx_n = 1;
   __pyx_t_5.ignored = __pyx_t_2;
-  __pyx_t_1 = __pyx_f_3hac_7cluster_remove_orphans(__pyx_t_4, 0, &__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_3hac_7cluster_remove_orphans(__pyx_t_4, 0, &__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -3721,14 +4461,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->orphans = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":126
+  /* "hac/cluster.pyx":152
  *         self.orphans = remove_orphans(self.super_graph, self.ignored_nodes)
  *         # TODO do better than remapping
  *         self.rename_map = int_graph_mapping(self.super_graph)             # <<<<<<<<<<<<<<
  *         nx.relabel_nodes(self.super_graph, self.rename_map.integer, copy=False)
  * 
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_int_graph_mapping); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_int_graph_mapping); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -3741,13 +4481,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_cur_scope->__pyx_v_self->super_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_cur_scope->__pyx_v_self->super_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_cur_scope->__pyx_v_self->super_graph};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -3755,19 +4495,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_cur_scope->__pyx_v_self->super_graph};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_INCREF(__pyx_cur_scope->__pyx_v_self->super_graph);
       __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_self->super_graph);
       PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_cur_scope->__pyx_v_self->super_graph);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
@@ -3779,21 +4519,21 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->rename_map = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":127
+  /* "hac/cluster.pyx":153
  *         # TODO do better than remapping
  *         self.rename_map = int_graph_mapping(self.super_graph)
  *         nx.relabel_nodes(self.super_graph, self.rename_map.integer, copy=False)             # <<<<<<<<<<<<<<
  * 
  *         self.dendrogram_graph = nx.Graph()
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_self->super_graph);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_self->super_graph);
@@ -3801,26 +4541,26 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 127, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 153, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":129
+  /* "hac/cluster.pyx":155
  *         nx.relabel_nodes(self.super_graph, self.rename_map.integer, copy=False)
  * 
  *         self.dendrogram_graph = nx.Graph()             # <<<<<<<<<<<<<<
  *         self.pair_cost_heap = []
  *         self.quality_history = []
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Graph); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_Graph); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -3834,10 +4574,10 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (__pyx_t_1) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
-    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 129, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3847,14 +4587,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->dendrogram_graph = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":130
+  /* "hac/cluster.pyx":156
  * 
  *         self.dendrogram_graph = nx.Graph()
  *         self.pair_cost_heap = []             # <<<<<<<<<<<<<<
  *         self.quality_history = []
  *         self.den_num = max(max_int_elem(graph), graph.number_of_nodes()) + 1
  */
-  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 130, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_4);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_self->pair_cost_heap);
@@ -3862,14 +4602,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->pair_cost_heap = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":131
+  /* "hac/cluster.pyx":157
  *         self.dendrogram_graph = nx.Graph()
  *         self.pair_cost_heap = []
  *         self.quality_history = []             # <<<<<<<<<<<<<<
  *         self.den_num = max(max_int_elem(graph), graph.number_of_nodes()) + 1
  * 
  */
-  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_4);
   __Pyx_GOTREF(__pyx_cur_scope->__pyx_v_self->quality_history);
@@ -3877,14 +4617,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_cur_scope->__pyx_v_self->quality_history = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":132
+  /* "hac/cluster.pyx":158
  *         self.pair_cost_heap = []
  *         self.quality_history = []
  *         self.den_num = max(max_int_elem(graph), graph.number_of_nodes()) + 1             # <<<<<<<<<<<<<<
  * 
  *         num_edges = weighted_edge_count(self.super_graph)
  */
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_number_of_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_graph, __pyx_n_s_number_of_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -3897,38 +4637,38 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (__pyx_t_1) {
-    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
-    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_7 = __pyx_f_3hac_7cluster_max_int_elem(__pyx_v_graph, 0);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_4, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_4, __pyx_t_1, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_3) {
     __Pyx_INCREF(__pyx_t_4);
     __pyx_t_6 = __pyx_t_4;
   } else {
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_6 = __pyx_t_2;
     __pyx_t_2 = 0;
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_t_6, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_t_6, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_cur_scope->__pyx_v_self->den_num = __pyx_t_7;
 
-  /* "hac/cluster.pyx":134
+  /* "hac/cluster.pyx":160
  *         self.den_num = max(max_int_elem(graph), graph.number_of_nodes()) + 1
  * 
  *         num_edges = weighted_edge_count(self.super_graph)             # <<<<<<<<<<<<<<
@@ -3937,13 +4677,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
  */
   __pyx_t_4 = __pyx_cur_scope->__pyx_v_self->super_graph;
   __Pyx_INCREF(__pyx_t_4);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weighted_edge_count(__pyx_t_4, 0)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weighted_edge_count(__pyx_t_4, 0)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_num_edges = __pyx_t_6;
   __pyx_t_6 = 0;
 
-  /* "hac/cluster.pyx":135
+  /* "hac/cluster.pyx":161
  * 
  *         num_edges = weighted_edge_count(self.super_graph)
  *         quality = 0.0             # <<<<<<<<<<<<<<
@@ -3953,19 +4693,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_INCREF(__pyx_float_0_0);
   __pyx_v_quality = __pyx_float_0_0;
 
-  /* "hac/cluster.pyx":136
+  /* "hac/cluster.pyx":162
  *         num_edges = weighted_edge_count(self.super_graph)
  *         quality = 0.0
  *         for cluster_id, data in self.super_graph.nodes(data=True):             # <<<<<<<<<<<<<<
  *             # node_degree = self.super_graph.degree(cluster_id)
  *             node_degree = 0.0
  */
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_n_s_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_n_s_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_data, Py_True) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_data, Py_True) < 0) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -3973,9 +4713,9 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     __pyx_t_4 = __pyx_t_2; __Pyx_INCREF(__pyx_t_4); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 136, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 162, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_9 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 136, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 162, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -3983,17 +4723,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       if (likely(PyList_CheckExact(__pyx_t_4))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 136, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 162, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_4, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_4, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 136, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 162, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_4, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_4, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 162, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -4003,7 +4743,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 136, __pyx_L1_error)
+          else __PYX_ERR(0, 162, __pyx_L1_error)
         }
         break;
       }
@@ -4019,7 +4759,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 136, __pyx_L1_error)
+        __PYX_ERR(0, 162, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -4032,15 +4772,15 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_INCREF(__pyx_t_6);
       __Pyx_INCREF(__pyx_t_1);
       #else
-      __pyx_t_6 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 136, __pyx_L1_error)
+      __pyx_t_6 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_1 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
+      __pyx_t_1 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       #endif
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_10 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 136, __pyx_L1_error)
+      __pyx_t_10 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_11 = Py_TYPE(__pyx_t_10)->tp_iternext;
@@ -4048,7 +4788,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_GOTREF(__pyx_t_6);
       index = 1; __pyx_t_1 = __pyx_t_11(__pyx_t_10); if (unlikely(!__pyx_t_1)) goto __pyx_L7_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_1);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_11(__pyx_t_10), 2) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_11(__pyx_t_10), 2) < 0) __PYX_ERR(0, 162, __pyx_L1_error)
       __pyx_t_11 = NULL;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       goto __pyx_L8_unpacking_done;
@@ -4056,7 +4796,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __pyx_t_11 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 136, __pyx_L1_error)
+      __PYX_ERR(0, 162, __pyx_L1_error)
       __pyx_L8_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_cluster_id, __pyx_t_6);
@@ -4064,7 +4804,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     __Pyx_XDECREF_SET(__pyx_v_data, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":138
+    /* "hac/cluster.pyx":164
  *         for cluster_id, data in self.super_graph.nodes(data=True):
  *             # node_degree = self.super_graph.degree(cluster_id)
  *             node_degree = 0.0             # <<<<<<<<<<<<<<
@@ -4073,7 +4813,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
  */
     __pyx_v_node_degree = 0.0;
 
-    /* "hac/cluster.pyx":139
+    /* "hac/cluster.pyx":165
  *             # node_degree = self.super_graph.degree(cluster_id)
  *             node_degree = 0.0
  *             for edge in self.super_graph[cluster_id].itervalues():             # <<<<<<<<<<<<<<
@@ -4081,13 +4821,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
  * 
  */
     __pyx_t_12 = 0;
-    __pyx_t_1 = PyObject_GetItem(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_v_cluster_id); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
+    __pyx_t_1 = PyObject_GetItem(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_v_cluster_id); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     if (unlikely(__pyx_t_1 == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "itervalues");
-      __PYX_ERR(0, 139, __pyx_L1_error)
+      __PYX_ERR(0, 165, __pyx_L1_error)
     }
-    __pyx_t_6 = __Pyx_dict_iterator(__pyx_t_1, 0, __pyx_n_s_itervalues, (&__pyx_t_13), (&__pyx_t_7)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 139, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_dict_iterator(__pyx_t_1, 0, __pyx_n_s_itervalues, (&__pyx_t_13), (&__pyx_t_7)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 165, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_XDECREF(__pyx_t_2);
@@ -4096,12 +4836,12 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     while (1) {
       __pyx_t_14 = __Pyx_dict_iter_next(__pyx_t_2, __pyx_t_13, &__pyx_t_12, NULL, &__pyx_t_6, NULL, __pyx_t_7);
       if (unlikely(__pyx_t_14 == 0)) break;
-      if (unlikely(__pyx_t_14 == -1)) __PYX_ERR(0, 139, __pyx_L1_error)
+      if (unlikely(__pyx_t_14 == -1)) __PYX_ERR(0, 165, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_XDECREF_SET(__pyx_v_edge, __pyx_t_6);
       __pyx_t_6 = 0;
 
-      /* "hac/cluster.pyx":140
+      /* "hac/cluster.pyx":166
  *             node_degree = 0.0
  *             for edge in self.super_graph[cluster_id].itervalues():
  *                 node_degree += weight(edge)             # <<<<<<<<<<<<<<
@@ -4112,66 +4852,66 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "hac/cluster.pyx":142
+    /* "hac/cluster.pyx":168
  *                 node_degree += weight(edge)
  * 
  *             average_degree = float(node_degree) / (num_edges or 1.0)             # <<<<<<<<<<<<<<
  *             self.super_graph.add_node(cluster_id, degree=average_degree)
  *             self.dendrogram_graph.add_node(cluster_id, data)
  */
-    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_node_degree); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __pyx_t_2 = PyFloat_FromDouble(__pyx_v_node_degree); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 168, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_num_edges); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_num_edges); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 168, __pyx_L1_error)
     if (!__pyx_t_3) {
     } else {
       __Pyx_INCREF(__pyx_v_num_edges);
       __pyx_t_6 = __pyx_v_num_edges;
       goto __pyx_L11_bool_binop_done;
     }
-    __pyx_t_1 = PyFloat_FromDouble(1.0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(1.0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_6 = __pyx_t_1;
     __pyx_t_1 = 0;
     __pyx_L11_bool_binop_done:;
-    __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF_SET(__pyx_v_average_degree, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":143
+    /* "hac/cluster.pyx":169
  * 
  *             average_degree = float(node_degree) / (num_edges or 1.0)
  *             self.super_graph.add_node(cluster_id, degree=average_degree)             # <<<<<<<<<<<<<<
  *             self.dendrogram_graph.add_node(cluster_id, data)
  *             # From equation (1) in section II of the Newman paper
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(__pyx_v_cluster_id);
     __Pyx_GIVEREF(__pyx_v_cluster_id);
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_cluster_id);
-    __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 143, __pyx_L1_error)
+    __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_degree, __pyx_v_average_degree) < 0) __PYX_ERR(0, 143, __pyx_L1_error)
-    __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, __pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 143, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_degree, __pyx_v_average_degree) < 0) __PYX_ERR(0, 169, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, __pyx_t_2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 169, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-    /* "hac/cluster.pyx":144
+    /* "hac/cluster.pyx":170
  *             average_degree = float(node_degree) / (num_edges or 1.0)
  *             self.super_graph.add_node(cluster_id, degree=average_degree)
  *             self.dendrogram_graph.add_node(cluster_id, data)             # <<<<<<<<<<<<<<
  *             # From equation (1) in section II of the Newman paper
  *             quality -= float(node_degree * node_degree) / (num_edges * num_edges)
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->dendrogram_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 144, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->dendrogram_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 170, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_6 = NULL;
     __pyx_t_7 = 0;
@@ -4188,7 +4928,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_v_cluster_id, __pyx_v_data};
-      __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_GOTREF(__pyx_t_10);
     } else
@@ -4196,13 +4936,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_v_cluster_id, __pyx_v_data};
-      __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_GOTREF(__pyx_t_10);
     } else
     #endif
     {
-      __pyx_t_1 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __pyx_t_1 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       if (__pyx_t_6) {
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -4213,35 +4953,35 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_INCREF(__pyx_v_data);
       __Pyx_GIVEREF(__pyx_v_data);
       PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_7, __pyx_v_data);
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 144, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 170, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-    /* "hac/cluster.pyx":146
+    /* "hac/cluster.pyx":172
  *             self.dendrogram_graph.add_node(cluster_id, data)
  *             # From equation (1) in section II of the Newman paper
  *             quality -= float(node_degree * node_degree) / (num_edges * num_edges)             # <<<<<<<<<<<<<<
  * 
  *         for (cluster_id1, cluster_id2, edge) in self.super_graph.edges(data=True):
  */
-    __pyx_t_10 = PyFloat_FromDouble((__pyx_v_node_degree * __pyx_v_node_degree)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_10 = PyFloat_FromDouble((__pyx_v_node_degree * __pyx_v_node_degree)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_10);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_v_num_edges, __pyx_v_num_edges); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_v_num_edges, __pyx_v_num_edges); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_10, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_10, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyNumber_InPlaceSubtract(__pyx_v_quality, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_InPlaceSubtract(__pyx_v_quality, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 172, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF_SET(__pyx_v_quality, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "hac/cluster.pyx":136
+    /* "hac/cluster.pyx":162
  *         num_edges = weighted_edge_count(self.super_graph)
  *         quality = 0.0
  *         for cluster_id, data in self.super_graph.nodes(data=True):             # <<<<<<<<<<<<<<
@@ -4251,19 +4991,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":148
+  /* "hac/cluster.pyx":174
  *             quality -= float(node_degree * node_degree) / (num_edges * num_edges)
  * 
  *         for (cluster_id1, cluster_id2, edge) in self.super_graph.edges(data=True):             # <<<<<<<<<<<<<<
  *             edge_weight = weight(edge) / num_edges
  *             self.super_graph[cluster_id1][cluster_id2] = edge_weight
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_n_s_edges); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_n_s_edges); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 174, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_data, Py_True) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_data, Py_True) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4271,9 +5011,9 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_8 = 0;
     __pyx_t_9 = NULL;
   } else {
-    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 148, __pyx_L1_error)
+    __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 174, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -4281,17 +5021,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 174, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 174, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -4301,7 +5041,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 148, __pyx_L1_error)
+          else __PYX_ERR(0, 174, __pyx_L1_error)
         }
         break;
       }
@@ -4317,7 +5057,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       if (unlikely(size != 3)) {
         if (size > 3) __Pyx_RaiseTooManyValuesError(3);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 148, __pyx_L1_error)
+        __PYX_ERR(0, 174, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -4333,17 +5073,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_INCREF(__pyx_t_10);
       __Pyx_INCREF(__pyx_t_6);
       #else
-      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 174, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_10 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_10 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 174, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_6 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_6 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 174, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       #endif
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_15 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_15 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 174, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_15);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_11 = Py_TYPE(__pyx_t_15)->tp_iternext;
@@ -4353,7 +5093,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_GOTREF(__pyx_t_10);
       index = 2; __pyx_t_6 = __pyx_t_11(__pyx_t_15); if (unlikely(!__pyx_t_6)) goto __pyx_L15_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_6);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_11(__pyx_t_15), 3) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_11(__pyx_t_15), 3) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
       __pyx_t_11 = NULL;
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       goto __pyx_L16_unpacking_done;
@@ -4361,7 +5101,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       __pyx_t_11 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 148, __pyx_L1_error)
+      __PYX_ERR(0, 174, __pyx_L1_error)
       __pyx_L16_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_cluster_id1, __pyx_t_4);
@@ -4371,46 +5111,46 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     __Pyx_XDECREF_SET(__pyx_v_edge, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "hac/cluster.pyx":149
+    /* "hac/cluster.pyx":175
  * 
  *         for (cluster_id1, cluster_id2, edge) in self.super_graph.edges(data=True):
  *             edge_weight = weight(edge) / num_edges             # <<<<<<<<<<<<<<
  *             self.super_graph[cluster_id1][cluster_id2] = edge_weight
  *             self.super_graph[cluster_id2][cluster_id1] = edge_weight
  */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weight(__pyx_v_edge, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_f_3hac_7cluster_weight(__pyx_v_edge, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 175, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_v_num_edges); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_v_num_edges); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 175, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_XDECREF_SET(__pyx_v_edge_weight, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "hac/cluster.pyx":150
+    /* "hac/cluster.pyx":176
  *         for (cluster_id1, cluster_id2, edge) in self.super_graph.edges(data=True):
  *             edge_weight = weight(edge) / num_edges
  *             self.super_graph[cluster_id1][cluster_id2] = edge_weight             # <<<<<<<<<<<<<<
  *             self.super_graph[cluster_id2][cluster_id1] = edge_weight
  * 
  */
-    __pyx_t_6 = PyObject_GetItem(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
+    __pyx_t_6 = PyObject_GetItem(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 176, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_cluster_id2, __pyx_v_edge_weight) < 0)) __PYX_ERR(0, 150, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_cluster_id2, __pyx_v_edge_weight) < 0)) __PYX_ERR(0, 176, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "hac/cluster.pyx":151
+    /* "hac/cluster.pyx":177
  *             edge_weight = weight(edge) / num_edges
  *             self.super_graph[cluster_id1][cluster_id2] = edge_weight
  *             self.super_graph[cluster_id2][cluster_id1] = edge_weight             # <<<<<<<<<<<<<<
  * 
  *         self.reheapify()
  */
-    __pyx_t_6 = PyObject_GetItem(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 151, __pyx_L1_error)
+    __pyx_t_6 = PyObject_GetItem(__pyx_cur_scope->__pyx_v_self->super_graph, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_cluster_id1, __pyx_v_edge_weight) < 0)) __PYX_ERR(0, 151, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_cluster_id1, __pyx_v_edge_weight) < 0)) __PYX_ERR(0, 177, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "hac/cluster.pyx":148
+    /* "hac/cluster.pyx":174
  *             quality -= float(node_degree * node_degree) / (num_edges * num_edges)
  * 
  *         for (cluster_id1, cluster_id2, edge) in self.super_graph.edges(data=True):             # <<<<<<<<<<<<<<
@@ -4420,14 +5160,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":153
+  /* "hac/cluster.pyx":179
  *             self.super_graph[cluster_id2][cluster_id1] = edge_weight
  * 
  *         self.reheapify()             # <<<<<<<<<<<<<<
  *         if self.forced_clusters:
  *             self.build_forced_clusters()
  */
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_n_s_reheapify); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_n_s_reheapify); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 179, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -4440,16 +5180,16 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (__pyx_t_1) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 153, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":154
+  /* "hac/cluster.pyx":180
  * 
  *         self.reheapify()
  *         if self.forced_clusters:             # <<<<<<<<<<<<<<
@@ -4459,14 +5199,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __pyx_t_3 = (__pyx_cur_scope->__pyx_v_self->forced_clusters != Py_None) && (PyList_GET_SIZE(__pyx_cur_scope->__pyx_v_self->forced_clusters) != 0);
   if (__pyx_t_3) {
 
-    /* "hac/cluster.pyx":155
+    /* "hac/cluster.pyx":181
  *         self.reheapify()
  *         if self.forced_clusters:
  *             self.build_forced_clusters()             # <<<<<<<<<<<<<<
  *         self.run_greedy_clustering(quality)
  *         nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_n_s_build_forced_clusters); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 155, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_n_s_build_forced_clusters); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 181, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_1 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -4479,16 +5219,16 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
       }
     }
     if (__pyx_t_1) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     } else {
-      __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 181, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "hac/cluster.pyx":154
+    /* "hac/cluster.pyx":180
  * 
  *         self.reheapify()
  *         if self.forced_clusters:             # <<<<<<<<<<<<<<
@@ -4497,14 +5237,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
  */
   }
 
-  /* "hac/cluster.pyx":156
+  /* "hac/cluster.pyx":182
  *         if self.forced_clusters:
  *             self.build_forced_clusters()
  *         self.run_greedy_clustering(quality)             # <<<<<<<<<<<<<<
  *         nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_n_s_run_greedy_clustering); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 156, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_cur_scope->__pyx_v_self), __pyx_n_s_run_greedy_clustering); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_1 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -4517,13 +5257,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     }
   }
   if (!__pyx_t_1) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_quality); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_quality); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_v_quality};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -4531,19 +5271,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_v_quality};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 156, __pyx_L1_error)
+      __pyx_t_10 = PyTuple_New(1+1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_1); __pyx_t_1 = NULL;
       __Pyx_INCREF(__pyx_v_quality);
       __Pyx_GIVEREF(__pyx_v_quality);
       PyTuple_SET_ITEM(__pyx_t_10, 0+1, __pyx_v_quality);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 156, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     }
@@ -4551,21 +5291,21 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":157
+  /* "hac/cluster.pyx":183
  *             self.build_forced_clusters()
  *         self.run_greedy_clustering(quality)
  *         nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)             # <<<<<<<<<<<<<<
  * 
  *         return Dendrogram(self.dendrogram_graph, self.quality_history,
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_cur_scope->__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_10 = PyTuple_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_10 = PyTuple_New(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_self->dendrogram_graph);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_self->dendrogram_graph);
@@ -4573,17 +5313,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_10, 1, __pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_2 = PyDict_New(); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_10, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_10, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":159
+  /* "hac/cluster.pyx":185
  *         nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)
  * 
  *         return Dendrogram(self.dendrogram_graph, self.quality_history,             # <<<<<<<<<<<<<<
@@ -4592,24 +5332,24 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
  */
   __Pyx_XDECREF(__pyx_r);
 
-  /* "hac/cluster.pyx":160
+  /* "hac/cluster.pyx":186
  * 
  *         return Dendrogram(self.dendrogram_graph, self.quality_history,
  *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters)             # <<<<<<<<<<<<<<
  * 
  *     def build_forced_clusters(self):
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "hac/cluster.pyx":159
+  /* "hac/cluster.pyx":185
  *         nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)
  * 
  *         return Dendrogram(self.dendrogram_graph, self.quality_history,             # <<<<<<<<<<<<<<
  *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters)
  * 
  */
-  __pyx_t_2 = PyTuple_New(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_self->dendrogram_graph);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_self->dendrogram_graph);
@@ -4629,15 +5369,15 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 5, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3hac_7cluster_Dendrogram), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_3hac_7cluster_Dendrogram), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":106
- *         self.optimal_clusters = num_clusters or 0
+  /* "hac/cluster.pyx":132
+ *         return self.get_state() == other.get_state()
  * 
  *     def cluster(self, graph, forced_clusters=None):             # <<<<<<<<<<<<<<
  *         '''
@@ -4670,7 +5410,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":162
+/* "hac/cluster.pyx":188
  *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters)
  * 
  *     def build_forced_clusters(self):             # <<<<<<<<<<<<<<
@@ -4679,19 +5419,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster(
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_5build_forced_clusters(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_5build_forced_clusters(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15build_forced_clusters(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15build_forced_clusters(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("build_forced_clusters (wrapper)", 0);
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_forced_clusters(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14build_forced_clusters(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_forced_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14build_forced_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
   PyObject *__pyx_v_cluster = NULL;
   PyObject *__pyx_v_precluster_nodes = NULL;
   PyObject *__pyx_v_node = NULL;
@@ -4714,7 +5454,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
   PyObject *__pyx_t_15 = NULL;
   __Pyx_RefNannySetupContext("build_forced_clusters", 0);
 
-  /* "hac/cluster.pyx":164
+  /* "hac/cluster.pyx":190
  *     def build_forced_clusters(self):
  *         # create a cluster from "unspecified" nodes
  *         for cluster in self.forced_clusters:             # <<<<<<<<<<<<<<
@@ -4723,33 +5463,33 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
  */
   if (unlikely(__pyx_v_self->forced_clusters == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 164, __pyx_L1_error)
+    __PYX_ERR(0, 190, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_v_self->forced_clusters; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
     if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 164, __pyx_L1_error)
+    __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 190, __pyx_L1_error)
     #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 190, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_cluster, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":165
+    /* "hac/cluster.pyx":191
  *         # create a cluster from "unspecified" nodes
  *         for cluster in self.forced_clusters:
  *             precluster_nodes = []             # <<<<<<<<<<<<<<
  *             for node in self.rename_map.integer.iterkeys():
  *                 if node in cluster:
  */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 165, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 191, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF_SET(__pyx_v_precluster_nodes, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":166
+    /* "hac/cluster.pyx":192
  *         for cluster in self.forced_clusters:
  *             precluster_nodes = []
  *             for node in self.rename_map.integer.iterkeys():             # <<<<<<<<<<<<<<
@@ -4757,13 +5497,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
  *                     precluster_nodes.append(self.rename_map.integer[node])
  */
     __pyx_t_4 = 0;
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 192, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (unlikely(__pyx_t_7 == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "iterkeys");
-      __PYX_ERR(0, 166, __pyx_L1_error)
+      __PYX_ERR(0, 192, __pyx_L1_error)
     }
-    __pyx_t_8 = __Pyx_dict_iterator(__pyx_t_7, 0, __pyx_n_s_iterkeys, (&__pyx_t_5), (&__pyx_t_6)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 166, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_dict_iterator(__pyx_t_7, 0, __pyx_n_s_iterkeys, (&__pyx_t_5), (&__pyx_t_6)); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 192, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_XDECREF(__pyx_t_3);
@@ -4772,38 +5512,38 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
     while (1) {
       __pyx_t_9 = __Pyx_dict_iter_next(__pyx_t_3, __pyx_t_5, &__pyx_t_4, &__pyx_t_8, NULL, NULL, __pyx_t_6);
       if (unlikely(__pyx_t_9 == 0)) break;
-      if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 166, __pyx_L1_error)
+      if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 192, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_XDECREF_SET(__pyx_v_node, __pyx_t_8);
       __pyx_t_8 = 0;
 
-      /* "hac/cluster.pyx":167
+      /* "hac/cluster.pyx":193
  *             precluster_nodes = []
  *             for node in self.rename_map.integer.iterkeys():
  *                 if node in cluster:             # <<<<<<<<<<<<<<
  *                     precluster_nodes.append(self.rename_map.integer[node])
  *             while len(precluster_nodes) > 1:
  */
-      __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_cluster, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 167, __pyx_L1_error)
+      __pyx_t_10 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_cluster, Py_EQ)); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 193, __pyx_L1_error)
       __pyx_t_11 = (__pyx_t_10 != 0);
       if (__pyx_t_11) {
 
-        /* "hac/cluster.pyx":168
+        /* "hac/cluster.pyx":194
  *             for node in self.rename_map.integer.iterkeys():
  *                 if node in cluster:
  *                     precluster_nodes.append(self.rename_map.integer[node])             # <<<<<<<<<<<<<<
  *             while len(precluster_nodes) > 1:
  *                 self.combine_clusters(precluster_nodes[0], precluster_nodes[1])
  */
-        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 194, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_7 = PyObject_GetItem(__pyx_t_8, __pyx_v_node); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_7 = PyObject_GetItem(__pyx_t_8, __pyx_v_node); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 194, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_precluster_nodes, __pyx_t_7); if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 168, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_precluster_nodes, __pyx_t_7); if (unlikely(__pyx_t_12 == -1)) __PYX_ERR(0, 194, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-        /* "hac/cluster.pyx":167
+        /* "hac/cluster.pyx":193
  *             precluster_nodes = []
  *             for node in self.rename_map.integer.iterkeys():
  *                 if node in cluster:             # <<<<<<<<<<<<<<
@@ -4814,7 +5554,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":169
+    /* "hac/cluster.pyx":195
  *                 if node in cluster:
  *                     precluster_nodes.append(self.rename_map.integer[node])
  *             while len(precluster_nodes) > 1:             # <<<<<<<<<<<<<<
@@ -4822,22 +5562,22 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
  *                 precluster_nodes.pop(0)
  */
     while (1) {
-      __pyx_t_5 = PyList_GET_SIZE(__pyx_v_precluster_nodes); if (unlikely(__pyx_t_5 == -1)) __PYX_ERR(0, 169, __pyx_L1_error)
+      __pyx_t_5 = PyList_GET_SIZE(__pyx_v_precluster_nodes); if (unlikely(__pyx_t_5 == -1)) __PYX_ERR(0, 195, __pyx_L1_error)
       __pyx_t_11 = ((__pyx_t_5 > 1) != 0);
       if (!__pyx_t_11) break;
 
-      /* "hac/cluster.pyx":170
+      /* "hac/cluster.pyx":196
  *                     precluster_nodes.append(self.rename_map.integer[node])
  *             while len(precluster_nodes) > 1:
  *                 self.combine_clusters(precluster_nodes[0], precluster_nodes[1])             # <<<<<<<<<<<<<<
  *                 precluster_nodes.pop(0)
  *                 precluster_nodes.pop(0)
  */
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 170, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 196, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = __Pyx_GetItemInt_List(__pyx_v_precluster_nodes, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 170, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_GetItemInt_List(__pyx_v_precluster_nodes, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 196, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_13 = __Pyx_GetItemInt_List(__pyx_v_precluster_nodes, 1, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 170, __pyx_L1_error)
+      __pyx_t_13 = __Pyx_GetItemInt_List(__pyx_v_precluster_nodes, 1, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 196, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_13);
       __pyx_t_14 = NULL;
       __pyx_t_6 = 0;
@@ -4854,7 +5594,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_7)) {
         PyObject *__pyx_temp[3] = {__pyx_t_14, __pyx_t_8, __pyx_t_13};
-        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 170, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 196, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -4864,7 +5604,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
         PyObject *__pyx_temp[3] = {__pyx_t_14, __pyx_t_8, __pyx_t_13};
-        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 170, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 196, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -4872,7 +5612,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
       } else
       #endif
       {
-        __pyx_t_15 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 170, __pyx_L1_error)
+        __pyx_t_15 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 196, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
         if (__pyx_t_14) {
           __Pyx_GIVEREF(__pyx_t_14); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_14); __pyx_t_14 = NULL;
@@ -4883,36 +5623,36 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
         PyTuple_SET_ITEM(__pyx_t_15, 1+__pyx_t_6, __pyx_t_13);
         __pyx_t_8 = 0;
         __pyx_t_13 = 0;
-        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 170, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 196, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
       }
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "hac/cluster.pyx":171
+      /* "hac/cluster.pyx":197
  *             while len(precluster_nodes) > 1:
  *                 self.combine_clusters(precluster_nodes[0], precluster_nodes[1])
  *                 precluster_nodes.pop(0)             # <<<<<<<<<<<<<<
  *                 precluster_nodes.pop(0)
  *                 while precluster_nodes:
  */
-      __pyx_t_3 = __Pyx_PyList_PopIndex(__pyx_v_precluster_nodes, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyList_PopIndex(__pyx_v_precluster_nodes, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 197, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "hac/cluster.pyx":172
+      /* "hac/cluster.pyx":198
  *                 self.combine_clusters(precluster_nodes[0], precluster_nodes[1])
  *                 precluster_nodes.pop(0)
  *                 precluster_nodes.pop(0)             # <<<<<<<<<<<<<<
  *                 while precluster_nodes:
  *                     self.combine_clusters(self.den_num-1, precluster_nodes[0])
  */
-      __pyx_t_3 = __Pyx_PyList_PopIndex(__pyx_v_precluster_nodes, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 172, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyList_PopIndex(__pyx_v_precluster_nodes, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 198, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "hac/cluster.pyx":173
+      /* "hac/cluster.pyx":199
  *                 precluster_nodes.pop(0)
  *                 precluster_nodes.pop(0)
  *                 while precluster_nodes:             # <<<<<<<<<<<<<<
@@ -4923,18 +5663,18 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
         __pyx_t_11 = (__pyx_v_precluster_nodes != Py_None) && (PyList_GET_SIZE(__pyx_v_precluster_nodes) != 0);
         if (!__pyx_t_11) break;
 
-        /* "hac/cluster.pyx":174
+        /* "hac/cluster.pyx":200
  *                 precluster_nodes.pop(0)
  *                 while precluster_nodes:
  *                     self.combine_clusters(self.den_num-1, precluster_nodes[0])             # <<<<<<<<<<<<<<
  *                     precluster_nodes.pop(0)
  * 
  */
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 174, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 200, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_15 = __Pyx_PyInt_From_long((__pyx_v_self->den_num - 1)); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 174, __pyx_L1_error)
+        __pyx_t_15 = __Pyx_PyInt_From_long((__pyx_v_self->den_num - 1)); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 200, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_15);
-        __pyx_t_13 = __Pyx_GetItemInt_List(__pyx_v_precluster_nodes, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 174, __pyx_L1_error)
+        __pyx_t_13 = __Pyx_GetItemInt_List(__pyx_v_precluster_nodes, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 200, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_13);
         __pyx_t_8 = NULL;
         __pyx_t_6 = 0;
@@ -4951,7 +5691,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_t_15, __pyx_t_13};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 200, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -4961,7 +5701,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
           PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_t_15, __pyx_t_13};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 200, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
@@ -4969,7 +5709,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
         } else
         #endif
         {
-          __pyx_t_14 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 174, __pyx_L1_error)
+          __pyx_t_14 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 200, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_14);
           if (__pyx_t_8) {
             __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_14, 0, __pyx_t_8); __pyx_t_8 = NULL;
@@ -4980,27 +5720,27 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
           PyTuple_SET_ITEM(__pyx_t_14, 1+__pyx_t_6, __pyx_t_13);
           __pyx_t_15 = 0;
           __pyx_t_13 = 0;
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 200, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         }
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "hac/cluster.pyx":175
+        /* "hac/cluster.pyx":201
  *                 while precluster_nodes:
  *                     self.combine_clusters(self.den_num-1, precluster_nodes[0])
  *                     precluster_nodes.pop(0)             # <<<<<<<<<<<<<<
  * 
  *     def reheapify(self):
  */
-        __pyx_t_3 = __Pyx_PyList_PopIndex(__pyx_v_precluster_nodes, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 175, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyList_PopIndex(__pyx_v_precluster_nodes, __pyx_int_0, 0, 1, Py_ssize_t, PyInt_FromSsize_t); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 201, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
     }
 
-    /* "hac/cluster.pyx":164
+    /* "hac/cluster.pyx":190
  *     def build_forced_clusters(self):
  *         # create a cluster from "unspecified" nodes
  *         for cluster in self.forced_clusters:             # <<<<<<<<<<<<<<
@@ -5010,7 +5750,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":162
+  /* "hac/cluster.pyx":188
  *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters)
  * 
  *     def build_forced_clusters(self):             # <<<<<<<<<<<<<<
@@ -5040,7 +5780,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":177
+/* "hac/cluster.pyx":203
  *                     precluster_nodes.pop(0)
  * 
  *     def reheapify(self):             # <<<<<<<<<<<<<<
@@ -5049,19 +5789,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_4build_fo
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_7reheapify(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_7reheapify(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_17reheapify(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_17reheapify(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("reheapify (wrapper)", 0);
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapify(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16reheapify(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapify(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16reheapify(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self) {
   PyObject *__pyx_v_id1 = NULL;
   PyObject *__pyx_v_id2 = NULL;
   PyObject *__pyx_r = NULL;
@@ -5077,14 +5817,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
   int __pyx_t_9;
   __Pyx_RefNannySetupContext("reheapify", 0);
 
-  /* "hac/cluster.pyx":178
+  /* "hac/cluster.pyx":204
  * 
  *     def reheapify(self):
  *         self.pair_cost_heap = []             # <<<<<<<<<<<<<<
  *         for (id1, id2) in self.super_graph.edges_iter():
  *             self.add_pair_to_cost_heap(id1, id2)
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 178, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 204, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
   __Pyx_GOTREF(__pyx_v_self->pair_cost_heap);
@@ -5092,14 +5832,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
   __pyx_v_self->pair_cost_heap = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":179
+  /* "hac/cluster.pyx":205
  *     def reheapify(self):
  *         self.pair_cost_heap = []
  *         for (id1, id2) in self.super_graph.edges_iter():             # <<<<<<<<<<<<<<
  *             self.add_pair_to_cost_heap(id1, id2)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_edges_iter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_edges_iter); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5112,10 +5852,10 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -5123,9 +5863,9 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
     __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 205, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 179, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 205, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -5133,17 +5873,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 179, __pyx_L1_error)
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 205, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 179, __pyx_L1_error)
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 205, __pyx_L1_error)
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -5153,7 +5893,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 179, __pyx_L1_error)
+          else __PYX_ERR(0, 205, __pyx_L1_error)
         }
         break;
       }
@@ -5169,7 +5909,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 179, __pyx_L1_error)
+        __PYX_ERR(0, 205, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -5182,15 +5922,15 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
       __Pyx_INCREF(__pyx_t_3);
       __Pyx_INCREF(__pyx_t_6);
       #else
-      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 179, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 179, __pyx_L1_error)
+      __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 205, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       #endif
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 179, __pyx_L1_error)
+      __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 205, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __pyx_t_8 = Py_TYPE(__pyx_t_7)->tp_iternext;
@@ -5198,7 +5938,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
       __Pyx_GOTREF(__pyx_t_3);
       index = 1; __pyx_t_6 = __pyx_t_8(__pyx_t_7); if (unlikely(!__pyx_t_6)) goto __pyx_L5_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_6);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 2) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 2) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
       __pyx_t_8 = NULL;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       goto __pyx_L6_unpacking_done;
@@ -5206,7 +5946,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_8 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 179, __pyx_L1_error)
+      __PYX_ERR(0, 205, __pyx_L1_error)
       __pyx_L6_unpacking_done:;
     }
     __Pyx_XDECREF_SET(__pyx_v_id1, __pyx_t_3);
@@ -5214,14 +5954,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
     __Pyx_XDECREF_SET(__pyx_v_id2, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "hac/cluster.pyx":180
+    /* "hac/cluster.pyx":206
  *         self.pair_cost_heap = []
  *         for (id1, id2) in self.super_graph.edges_iter():
  *             self.add_pair_to_cost_heap(id1, id2)             # <<<<<<<<<<<<<<
  * 
  *     def run_greedy_clustering(self, quality, reheap_steps=500):
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_pair_to_cost_heap); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 180, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_pair_to_cost_heap); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 206, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_3 = NULL;
     __pyx_t_9 = 0;
@@ -5238,7 +5978,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -5246,13 +5986,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_7 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       if (__pyx_t_3) {
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -5263,14 +6003,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
       __Pyx_INCREF(__pyx_v_id2);
       __Pyx_GIVEREF(__pyx_v_id2);
       PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_9, __pyx_v_id2);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":179
+    /* "hac/cluster.pyx":205
  *     def reheapify(self):
  *         self.pair_cost_heap = []
  *         for (id1, id2) in self.super_graph.edges_iter():             # <<<<<<<<<<<<<<
@@ -5280,7 +6020,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":177
+  /* "hac/cluster.pyx":203
  *                     precluster_nodes.pop(0)
  * 
  *     def reheapify(self):             # <<<<<<<<<<<<<<
@@ -5307,7 +6047,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":182
+/* "hac/cluster.pyx":208
  *             self.add_pair_to_cost_heap(id1, id2)
  * 
  *     def run_greedy_clustering(self, quality, reheap_steps=500):             # <<<<<<<<<<<<<<
@@ -5316,8 +6056,8 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_6reheapif
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9run_greedy_clustering(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9run_greedy_clustering(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_19run_greedy_clustering(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_19run_greedy_clustering(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_quality = 0;
   CYTHON_UNUSED PyObject *__pyx_v_reheap_steps = 0;
   PyObject *__pyx_r = 0;
@@ -5348,7 +6088,7 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9run_gree
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "run_greedy_clustering") < 0)) __PYX_ERR(0, 182, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "run_greedy_clustering") < 0)) __PYX_ERR(0, 208, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -5363,20 +6103,20 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9run_gree
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("run_greedy_clustering", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 182, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("run_greedy_clustering", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 208, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.run_greedy_clustering", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_greedy_clustering(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_quality, __pyx_v_reheap_steps);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_18run_greedy_clustering(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_quality, __pyx_v_reheap_steps);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_greedy_clustering(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_quality, CYTHON_UNUSED PyObject *__pyx_v_reheap_steps) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_18run_greedy_clustering(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_quality, CYTHON_UNUSED PyObject *__pyx_v_reheap_steps) {
   CYTHON_UNUSED PyObject *__pyx_v_last_heapify = NULL;
   PyObject *__pyx_v_qd = NULL;
   PyObject *__pyx_v_id1 = NULL;
@@ -5401,14 +6141,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
   __Pyx_RefNannySetupContext("run_greedy_clustering", 0);
   __Pyx_INCREF(__pyx_v_quality);
 
-  /* "hac/cluster.pyx":183
+  /* "hac/cluster.pyx":209
  * 
  *     def run_greedy_clustering(self, quality, reheap_steps=500):
  *         self.quality_history = [quality]             # <<<<<<<<<<<<<<
  *         last_heapify = self.super_graph.number_of_nodes()
  *         while len(self.super_graph) > 1:
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_quality);
   __Pyx_GIVEREF(__pyx_v_quality);
@@ -5419,14 +6159,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
   __pyx_v_self->quality_history = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":184
+  /* "hac/cluster.pyx":210
  *     def run_greedy_clustering(self, quality, reheap_steps=500):
  *         self.quality_history = [quality]
  *         last_heapify = self.super_graph.number_of_nodes()             # <<<<<<<<<<<<<<
  *         while len(self.super_graph) > 1:
  *             while True:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_number_of_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_number_of_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5439,17 +6179,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 210, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 210, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_last_heapify = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":185
+  /* "hac/cluster.pyx":211
  *         self.quality_history = [quality]
  *         last_heapify = self.super_graph.number_of_nodes()
  *         while len(self.super_graph) > 1:             # <<<<<<<<<<<<<<
@@ -5459,12 +6199,12 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
   while (1) {
     __pyx_t_1 = __pyx_v_self->super_graph;
     __Pyx_INCREF(__pyx_t_1);
-    __pyx_t_4 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 185, __pyx_L1_error)
+    __pyx_t_4 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_5 = ((__pyx_t_4 > 1) != 0);
     if (!__pyx_t_5) break;
 
-    /* "hac/cluster.pyx":186
+    /* "hac/cluster.pyx":212
  *         last_heapify = self.super_graph.number_of_nodes()
  *         while len(self.super_graph) > 1:
  *             while True:             # <<<<<<<<<<<<<<
@@ -5473,7 +6213,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
     while (1) {
 
-      /* "hac/cluster.pyx":187
+      /* "hac/cluster.pyx":213
  *         while len(self.super_graph) > 1:
  *             while True:
  *                 if self.pair_cost_heap:             # <<<<<<<<<<<<<<
@@ -5483,16 +6223,16 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
       __pyx_t_5 = (__pyx_v_self->pair_cost_heap != Py_None) && (PyList_GET_SIZE(__pyx_v_self->pair_cost_heap) != 0);
       if (__pyx_t_5) {
 
-        /* "hac/cluster.pyx":188
+        /* "hac/cluster.pyx":214
  *             while True:
  *                 if self.pair_cost_heap:
  *                     qd, id1, id2 = heapq.heappop(self.pair_cost_heap)             # <<<<<<<<<<<<<<
  *                 else:
  *                     for x in self.super_graph.nodes():
  */
-        __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 188, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_heappop); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 188, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_heappop); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 214, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __pyx_t_2 = NULL;
@@ -5506,13 +6246,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           }
         }
         if (!__pyx_t_2) {
-          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_self->pair_cost_heap); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_self->pair_cost_heap); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 214, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_1);
         } else {
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_v_self->pair_cost_heap};
-            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 214, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
@@ -5520,19 +6260,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_v_self->pair_cost_heap};
-            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 214, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
             __Pyx_GOTREF(__pyx_t_1);
           } else
           #endif
           {
-            __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 188, __pyx_L1_error)
+            __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 214, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_2); __pyx_t_2 = NULL;
             __Pyx_INCREF(__pyx_v_self->pair_cost_heap);
             __Pyx_GIVEREF(__pyx_v_self->pair_cost_heap);
             PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_self->pair_cost_heap);
-            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 214, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           }
@@ -5548,7 +6288,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           if (unlikely(size != 3)) {
             if (size > 3) __Pyx_RaiseTooManyValuesError(3);
             else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-            __PYX_ERR(0, 188, __pyx_L1_error)
+            __PYX_ERR(0, 214, __pyx_L1_error)
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
           if (likely(PyTuple_CheckExact(sequence))) {
@@ -5564,17 +6304,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           __Pyx_INCREF(__pyx_t_6);
           __Pyx_INCREF(__pyx_t_2);
           #else
-          __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 188, __pyx_L1_error)
+          __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 214, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 188, __pyx_L1_error)
+          __pyx_t_6 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 214, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_2 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 188, __pyx_L1_error)
+          __pyx_t_2 = PySequence_ITEM(sequence, 2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           #endif
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         } else {
           Py_ssize_t index = -1;
-          __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 188, __pyx_L1_error)
+          __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 214, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           __pyx_t_8 = Py_TYPE(__pyx_t_7)->tp_iternext;
@@ -5584,7 +6324,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           __Pyx_GOTREF(__pyx_t_6);
           index = 2; __pyx_t_2 = __pyx_t_8(__pyx_t_7); if (unlikely(!__pyx_t_2)) goto __pyx_L8_unpacking_failed;
           __Pyx_GOTREF(__pyx_t_2);
-          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 3) < 0) __PYX_ERR(0, 188, __pyx_L1_error)
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 3) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
           __pyx_t_8 = NULL;
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
           goto __pyx_L9_unpacking_done;
@@ -5592,7 +6332,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
           __pyx_t_8 = NULL;
           if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-          __PYX_ERR(0, 188, __pyx_L1_error)
+          __PYX_ERR(0, 214, __pyx_L1_error)
           __pyx_L9_unpacking_done:;
         }
         __Pyx_XDECREF_SET(__pyx_v_qd, __pyx_t_3);
@@ -5602,7 +6342,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         __Pyx_XDECREF_SET(__pyx_v_id2, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "hac/cluster.pyx":187
+        /* "hac/cluster.pyx":213
  *         while len(self.super_graph) > 1:
  *             while True:
  *                 if self.pair_cost_heap:             # <<<<<<<<<<<<<<
@@ -5612,7 +6352,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         goto __pyx_L7;
       }
 
-      /* "hac/cluster.pyx":190
+      /* "hac/cluster.pyx":216
  *                     qd, id1, id2 = heapq.heappop(self.pair_cost_heap)
  *                 else:
  *                     for x in self.super_graph.nodes():             # <<<<<<<<<<<<<<
@@ -5620,7 +6360,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  *                         # iteration completes, so need to check its existence
  */
       /*else*/ {
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 190, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __pyx_t_6 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -5633,10 +6373,10 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           }
         }
         if (__pyx_t_6) {
-          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 190, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         } else {
-          __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 190, __pyx_L1_error)
+          __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
         }
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -5644,9 +6384,9 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           __pyx_t_2 = __pyx_t_1; __Pyx_INCREF(__pyx_t_2); __pyx_t_4 = 0;
           __pyx_t_9 = NULL;
         } else {
-          __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 190, __pyx_L1_error)
+          __pyx_t_4 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
-          __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 190, __pyx_L1_error)
+          __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 216, __pyx_L1_error)
         }
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         for (;;) {
@@ -5654,17 +6394,17 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
             if (likely(PyList_CheckExact(__pyx_t_2))) {
               if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_2)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __pyx_t_1 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 216, __pyx_L1_error)
               #else
-              __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_1);
               #endif
             } else {
               if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_4); __Pyx_INCREF(__pyx_t_1); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 216, __pyx_L1_error)
               #else
-              __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __pyx_t_1 = PySequence_ITEM(__pyx_t_2, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_1);
               #endif
             }
@@ -5674,7 +6414,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
               PyObject* exc_type = PyErr_Occurred();
               if (exc_type) {
                 if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                else __PYX_ERR(0, 190, __pyx_L1_error)
+                else __PYX_ERR(0, 216, __pyx_L1_error)
               }
               break;
             }
@@ -5683,14 +6423,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
           __Pyx_XDECREF_SET(__pyx_v_x, __pyx_t_1);
           __pyx_t_1 = 0;
 
-          /* "hac/cluster.pyx":193
+          /* "hac/cluster.pyx":219
  *                         # combining nodes can cause x to be removed before
  *                         # iteration completes, so need to check its existence
  *                         if self.super_graph.has_node(x):             # <<<<<<<<<<<<<<
  *                             if not self.super_graph[x]:
  *                                 self.combine_clusters(x, max(self.super_graph.nodes()))
  */
-          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_has_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 193, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_has_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 219, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __pyx_t_3 = NULL;
           if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -5703,13 +6443,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
             }
           }
           if (!__pyx_t_3) {
-            __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+            __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
           } else {
             #if CYTHON_FAST_PYCALL
             if (PyFunction_Check(__pyx_t_6)) {
               PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_x};
-              __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
               __Pyx_GOTREF(__pyx_t_1);
             } else
@@ -5717,52 +6457,52 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
             #if CYTHON_FAST_PYCCALL
             if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
               PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_x};
-              __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
               __Pyx_GOTREF(__pyx_t_1);
             } else
             #endif
             {
-              __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 219, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_7);
               __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3); __pyx_t_3 = NULL;
               __Pyx_INCREF(__pyx_v_x);
               __Pyx_GIVEREF(__pyx_v_x);
               PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_v_x);
-              __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_1);
               __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
             }
           }
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 193, __pyx_L1_error)
+          __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 219, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
           if (__pyx_t_5) {
 
-            /* "hac/cluster.pyx":194
+            /* "hac/cluster.pyx":220
  *                         # iteration completes, so need to check its existence
  *                         if self.super_graph.has_node(x):
  *                             if not self.super_graph[x]:             # <<<<<<<<<<<<<<
  *                                 self.combine_clusters(x, max(self.super_graph.nodes()))
  *                                 self.quality_history.append(quality)
  */
-            __pyx_t_1 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+            __pyx_t_1 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 220, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_1);
-            __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 194, __pyx_L1_error)
+            __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 220, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
             __pyx_t_10 = ((!__pyx_t_5) != 0);
             if (__pyx_t_10) {
 
-              /* "hac/cluster.pyx":195
+              /* "hac/cluster.pyx":221
  *                         if self.super_graph.has_node(x):
  *                             if not self.super_graph[x]:
  *                                 self.combine_clusters(x, max(self.super_graph.nodes()))             # <<<<<<<<<<<<<<
  *                                 self.quality_history.append(quality)
  *                     break
  */
-              __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 221, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_6);
-              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_nodes); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_nodes); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 221, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_3);
               __pyx_t_11 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -5775,19 +6515,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
                 }
               }
               if (__pyx_t_11) {
-                __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 195, __pyx_L1_error)
+                __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 221, __pyx_L1_error)
                 __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
               } else {
-                __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 195, __pyx_L1_error)
+                __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 221, __pyx_L1_error)
               }
               __Pyx_GOTREF(__pyx_t_7);
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 221, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_3);
               __Pyx_GIVEREF(__pyx_t_7);
               PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_7);
               __pyx_t_7 = 0;
-              __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_3, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_3, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 221, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_7);
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
               __pyx_t_3 = NULL;
@@ -5805,7 +6545,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
               #if CYTHON_FAST_PYCALL
               if (PyFunction_Check(__pyx_t_6)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_x, __pyx_t_7};
-                __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
+                __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
                 __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -5814,14 +6554,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
               #if CYTHON_FAST_PYCCALL
               if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
                 PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_x, __pyx_t_7};
-                __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
+                __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
                 __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
               } else
               #endif
               {
-                __pyx_t_11 = PyTuple_New(2+__pyx_t_12); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 195, __pyx_L1_error)
+                __pyx_t_11 = PyTuple_New(2+__pyx_t_12); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 221, __pyx_L1_error)
                 __Pyx_GOTREF(__pyx_t_11);
                 if (__pyx_t_3) {
                   __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -5832,14 +6572,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
                 __Pyx_GIVEREF(__pyx_t_7);
                 PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_12, __pyx_t_7);
                 __pyx_t_7 = 0;
-                __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
+                __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
                 __Pyx_GOTREF(__pyx_t_1);
                 __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
               }
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
               __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-              /* "hac/cluster.pyx":196
+              /* "hac/cluster.pyx":222
  *                             if not self.super_graph[x]:
  *                                 self.combine_clusters(x, max(self.super_graph.nodes()))
  *                                 self.quality_history.append(quality)             # <<<<<<<<<<<<<<
@@ -5848,11 +6588,11 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
               if (unlikely(__pyx_v_self->quality_history == Py_None)) {
                 PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "append");
-                __PYX_ERR(0, 196, __pyx_L1_error)
+                __PYX_ERR(0, 222, __pyx_L1_error)
               }
-              __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_self->quality_history, __pyx_v_quality); if (unlikely(__pyx_t_13 == -1)) __PYX_ERR(0, 196, __pyx_L1_error)
+              __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_self->quality_history, __pyx_v_quality); if (unlikely(__pyx_t_13 == -1)) __PYX_ERR(0, 222, __pyx_L1_error)
 
-              /* "hac/cluster.pyx":194
+              /* "hac/cluster.pyx":220
  *                         # iteration completes, so need to check its existence
  *                         if self.super_graph.has_node(x):
  *                             if not self.super_graph[x]:             # <<<<<<<<<<<<<<
@@ -5861,7 +6601,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
             }
 
-            /* "hac/cluster.pyx":193
+            /* "hac/cluster.pyx":219
  *                         # combining nodes can cause x to be removed before
  *                         # iteration completes, so need to check its existence
  *                         if self.super_graph.has_node(x):             # <<<<<<<<<<<<<<
@@ -5870,7 +6610,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
           }
 
-          /* "hac/cluster.pyx":190
+          /* "hac/cluster.pyx":216
  *                     qd, id1, id2 = heapq.heappop(self.pair_cost_heap)
  *                 else:
  *                     for x in self.super_graph.nodes():             # <<<<<<<<<<<<<<
@@ -5880,7 +6620,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         }
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-        /* "hac/cluster.pyx":197
+        /* "hac/cluster.pyx":223
  *                                 self.combine_clusters(x, max(self.super_graph.nodes()))
  *                                 self.quality_history.append(quality)
  *                     break             # <<<<<<<<<<<<<<
@@ -5891,14 +6631,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
       }
       __pyx_L7:;
 
-      /* "hac/cluster.pyx":198
+      /* "hac/cluster.pyx":224
  *                                 self.quality_history.append(quality)
  *                     break
  *                 if self.super_graph.has_node(id1) and self.super_graph.has_node(id2):             # <<<<<<<<<<<<<<
  *                     qual_diff = -qd
  *                     break
  */
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_has_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_has_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_6 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -5911,13 +6651,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         }
       }
       if (!__pyx_t_6) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_id1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_id1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_id1};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
@@ -5925,32 +6665,32 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_id1};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
         #endif
         {
-          __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_11);
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_6); __pyx_t_6 = NULL;
           __Pyx_INCREF(__pyx_v_id1);
           __Pyx_GIVEREF(__pyx_v_id1);
           PyTuple_SET_ITEM(__pyx_t_11, 0+1, __pyx_v_id1);
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         }
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 198, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 224, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       if (__pyx_t_5) {
       } else {
         __pyx_t_10 = __pyx_t_5;
         goto __pyx_L15_bool_binop_done;
       }
-      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_has_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_has_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_11 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -5963,13 +6703,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         }
       }
       if (!__pyx_t_11) {
-        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_v_id2};
-          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
@@ -5977,43 +6717,43 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_v_id2};
-          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_2);
         } else
         #endif
         {
-          __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_11); __pyx_t_11 = NULL;
           __Pyx_INCREF(__pyx_v_id2);
           __Pyx_GIVEREF(__pyx_v_id2);
           PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_id2);
-          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 198, __pyx_L1_error)
+          __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_2);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         }
       }
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 198, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 224, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_t_10 = __pyx_t_5;
       __pyx_L15_bool_binop_done:;
       if (__pyx_t_10) {
 
-        /* "hac/cluster.pyx":199
+        /* "hac/cluster.pyx":225
  *                     break
  *                 if self.super_graph.has_node(id1) and self.super_graph.has_node(id2):
  *                     qual_diff = -qd             # <<<<<<<<<<<<<<
  *                     break
  *             if self.super_graph.number_of_edges() > 0:
  */
-        __pyx_t_2 = PyNumber_Negative(__pyx_v_qd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 199, __pyx_L1_error)
+        __pyx_t_2 = PyNumber_Negative(__pyx_v_qd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_XDECREF_SET(__pyx_v_qual_diff, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "hac/cluster.pyx":200
+        /* "hac/cluster.pyx":226
  *                 if self.super_graph.has_node(id1) and self.super_graph.has_node(id2):
  *                     qual_diff = -qd
  *                     break             # <<<<<<<<<<<<<<
@@ -6022,7 +6762,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
         goto __pyx_L6_break;
 
-        /* "hac/cluster.pyx":198
+        /* "hac/cluster.pyx":224
  *                                 self.quality_history.append(quality)
  *                     break
  *                 if self.super_graph.has_node(id1) and self.super_graph.has_node(id2):             # <<<<<<<<<<<<<<
@@ -6033,14 +6773,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
     }
     __pyx_L6_break:;
 
-    /* "hac/cluster.pyx":201
+    /* "hac/cluster.pyx":227
  *                     qual_diff = -qd
  *                     break
  *             if self.super_graph.number_of_edges() > 0:             # <<<<<<<<<<<<<<
  *                 quality += qual_diff
  *                 self.combine_clusters(id1, id2)
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_number_of_edges); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_number_of_edges); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -6053,43 +6793,43 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
       }
     }
     if (__pyx_t_6) {
-      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 227, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
-      __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 227, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_2, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_2, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 227, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_10) {
 
-      /* "hac/cluster.pyx":202
+      /* "hac/cluster.pyx":228
  *                     break
  *             if self.super_graph.number_of_edges() > 0:
  *                 quality += qual_diff             # <<<<<<<<<<<<<<
  *                 self.combine_clusters(id1, id2)
  *                 self.quality_history.append(quality)
  */
-      if (unlikely(!__pyx_v_qual_diff)) { __Pyx_RaiseUnboundLocalError("qual_diff"); __PYX_ERR(0, 202, __pyx_L1_error) }
-      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_quality, __pyx_v_qual_diff); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 202, __pyx_L1_error)
+      if (unlikely(!__pyx_v_qual_diff)) { __Pyx_RaiseUnboundLocalError("qual_diff"); __PYX_ERR(0, 228, __pyx_L1_error) }
+      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_quality, __pyx_v_qual_diff); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF_SET(__pyx_v_quality, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "hac/cluster.pyx":203
+      /* "hac/cluster.pyx":229
  *             if self.super_graph.number_of_edges() > 0:
  *                 quality += qual_diff
  *                 self.combine_clusters(id1, id2)             # <<<<<<<<<<<<<<
  *                 self.quality_history.append(quality)
  * 
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_combine_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      if (unlikely(!__pyx_v_id1)) { __Pyx_RaiseUnboundLocalError("id1"); __PYX_ERR(0, 203, __pyx_L1_error) }
-      if (unlikely(!__pyx_v_id2)) { __Pyx_RaiseUnboundLocalError("id2"); __PYX_ERR(0, 203, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_id1)) { __Pyx_RaiseUnboundLocalError("id1"); __PYX_ERR(0, 229, __pyx_L1_error) }
+      if (unlikely(!__pyx_v_id2)) { __Pyx_RaiseUnboundLocalError("id2"); __PYX_ERR(0, 229, __pyx_L1_error) }
       __pyx_t_6 = NULL;
       __pyx_t_12 = 0;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
@@ -6105,7 +6845,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_2)) {
         PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_v_id1, __pyx_v_id2};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
@@ -6113,13 +6853,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
         PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_v_id1, __pyx_v_id2};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
       #endif
       {
-        __pyx_t_11 = PyTuple_New(2+__pyx_t_12); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_11 = PyTuple_New(2+__pyx_t_12); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 229, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         if (__pyx_t_6) {
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -6130,14 +6870,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
         __Pyx_INCREF(__pyx_v_id2);
         __Pyx_GIVEREF(__pyx_v_id2);
         PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_12, __pyx_v_id2);
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_11, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "hac/cluster.pyx":204
+      /* "hac/cluster.pyx":230
  *                 quality += qual_diff
  *                 self.combine_clusters(id1, id2)
  *                 self.quality_history.append(quality)             # <<<<<<<<<<<<<<
@@ -6146,11 +6886,11 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
       if (unlikely(__pyx_v_self->quality_history == Py_None)) {
         PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "append");
-        __PYX_ERR(0, 204, __pyx_L1_error)
+        __PYX_ERR(0, 230, __pyx_L1_error)
       }
-      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_self->quality_history, __pyx_v_quality); if (unlikely(__pyx_t_13 == -1)) __PYX_ERR(0, 204, __pyx_L1_error)
+      __pyx_t_13 = __Pyx_PyList_Append(__pyx_v_self->quality_history, __pyx_v_quality); if (unlikely(__pyx_t_13 == -1)) __PYX_ERR(0, 230, __pyx_L1_error)
 
-      /* "hac/cluster.pyx":201
+      /* "hac/cluster.pyx":227
  *                     qual_diff = -qd
  *                     break
  *             if self.super_graph.number_of_edges() > 0:             # <<<<<<<<<<<<<<
@@ -6160,7 +6900,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
     }
   }
 
-  /* "hac/cluster.pyx":182
+  /* "hac/cluster.pyx":208
  *             self.add_pair_to_cost_heap(id1, id2)
  * 
  *     def run_greedy_clustering(self, quality, reheap_steps=500):             # <<<<<<<<<<<<<<
@@ -6193,7 +6933,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":206
+/* "hac/cluster.pyx":232
  *                 self.quality_history.append(quality)
  * 
  *     def add_pair_to_cost_heap(self, id1, id2):             # <<<<<<<<<<<<<<
@@ -6202,8 +6942,8 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_8run_gree
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11add_pair_to_cost_heap(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11add_pair_to_cost_heap(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_21add_pair_to_cost_heap(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_21add_pair_to_cost_heap(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_id1 = 0;
   PyObject *__pyx_v_id2 = 0;
   PyObject *__pyx_r = 0;
@@ -6229,11 +6969,11 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11add_pai
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("add_pair_to_cost_heap", 1, 2, 2, 1); __PYX_ERR(0, 206, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("add_pair_to_cost_heap", 1, 2, 2, 1); __PYX_ERR(0, 232, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "add_pair_to_cost_heap") < 0)) __PYX_ERR(0, 206, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "add_pair_to_cost_heap") < 0)) __PYX_ERR(0, 232, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -6246,20 +6986,20 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11add_pai
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("add_pair_to_cost_heap", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 206, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("add_pair_to_cost_heap", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 232, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.add_pair_to_cost_heap", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pair_to_cost_heap(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_id1, __pyx_v_id2);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_20add_pair_to_cost_heap(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_id1, __pyx_v_id2);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pair_to_cost_heap(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_id1, PyObject *__pyx_v_id2) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_20add_pair_to_cost_heap(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_id1, PyObject *__pyx_v_id2) {
   PyObject *__pyx_v_qd = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6276,14 +7016,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   __Pyx_INCREF(__pyx_v_id1);
   __Pyx_INCREF(__pyx_v_id2);
 
-  /* "hac/cluster.pyx":207
+  /* "hac/cluster.pyx":233
  * 
  *     def add_pair_to_cost_heap(self, id1, id2):
  *         qd = self.quality_difference(id1, id2)             # <<<<<<<<<<<<<<
  *         if id2 < id1:
  *             id1, id2 = id2, id1
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_quality_difference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_quality_difference); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   __pyx_t_4 = 0;
@@ -6300,7 +7040,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -6308,13 +7048,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_id1, __pyx_v_id2};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 207, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_3) {
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
@@ -6325,7 +7065,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
     __Pyx_INCREF(__pyx_v_id2);
     __Pyx_GIVEREF(__pyx_v_id2);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_id2);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
@@ -6333,19 +7073,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   __pyx_v_qd = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":208
+  /* "hac/cluster.pyx":234
  *     def add_pair_to_cost_heap(self, id1, id2):
  *         qd = self.quality_difference(id1, id2)
  *         if id2 < id1:             # <<<<<<<<<<<<<<
  *             id1, id2 = id2, id1
  *         # Negate quality difference (to maximize), AND id1 < id2
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_id2, __pyx_v_id1, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_id2, __pyx_v_id1, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_6) {
 
-    /* "hac/cluster.pyx":209
+    /* "hac/cluster.pyx":235
  *         qd = self.quality_difference(id1, id2)
  *         if id2 < id1:
  *             id1, id2 = id2, id1             # <<<<<<<<<<<<<<
@@ -6359,7 +7099,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
     __pyx_v_id2 = __pyx_t_8;
     __pyx_t_8 = 0;
 
-    /* "hac/cluster.pyx":208
+    /* "hac/cluster.pyx":234
  *     def add_pair_to_cost_heap(self, id1, id2):
  *         qd = self.quality_difference(id1, id2)
  *         if id2 < id1:             # <<<<<<<<<<<<<<
@@ -6368,21 +7108,21 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
  */
   }
 
-  /* "hac/cluster.pyx":211
+  /* "hac/cluster.pyx":237
  *             id1, id2 = id2, id1
  *         # Negate quality difference (to maximize), AND id1 < id2
  *         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))             # <<<<<<<<<<<<<<
  * 
  *     def quality_difference(self, cluster_id1, cluster_id2):
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_heappush); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_heappush); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Negative(__pyx_v_qd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Negative(__pyx_v_qd); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
@@ -6408,7 +7148,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_self->pair_cost_heap, __pyx_t_3};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -6417,14 +7157,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_v_self->pair_cost_heap, __pyx_t_3};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_9 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_9 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 237, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -6435,14 +7175,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_4, __pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":206
+  /* "hac/cluster.pyx":232
  *                 self.quality_history.append(quality)
  * 
  *     def add_pair_to_cost_heap(self, id1, id2):             # <<<<<<<<<<<<<<
@@ -6470,7 +7210,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":213
+/* "hac/cluster.pyx":239
  *         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
  * 
  *     def quality_difference(self, cluster_id1, cluster_id2):             # <<<<<<<<<<<<<<
@@ -6479,8 +7219,8 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_10add_pai
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13quality_difference(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13quality_difference(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_23quality_difference(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_23quality_difference(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_cluster_id1 = 0;
   PyObject *__pyx_v_cluster_id2 = 0;
   PyObject *__pyx_r = 0;
@@ -6506,11 +7246,11 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13quality
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_cluster_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("quality_difference", 1, 2, 2, 1); __PYX_ERR(0, 213, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("quality_difference", 1, 2, 2, 1); __PYX_ERR(0, 239, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "quality_difference") < 0)) __PYX_ERR(0, 213, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "quality_difference") < 0)) __PYX_ERR(0, 239, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -6523,20 +7263,20 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13quality
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("quality_difference", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 213, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("quality_difference", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 239, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.quality_difference", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality_difference(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_cluster_id1, __pyx_v_cluster_id2);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_22quality_difference(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_cluster_id1, __pyx_v_cluster_id2);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality_difference(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_22quality_difference(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2) {
   float __pyx_v_degree_one;
   float __pyx_v_degree_two;
   float __pyx_v_edge;
@@ -6547,61 +7287,61 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality
   float __pyx_t_3;
   __Pyx_RefNannySetupContext("quality_difference", 0);
 
-  /* "hac/cluster.pyx":215
+  /* "hac/cluster.pyx":241
  *     def quality_difference(self, cluster_id1, cluster_id2):
  *         # The "Change in Q" as described by section II of the Newman paper
  *         cdef float degree_one = self.super_graph.node[cluster_id1]['degree']             # <<<<<<<<<<<<<<
  *         cdef float degree_two = self.super_graph.node[cluster_id2]['degree']
  *         cdef float edge = self.super_graph[cluster_id1][cluster_id2]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyObject_GetItem(__pyx_t_2, __pyx_n_s_degree); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_t_2, __pyx_n_s_degree); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_degree_one = __pyx_t_3;
 
-  /* "hac/cluster.pyx":216
+  /* "hac/cluster.pyx":242
  *         # The "Change in Q" as described by section II of the Newman paper
  *         cdef float degree_one = self.super_graph.node[cluster_id1]['degree']
  *         cdef float degree_two = self.super_graph.node[cluster_id2]['degree']             # <<<<<<<<<<<<<<
  *         cdef float edge = self.super_graph[cluster_id1][cluster_id2]
  *         return 2.0 * (edge - degree_one * degree_two)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyObject_GetItem(__pyx_t_2, __pyx_n_s_degree); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_t_2, __pyx_n_s_degree); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_t_1); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_degree_two = __pyx_t_3;
 
-  /* "hac/cluster.pyx":217
+  /* "hac/cluster.pyx":243
  *         cdef float degree_one = self.super_graph.node[cluster_id1]['degree']
  *         cdef float degree_two = self.super_graph.node[cluster_id2]['degree']
  *         cdef float edge = self.super_graph[cluster_id1][cluster_id2]             # <<<<<<<<<<<<<<
  *         return 2.0 * (edge - degree_one * degree_two)
  * 
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_t_1, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 243, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_edge = __pyx_t_3;
 
-  /* "hac/cluster.pyx":218
+  /* "hac/cluster.pyx":244
  *         cdef float degree_two = self.super_graph.node[cluster_id2]['degree']
  *         cdef float edge = self.super_graph[cluster_id1][cluster_id2]
  *         return 2.0 * (edge - degree_one * degree_two)             # <<<<<<<<<<<<<<
@@ -6609,13 +7349,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality
  *     def combine_clusters(self, cluster_id1, cluster_id2):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyFloat_FromDouble((2.0 * (__pyx_v_edge - (__pyx_v_degree_one * __pyx_v_degree_two)))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble((2.0 * (__pyx_v_edge - (__pyx_v_degree_one * __pyx_v_degree_two)))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":213
+  /* "hac/cluster.pyx":239
  *         heapq.heappush(self.pair_cost_heap, (-qd, id1, id2))
  * 
  *     def quality_difference(self, cluster_id1, cluster_id2):             # <<<<<<<<<<<<<<
@@ -6635,7 +7375,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":220
+/* "hac/cluster.pyx":246
  *         return 2.0 * (edge - degree_one * degree_two)
  * 
  *     def combine_clusters(self, cluster_id1, cluster_id2):             # <<<<<<<<<<<<<<
@@ -6644,8 +7384,8 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_12quality
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15combine_clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15combine_clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_25combine_clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_25combine_clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_cluster_id1 = 0;
   PyObject *__pyx_v_cluster_id2 = 0;
   PyObject *__pyx_r = 0;
@@ -6671,11 +7411,11 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15combine
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_cluster_id2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("combine_clusters", 1, 2, 2, 1); __PYX_ERR(0, 220, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("combine_clusters", 1, 2, 2, 1); __PYX_ERR(0, 246, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "combine_clusters") < 0)) __PYX_ERR(0, 220, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "combine_clusters") < 0)) __PYX_ERR(0, 246, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -6688,20 +7428,20 @@ static PyObject *__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15combine
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("combine_clusters", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 220, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("combine_clusters", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 246, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.GreedyAgglomerativeClusterer.combine_clusters", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine_clusters(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_cluster_id1, __pyx_v_cluster_id2);
+  __pyx_r = __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_24combine_clusters(((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)__pyx_v_self), __pyx_v_cluster_id1, __pyx_v_cluster_id2);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2) {
+static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_24combine_clusters(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *__pyx_v_self, PyObject *__pyx_v_cluster_id1, PyObject *__pyx_v_cluster_id2) {
   int __pyx_v_combine_id;
   float __pyx_v_total;
   PyObject *__pyx_v_c1_con = 0;
@@ -6728,7 +7468,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   PyObject *__pyx_t_14 = NULL;
   __Pyx_RefNannySetupContext("combine_clusters", 0);
 
-  /* "hac/cluster.pyx":221
+  /* "hac/cluster.pyx":247
  * 
  *     def combine_clusters(self, cluster_id1, cluster_id2):
  *         cdef int combine_id = self.den_num             # <<<<<<<<<<<<<<
@@ -6738,7 +7478,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   __pyx_t_1 = __pyx_v_self->den_num;
   __pyx_v_combine_id = __pyx_t_1;
 
-  /* "hac/cluster.pyx":223
+  /* "hac/cluster.pyx":249
  *         cdef int combine_id = self.den_num
  *         cdef float total
  *         self.den_num += 1             # <<<<<<<<<<<<<<
@@ -6747,33 +7487,33 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
   __pyx_v_self->den_num = (__pyx_v_self->den_num + 1);
 
-  /* "hac/cluster.pyx":226
+  /* "hac/cluster.pyx":252
  * 
  *         # Add combined node
  *         cdef dict c1_con = self.super_graph[cluster_id1]             # <<<<<<<<<<<<<<
  *         cdef dict c2_con = self.super_graph[cluster_id2]
  *         cdef set c12_nodes = set(c1_con.keys()).union(set(c2_con.keys()))
  */
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 226, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(PyDict_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "dict", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 226, __pyx_L1_error)
+  if (!(likely(PyDict_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "dict", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 252, __pyx_L1_error)
   __pyx_v_c1_con = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":227
+  /* "hac/cluster.pyx":253
  *         # Add combined node
  *         cdef dict c1_con = self.super_graph[cluster_id1]
  *         cdef dict c2_con = self.super_graph[cluster_id2]             # <<<<<<<<<<<<<<
  *         cdef set c12_nodes = set(c1_con.keys()).union(set(c2_con.keys()))
  * 
  */
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(PyDict_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "dict", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 227, __pyx_L1_error)
+  if (!(likely(PyDict_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "dict", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 253, __pyx_L1_error)
   __pyx_v_c2_con = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":228
+  /* "hac/cluster.pyx":254
  *         cdef dict c1_con = self.super_graph[cluster_id1]
  *         cdef dict c2_con = self.super_graph[cluster_id2]
  *         cdef set c12_nodes = set(c1_con.keys()).union(set(c2_con.keys()))             # <<<<<<<<<<<<<<
@@ -6782,23 +7522,23 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
   if (unlikely(__pyx_v_c1_con == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "keys");
-    __PYX_ERR(0, 228, __pyx_L1_error)
+    __PYX_ERR(0, 254, __pyx_L1_error)
   }
-  __pyx_t_3 = __Pyx_PyDict_Keys(__pyx_v_c1_con); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_Keys(__pyx_v_c1_con); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PySet_New(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_4 = PySet_New(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_union); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_union); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (unlikely(__pyx_v_c2_con == Py_None)) {
     PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%s'", "keys");
-    __PYX_ERR(0, 228, __pyx_L1_error)
+    __PYX_ERR(0, 254, __pyx_L1_error)
   }
-  __pyx_t_4 = __Pyx_PyDict_Keys(__pyx_v_c2_con); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_Keys(__pyx_v_c2_con); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PySet_New(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_5 = PySet_New(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -6812,14 +7552,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 228, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_2);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_t_5};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 228, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6828,134 +7568,134 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_t_5};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 228, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else
     #endif
     {
-      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 228, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 254, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_GIVEREF(__pyx_t_5);
       PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_5);
       __pyx_t_5 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 228, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(PySet_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 228, __pyx_L1_error)
+  if (!(likely(PySet_CheckExact(__pyx_t_2))||((__pyx_t_2) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_t_2)->tp_name), 0))) __PYX_ERR(0, 254, __pyx_L1_error)
   __pyx_v_c12_nodes = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":230
+  /* "hac/cluster.pyx":256
  *         cdef set c12_nodes = set(c1_con.keys()).union(set(c2_con.keys()))
  * 
  *         self.rename_map.original[combine_id] = combine_id             # <<<<<<<<<<<<<<
  *         self.rename_map.integer[combine_id] = combine_id
  * 
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 230, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (unlikely(__Pyx_SetItemInt(__pyx_t_3, __pyx_v_combine_id, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 230, __pyx_L1_error)
+  if (unlikely(__Pyx_SetItemInt(__pyx_t_3, __pyx_v_combine_id, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 256, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":231
+  /* "hac/cluster.pyx":257
  * 
  *         self.rename_map.original[combine_id] = combine_id
  *         self.rename_map.integer[combine_id] = combine_id             # <<<<<<<<<<<<<<
  * 
  *         degree_one = self.super_graph.node[cluster_id1]['degree']
  */
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (unlikely(__Pyx_SetItemInt(__pyx_t_3, __pyx_v_combine_id, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 231, __pyx_L1_error)
+  if (unlikely(__Pyx_SetItemInt(__pyx_t_3, __pyx_v_combine_id, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":233
+  /* "hac/cluster.pyx":259
  *         self.rename_map.integer[combine_id] = combine_id
  * 
  *         degree_one = self.super_graph.node[cluster_id1]['degree']             # <<<<<<<<<<<<<<
  *         degree_two = self.super_graph.node[cluster_id2]['degree']
  *         self.super_graph.add_node(combine_id, degree=degree_one + degree_two)
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyObject_GetItem(__pyx_t_2, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_t_3 = PyObject_GetItem(__pyx_t_2, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_degree); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_degree); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 259, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_degree_one = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":234
+  /* "hac/cluster.pyx":260
  * 
  *         degree_one = self.super_graph.node[cluster_id1]['degree']
  *         degree_two = self.super_graph.node[cluster_id2]['degree']             # <<<<<<<<<<<<<<
  *         self.super_graph.add_node(combine_id, degree=degree_one + degree_two)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyObject_GetItem(__pyx_t_2, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_3 = PyObject_GetItem(__pyx_t_2, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_degree); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_degree); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_degree_two = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":235
+  /* "hac/cluster.pyx":261
  *         degree_one = self.super_graph.node[cluster_id1]['degree']
  *         degree_two = self.super_graph.node[cluster_id2]['degree']
  *         self.super_graph.add_node(combine_id, degree=degree_one + degree_two)             # <<<<<<<<<<<<<<
  * 
  *         for outer_node in c12_nodes:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyNumber_Add(__pyx_v_degree_one, __pyx_v_degree_two); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_v_degree_one, __pyx_v_degree_two); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_degree, __pyx_t_5) < 0) __PYX_ERR(0, 235, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_degree, __pyx_t_5) < 0) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "hac/cluster.pyx":237
+  /* "hac/cluster.pyx":263
  *         self.super_graph.add_node(combine_id, degree=degree_one + degree_two)
  * 
  *         for outer_node in c12_nodes:             # <<<<<<<<<<<<<<
  *             total = 0.0
  *             # ignore edges between the two clusters
  */
-  __pyx_t_5 = PyObject_GetIter(__pyx_v_c12_nodes); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_t_5 = PyObject_GetIter(__pyx_v_c12_nodes); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 263, __pyx_L1_error)
   for (;;) {
     {
       __pyx_t_3 = __pyx_t_7(__pyx_t_5);
@@ -6963,7 +7703,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 237, __pyx_L1_error)
+          else __PYX_ERR(0, 263, __pyx_L1_error)
         }
         break;
       }
@@ -6972,7 +7712,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_XDECREF_SET(__pyx_v_outer_node, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":238
+    /* "hac/cluster.pyx":264
  * 
  *         for outer_node in c12_nodes:
  *             total = 0.0             # <<<<<<<<<<<<<<
@@ -6981,29 +7721,29 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
     __pyx_v_total = 0.0;
 
-    /* "hac/cluster.pyx":240
+    /* "hac/cluster.pyx":266
  *             total = 0.0
  *             # ignore edges between the two clusters
  *             if outer_node == cluster_id1 or outer_node == cluster_id2:             # <<<<<<<<<<<<<<
  *                 continue
  *             # sum edge weights to clusters that are reached by both clusters
  */
-    __pyx_t_3 = PyObject_RichCompare(__pyx_v_outer_node, __pyx_v_cluster_id1, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
-    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 240, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_v_outer_node, __pyx_v_cluster_id1, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 266, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (!__pyx_t_9) {
     } else {
       __pyx_t_8 = __pyx_t_9;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_3 = PyObject_RichCompare(__pyx_v_outer_node, __pyx_v_cluster_id2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
-    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 240, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_v_outer_node, __pyx_v_cluster_id2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 266, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_8 = __pyx_t_9;
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_8) {
 
-      /* "hac/cluster.pyx":241
+      /* "hac/cluster.pyx":267
  *             # ignore edges between the two clusters
  *             if outer_node == cluster_id1 or outer_node == cluster_id2:
  *                 continue             # <<<<<<<<<<<<<<
@@ -7012,7 +7752,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
       goto __pyx_L3_continue;
 
-      /* "hac/cluster.pyx":240
+      /* "hac/cluster.pyx":266
  *             total = 0.0
  *             # ignore edges between the two clusters
  *             if outer_node == cluster_id1 or outer_node == cluster_id2:             # <<<<<<<<<<<<<<
@@ -7021,7 +7761,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
     }
 
-    /* "hac/cluster.pyx":243
+    /* "hac/cluster.pyx":269
  *                 continue
  *             # sum edge weights to clusters that are reached by both clusters
  *             if outer_node in c1_con:             # <<<<<<<<<<<<<<
@@ -7030,36 +7770,36 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
     if (unlikely(__pyx_v_c1_con == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-      __PYX_ERR(0, 243, __pyx_L1_error)
+      __PYX_ERR(0, 269, __pyx_L1_error)
     }
-    __pyx_t_8 = (__Pyx_PyDict_ContainsTF(__pyx_v_outer_node, __pyx_v_c1_con, Py_EQ)); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 243, __pyx_L1_error)
+    __pyx_t_8 = (__Pyx_PyDict_ContainsTF(__pyx_v_outer_node, __pyx_v_c1_con, Py_EQ)); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 269, __pyx_L1_error)
     __pyx_t_9 = (__pyx_t_8 != 0);
     if (__pyx_t_9) {
 
-      /* "hac/cluster.pyx":244
+      /* "hac/cluster.pyx":270
  *             # sum edge weights to clusters that are reached by both clusters
  *             if outer_node in c1_con:
  *                 total += c1_con[outer_node]             # <<<<<<<<<<<<<<
  *             if outer_node in c2_con:
  *                 total += c2_con[outer_node]
  */
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       if (unlikely(__pyx_v_c1_con == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 244, __pyx_L1_error)
+        __PYX_ERR(0, 270, __pyx_L1_error)
       }
-      __pyx_t_6 = __Pyx_PyDict_GetItem(__pyx_v_c1_con, __pyx_v_outer_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 244, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyDict_GetItem(__pyx_v_c1_con, __pyx_v_outer_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
+      __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_10 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_10 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 244, __pyx_L1_error)
+      __pyx_t_10 = __pyx_PyFloat_AsFloat(__pyx_t_2); if (unlikely((__pyx_t_10 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 270, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_total = __pyx_t_10;
 
-      /* "hac/cluster.pyx":243
+      /* "hac/cluster.pyx":269
  *                 continue
  *             # sum edge weights to clusters that are reached by both clusters
  *             if outer_node in c1_con:             # <<<<<<<<<<<<<<
@@ -7068,7 +7808,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
     }
 
-    /* "hac/cluster.pyx":245
+    /* "hac/cluster.pyx":271
  *             if outer_node in c1_con:
  *                 total += c1_con[outer_node]
  *             if outer_node in c2_con:             # <<<<<<<<<<<<<<
@@ -7077,36 +7817,36 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
     if (unlikely(__pyx_v_c2_con == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-      __PYX_ERR(0, 245, __pyx_L1_error)
+      __PYX_ERR(0, 271, __pyx_L1_error)
     }
-    __pyx_t_9 = (__Pyx_PyDict_ContainsTF(__pyx_v_outer_node, __pyx_v_c2_con, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 245, __pyx_L1_error)
+    __pyx_t_9 = (__Pyx_PyDict_ContainsTF(__pyx_v_outer_node, __pyx_v_c2_con, Py_EQ)); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 271, __pyx_L1_error)
     __pyx_t_8 = (__pyx_t_9 != 0);
     if (__pyx_t_8) {
 
-      /* "hac/cluster.pyx":246
+      /* "hac/cluster.pyx":272
  *                 total += c1_con[outer_node]
  *             if outer_node in c2_con:
  *                 total += c2_con[outer_node]             # <<<<<<<<<<<<<<
  *             self.super_graph[combine_id][outer_node] = total
  *             self.super_graph[outer_node][combine_id] = total
  */
-      __pyx_t_2 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_2 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 272, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       if (unlikely(__pyx_v_c2_con == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 246, __pyx_L1_error)
+        __PYX_ERR(0, 272, __pyx_L1_error)
       }
-      __pyx_t_6 = __Pyx_PyDict_GetItem(__pyx_v_c2_con, __pyx_v_outer_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyDict_GetItem(__pyx_v_c2_con, __pyx_v_outer_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 272, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 272, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_10 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_10 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L1_error)
+      __pyx_t_10 = __pyx_PyFloat_AsFloat(__pyx_t_3); if (unlikely((__pyx_t_10 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 272, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_v_total = __pyx_t_10;
 
-      /* "hac/cluster.pyx":245
+      /* "hac/cluster.pyx":271
  *             if outer_node in c1_con:
  *                 total += c1_con[outer_node]
  *             if outer_node in c2_con:             # <<<<<<<<<<<<<<
@@ -7115,46 +7855,46 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
  */
     }
 
-    /* "hac/cluster.pyx":247
+    /* "hac/cluster.pyx":273
  *             if outer_node in c2_con:
  *                 total += c2_con[outer_node]
  *             self.super_graph[combine_id][outer_node] = total             # <<<<<<<<<<<<<<
  *             self.super_graph[outer_node][combine_id] = total
  *             self.add_pair_to_cost_heap(combine_id, outer_node)
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_self->super_graph, __pyx_v_combine_id, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 247, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_self->super_graph, __pyx_v_combine_id, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_outer_node, __pyx_t_3) < 0)) __PYX_ERR(0, 247, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_outer_node, __pyx_t_3) < 0)) __PYX_ERR(0, 273, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":248
+    /* "hac/cluster.pyx":274
  *                 total += c2_con[outer_node]
  *             self.super_graph[combine_id][outer_node] = total
  *             self.super_graph[outer_node][combine_id] = total             # <<<<<<<<<<<<<<
  *             self.add_pair_to_cost_heap(combine_id, outer_node)
  * 
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 248, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_total); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 274, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_outer_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 248, __pyx_L1_error)
+    __pyx_t_6 = PyObject_GetItem(__pyx_v_self->super_graph, __pyx_v_outer_node); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 274, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (unlikely(__Pyx_SetItemInt(__pyx_t_6, __pyx_v_combine_id, __pyx_t_3, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 248, __pyx_L1_error)
+    if (unlikely(__Pyx_SetItemInt(__pyx_t_6, __pyx_v_combine_id, __pyx_t_3, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 274, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":249
+    /* "hac/cluster.pyx":275
  *             self.super_graph[combine_id][outer_node] = total
  *             self.super_graph[outer_node][combine_id] = total
  *             self.add_pair_to_cost_heap(combine_id, outer_node)             # <<<<<<<<<<<<<<
  * 
  *         # Remove old nodes
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_pair_to_cost_heap); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_add_pair_to_cost_heap); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 275, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 249, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 275, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_4 = NULL;
     __pyx_t_1 = 0;
@@ -7171,7 +7911,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_2, __pyx_v_outer_node};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 249, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 275, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7180,14 +7920,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_2, __pyx_v_outer_node};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 249, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 275, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     {
-      __pyx_t_11 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 249, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 275, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       if (__pyx_t_4) {
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -7198,14 +7938,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
       __Pyx_GIVEREF(__pyx_v_outer_node);
       PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_1, __pyx_v_outer_node);
       __pyx_t_2 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 249, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_11, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 275, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":237
+    /* "hac/cluster.pyx":263
  *         self.super_graph.add_node(combine_id, degree=degree_one + degree_two)
  * 
  *         for outer_node in c12_nodes:             # <<<<<<<<<<<<<<
@@ -7216,7 +7956,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "hac/cluster.pyx":253
+  /* "hac/cluster.pyx":279
  *         # Remove old nodes
  *         # TODO the except should be removed and the initial weights bug solved...
  *         try: self.super_graph.remove_node(cluster_id1)             # <<<<<<<<<<<<<<
@@ -7231,7 +7971,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_XGOTREF(__pyx_t_13);
     __Pyx_XGOTREF(__pyx_t_14);
     /*try:*/ {
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_remove_node); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 253, __pyx_L10_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_remove_node); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 279, __pyx_L10_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_6 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7244,13 +7984,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
         }
       }
       if (!__pyx_t_6) {
-        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 253, __pyx_L10_error)
+        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_cluster_id1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 279, __pyx_L10_error)
         __Pyx_GOTREF(__pyx_t_5);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_cluster_id1};
-          __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 253, __pyx_L10_error)
+          __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 279, __pyx_L10_error)
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_5);
         } else
@@ -7258,19 +7998,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_cluster_id1};
-          __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 253, __pyx_L10_error)
+          __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 279, __pyx_L10_error)
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_5);
         } else
         #endif
         {
-          __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 253, __pyx_L10_error)
+          __pyx_t_11 = PyTuple_New(1+1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 279, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_11);
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_6); __pyx_t_6 = NULL;
           __Pyx_INCREF(__pyx_v_cluster_id1);
           __Pyx_GIVEREF(__pyx_v_cluster_id1);
           PyTuple_SET_ITEM(__pyx_t_11, 0+1, __pyx_v_cluster_id1);
-          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 253, __pyx_L10_error)
+          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 279, __pyx_L10_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         }
@@ -7291,19 +8031,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "hac/cluster.pyx":254
+    /* "hac/cluster.pyx":280
  *         # TODO the except should be removed and the initial weights bug solved...
  *         try: self.super_graph.remove_node(cluster_id1)
  *         except nx.exception.NetworkXError: pass             # <<<<<<<<<<<<<<
  *         try: self.super_graph.remove_node(cluster_id2)
  *         except nx.exception.NetworkXError: pass
  */
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L12_except_error)
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 280, __pyx_L12_except_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L12_except_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 280, __pyx_L12_except_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_NetworkXError); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L12_except_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_NetworkXError); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 280, __pyx_L12_except_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_1 = __Pyx_PyErr_ExceptionMatches(__pyx_t_5);
@@ -7315,7 +8055,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     goto __pyx_L12_except_error;
     __pyx_L12_except_error:;
 
-    /* "hac/cluster.pyx":253
+    /* "hac/cluster.pyx":279
  *         # Remove old nodes
  *         # TODO the except should be removed and the initial weights bug solved...
  *         try: self.super_graph.remove_node(cluster_id1)             # <<<<<<<<<<<<<<
@@ -7337,7 +8077,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __pyx_L17_try_end:;
   }
 
-  /* "hac/cluster.pyx":255
+  /* "hac/cluster.pyx":281
  *         try: self.super_graph.remove_node(cluster_id1)
  *         except nx.exception.NetworkXError: pass
  *         try: self.super_graph.remove_node(cluster_id2)             # <<<<<<<<<<<<<<
@@ -7352,7 +8092,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_XGOTREF(__pyx_t_13);
     __Pyx_XGOTREF(__pyx_t_12);
     /*try:*/ {
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_remove_node); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 255, __pyx_L18_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->super_graph, __pyx_n_s_remove_node); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 281, __pyx_L18_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_11 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7365,13 +8105,13 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
         }
       }
       if (!__pyx_t_11) {
-        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 255, __pyx_L18_error)
+        __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_cluster_id2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 281, __pyx_L18_error)
         __Pyx_GOTREF(__pyx_t_5);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_v_cluster_id2};
-          __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 255, __pyx_L18_error)
+          __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 281, __pyx_L18_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_5);
         } else
@@ -7379,19 +8119,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_v_cluster_id2};
-          __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 255, __pyx_L18_error)
+          __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 281, __pyx_L18_error)
           __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_GOTREF(__pyx_t_5);
         } else
         #endif
         {
-          __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 255, __pyx_L18_error)
+          __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 281, __pyx_L18_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_11); __pyx_t_11 = NULL;
           __Pyx_INCREF(__pyx_v_cluster_id2);
           __Pyx_GIVEREF(__pyx_v_cluster_id2);
           PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_cluster_id2);
-          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 255, __pyx_L18_error)
+          __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 281, __pyx_L18_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         }
@@ -7412,19 +8152,19 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "hac/cluster.pyx":256
+    /* "hac/cluster.pyx":282
  *         except nx.exception.NetworkXError: pass
  *         try: self.super_graph.remove_node(cluster_id2)
  *         except nx.exception.NetworkXError: pass             # <<<<<<<<<<<<<<
  * 
  *         # Update dendrogram
  */
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 256, __pyx_L20_except_error)
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 282, __pyx_L20_except_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L20_except_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_exception); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 282, __pyx_L20_except_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_NetworkXError); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 256, __pyx_L20_except_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_NetworkXError); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 282, __pyx_L20_except_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_1 = __Pyx_PyErr_ExceptionMatches(__pyx_t_5);
@@ -7436,7 +8176,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     goto __pyx_L20_except_error;
     __pyx_L20_except_error:;
 
-    /* "hac/cluster.pyx":255
+    /* "hac/cluster.pyx":281
  *         try: self.super_graph.remove_node(cluster_id1)
  *         except nx.exception.NetworkXError: pass
  *         try: self.super_graph.remove_node(cluster_id2)             # <<<<<<<<<<<<<<
@@ -7458,16 +8198,16 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __pyx_L25_try_end:;
   }
 
-  /* "hac/cluster.pyx":259
+  /* "hac/cluster.pyx":285
  * 
  *         # Update dendrogram
  *         self.dendrogram_graph.add_node(combine_id)             # <<<<<<<<<<<<<<
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id1)
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id2)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->dendrogram_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->dendrogram_graph, __pyx_n_s_add_node); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 285, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 285, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_11 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -7480,14 +8220,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     }
   }
   if (!__pyx_t_11) {
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 259, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 285, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_5);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_t_6};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 259, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 285, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -7496,20 +8236,20 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_11, __pyx_t_6};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 259, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 285, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else
     #endif
     {
-      __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 259, __pyx_L1_error)
+      __pyx_t_2 = PyTuple_New(1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 285, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GIVEREF(__pyx_t_11); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_11); __pyx_t_11 = NULL;
       __Pyx_GIVEREF(__pyx_t_6);
       PyTuple_SET_ITEM(__pyx_t_2, 0+1, __pyx_t_6);
       __pyx_t_6 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 259, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 285, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     }
@@ -7517,16 +8257,16 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "hac/cluster.pyx":260
+  /* "hac/cluster.pyx":286
  *         # Update dendrogram
  *         self.dendrogram_graph.add_node(combine_id)
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id1)             # <<<<<<<<<<<<<<
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id2)
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->dendrogram_graph, __pyx_n_s_add_edge); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->dendrogram_graph, __pyx_n_s_add_edge); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_6 = NULL;
   __pyx_t_1 = 0;
@@ -7543,7 +8283,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_t_2, __pyx_v_cluster_id1};
-    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -7552,14 +8292,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_t_2, __pyx_v_cluster_id1};
-    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_11 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __pyx_t_11 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 286, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_11);
     if (__pyx_t_6) {
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -7570,23 +8310,23 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_GIVEREF(__pyx_v_cluster_id1);
     PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_1, __pyx_v_cluster_id1);
     __pyx_t_2 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 260, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "hac/cluster.pyx":261
+  /* "hac/cluster.pyx":287
  *         self.dendrogram_graph.add_node(combine_id)
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id1)
  *         self.dendrogram_graph.add_edge(combine_id, cluster_id2)             # <<<<<<<<<<<<<<
  * 
  * cdef class Dendrogram(object):
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->dendrogram_graph, __pyx_n_s_add_edge); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->dendrogram_graph, __pyx_n_s_add_edge); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_combine_id); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
   __pyx_t_2 = NULL;
   __pyx_t_1 = 0;
@@ -7603,7 +8343,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_11, __pyx_v_cluster_id2};
-    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 261, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 287, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -7612,14 +8352,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, __pyx_t_11, __pyx_v_cluster_id2};
-    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 261, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_1, 2+__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 287, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 261, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 287, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -7630,14 +8370,14 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
     __Pyx_GIVEREF(__pyx_v_cluster_id2);
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_1, __pyx_v_cluster_id2);
     __pyx_t_11 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 261, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 287, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "hac/cluster.pyx":220
+  /* "hac/cluster.pyx":246
  *         return 2.0 * (edge - degree_one * degree_two)
  * 
  *     def combine_clusters(self, cluster_id1, cluster_id2):             # <<<<<<<<<<<<<<
@@ -7669,7 +8409,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_14combine
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":84
+/* "hac/cluster.pyx":79
  *     See papers on scaling and accuracy questions regarding greedy Newman.
  *     '''
  *     cdef public int optimal_clusters             # <<<<<<<<<<<<<<
@@ -7696,7 +8436,7 @@ static PyObject *__pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16optimal
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -7731,7 +8471,7 @@ static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16optimal_clust
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 79, __pyx_L1_error)
   __pyx_v_self->optimal_clusters = __pyx_t_1;
 
   /* function exit code */
@@ -7745,7 +8485,7 @@ static int __pyx_pf_3hac_7cluster_28GreedyAgglomerativeClusterer_16optimal_clust
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":272
+/* "hac/cluster.pyx":298
  *     cdef object rename_map
  * 
  *     def __init__(self, dendrogram_graph, quality_history, original_nodes, orphans,             # <<<<<<<<<<<<<<
@@ -7769,7 +8509,7 @@ static int __pyx_pw_3hac_7cluster_10Dendrogram_1__init__(PyObject *__pyx_v_self,
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_dendrogram_graph,&__pyx_n_s_quality_history,&__pyx_n_s_original_nodes,&__pyx_n_s_orphans,&__pyx_n_s_rename_map,&__pyx_n_s_num_clusters,0};
     PyObject* values[6] = {0,0,0,0,0,0};
 
-    /* "hac/cluster.pyx":273
+    /* "hac/cluster.pyx":299
  * 
  *     def __init__(self, dendrogram_graph, quality_history, original_nodes, orphans,
  *             rename_map, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -7798,22 +8538,22 @@ static int __pyx_pw_3hac_7cluster_10Dendrogram_1__init__(PyObject *__pyx_v_self,
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_quality_history)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 1); __PYX_ERR(0, 272, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 1); __PYX_ERR(0, 298, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_original_nodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 2); __PYX_ERR(0, 272, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 2); __PYX_ERR(0, 298, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_orphans)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 3); __PYX_ERR(0, 272, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 3); __PYX_ERR(0, 298, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_rename_map)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 4); __PYX_ERR(0, 272, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, 4); __PYX_ERR(0, 298, __pyx_L3_error)
         }
         case  5:
         if (kw_args > 0) {
@@ -7822,7 +8562,7 @@ static int __pyx_pw_3hac_7cluster_10Dendrogram_1__init__(PyObject *__pyx_v_self,
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 272, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 298, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -7845,7 +8585,7 @@ static int __pyx_pw_3hac_7cluster_10Dendrogram_1__init__(PyObject *__pyx_v_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 272, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 5, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 298, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.Dendrogram.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7853,7 +8593,7 @@ static int __pyx_pw_3hac_7cluster_10Dendrogram_1__init__(PyObject *__pyx_v_self,
   __pyx_L4_argument_unpacking_done:;
   __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram___init__(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_dendrogram_graph, __pyx_v_quality_history, __pyx_v_original_nodes, __pyx_v_orphans, __pyx_v_rename_map, __pyx_v_num_clusters);
 
-  /* "hac/cluster.pyx":272
+  /* "hac/cluster.pyx":298
  *     cdef object rename_map
  * 
  *     def __init__(self, dendrogram_graph, quality_history, original_nodes, orphans,             # <<<<<<<<<<<<<<
@@ -7875,7 +8615,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "hac/cluster.pyx":274
+  /* "hac/cluster.pyx":300
  *     def __init__(self, dendrogram_graph, quality_history, original_nodes, orphans,
  *             rename_map, num_clusters=None):
  *         self.graph = dendrogram_graph             # <<<<<<<<<<<<<<
@@ -7888,14 +8628,14 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   __Pyx_DECREF(__pyx_v_self->graph);
   __pyx_v_self->graph = __pyx_v_dendrogram_graph;
 
-  /* "hac/cluster.pyx":275
+  /* "hac/cluster.pyx":301
  *             rename_map, num_clusters=None):
  *         self.graph = dendrogram_graph
  *         self.quality_history = quality_history             # <<<<<<<<<<<<<<
  *         self.orphans = orphans
  *         self.original_nodes = original_nodes
  */
-  if (!(likely(PyList_CheckExact(__pyx_v_quality_history))||((__pyx_v_quality_history) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_quality_history)->tp_name), 0))) __PYX_ERR(0, 275, __pyx_L1_error)
+  if (!(likely(PyList_CheckExact(__pyx_v_quality_history))||((__pyx_v_quality_history) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_quality_history)->tp_name), 0))) __PYX_ERR(0, 301, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_quality_history;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -7904,14 +8644,14 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   __pyx_v_self->quality_history = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":276
+  /* "hac/cluster.pyx":302
  *         self.graph = dendrogram_graph
  *         self.quality_history = quality_history
  *         self.orphans = orphans             # <<<<<<<<<<<<<<
  *         self.original_nodes = original_nodes
  *         self.rename_map = rename_map
  */
-  if (!(likely(PySet_CheckExact(__pyx_v_orphans))||((__pyx_v_orphans) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_orphans)->tp_name), 0))) __PYX_ERR(0, 276, __pyx_L1_error)
+  if (!(likely(PySet_CheckExact(__pyx_v_orphans))||((__pyx_v_orphans) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_orphans)->tp_name), 0))) __PYX_ERR(0, 302, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_orphans;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -7920,14 +8660,14 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   __pyx_v_self->orphans = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":277
+  /* "hac/cluster.pyx":303
  *         self.quality_history = quality_history
  *         self.orphans = orphans
  *         self.original_nodes = original_nodes             # <<<<<<<<<<<<<<
  *         self.rename_map = rename_map
  *         self.max_clusters = len(original_nodes) + len(orphans)
  */
-  if (!(likely(PySet_CheckExact(__pyx_v_original_nodes))||((__pyx_v_original_nodes) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_original_nodes)->tp_name), 0))) __PYX_ERR(0, 277, __pyx_L1_error)
+  if (!(likely(PySet_CheckExact(__pyx_v_original_nodes))||((__pyx_v_original_nodes) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_original_nodes)->tp_name), 0))) __PYX_ERR(0, 303, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_original_nodes;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -7936,7 +8676,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   __pyx_v_self->original_nodes = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":278
+  /* "hac/cluster.pyx":304
  *         self.orphans = orphans
  *         self.original_nodes = original_nodes
  *         self.rename_map = rename_map             # <<<<<<<<<<<<<<
@@ -7949,28 +8689,28 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   __Pyx_DECREF(__pyx_v_self->rename_map);
   __pyx_v_self->rename_map = __pyx_v_rename_map;
 
-  /* "hac/cluster.pyx":279
+  /* "hac/cluster.pyx":305
  *         self.original_nodes = original_nodes
  *         self.rename_map = rename_map
  *         self.max_clusters = len(original_nodes) + len(orphans)             # <<<<<<<<<<<<<<
  *         self.optimal_clusters = num_clusters
  * 
  */
-  __pyx_t_2 = PyObject_Length(__pyx_v_original_nodes); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 279, __pyx_L1_error)
-  __pyx_t_3 = PyObject_Length(__pyx_v_orphans); if (unlikely(__pyx_t_3 == -1)) __PYX_ERR(0, 279, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_v_original_nodes); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 305, __pyx_L1_error)
+  __pyx_t_3 = PyObject_Length(__pyx_v_orphans); if (unlikely(__pyx_t_3 == -1)) __PYX_ERR(0, 305, __pyx_L1_error)
   __pyx_v_self->max_clusters = (__pyx_t_2 + __pyx_t_3);
 
-  /* "hac/cluster.pyx":280
+  /* "hac/cluster.pyx":306
  *         self.rename_map = rename_map
  *         self.max_clusters = len(original_nodes) + len(orphans)
  *         self.optimal_clusters = num_clusters             # <<<<<<<<<<<<<<
  * 
- *     def crawl(self, start, priors=None, max_fringe_size=None):
+ *     def __getstate__(self):
  */
-  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_num_clusters); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_num_clusters); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L1_error)
   __pyx_v_self->optimal_clusters = __pyx_t_4;
 
-  /* "hac/cluster.pyx":272
+  /* "hac/cluster.pyx":298
  *     cdef object rename_map
  * 
  *     def __init__(self, dendrogram_graph, quality_history, original_nodes, orphans,             # <<<<<<<<<<<<<<
@@ -7990,8 +8730,859 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":282
+/* "hac/cluster.pyx":308
  *         self.optimal_clusters = num_clusters
+ * 
+ *     def __getstate__(self):             # <<<<<<<<<<<<<<
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters,
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_3__getstate__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_3__getstate__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__getstate__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_2__getstate__(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2__getstate__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  __Pyx_RefNannySetupContext("__getstate__", 0);
+
+  /* "hac/cluster.pyx":309
+ * 
+ *     def __getstate__(self):
+ *         return {             # <<<<<<<<<<<<<<
+ *             'optimal_clusters': self.optimal_clusters,
+ *             'quality_history': self.quality_history,
+ */
+  __Pyx_XDECREF(__pyx_r);
+
+  /* "hac/cluster.pyx":310
+ *     def __getstate__(self):
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters,             # <<<<<<<<<<<<<<
+ *             'quality_history': self.quality_history,
+ *             'max_clusters': self.max_clusters,
+ */
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_optimal_clusters, __pyx_t_2) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "hac/cluster.pyx":311
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters,
+ *             'quality_history': self.quality_history,             # <<<<<<<<<<<<<<
+ *             'max_clusters': self.max_clusters,
+ *             'graph': self.graph,
+ */
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_quality_history, __pyx_v_self->quality_history) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+
+  /* "hac/cluster.pyx":312
+ *             'optimal_clusters': self.optimal_clusters,
+ *             'quality_history': self.quality_history,
+ *             'max_clusters': self.max_clusters,             # <<<<<<<<<<<<<<
+ *             'graph': self.graph,
+ *             'original_nodes': self.original_nodes,
+ */
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->max_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_max_clusters, __pyx_t_2) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "hac/cluster.pyx":313
+ *             'quality_history': self.quality_history,
+ *             'max_clusters': self.max_clusters,
+ *             'graph': self.graph,             # <<<<<<<<<<<<<<
+ *             'original_nodes': self.original_nodes,
+ *             'orphans': self.orphans,
+ */
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_graph, __pyx_v_self->graph) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+
+  /* "hac/cluster.pyx":314
+ *             'max_clusters': self.max_clusters,
+ *             'graph': self.graph,
+ *             'original_nodes': self.original_nodes,             # <<<<<<<<<<<<<<
+ *             'orphans': self.orphans,
+ *             'rename_map': self.rename_map
+ */
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_original_nodes, __pyx_v_self->original_nodes) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+
+  /* "hac/cluster.pyx":315
+ *             'graph': self.graph,
+ *             'original_nodes': self.original_nodes,
+ *             'orphans': self.orphans,             # <<<<<<<<<<<<<<
+ *             'rename_map': self.rename_map
+ *         }
+ */
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_orphans, __pyx_v_self->orphans) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+
+  /* "hac/cluster.pyx":316
+ *             'original_nodes': self.original_nodes,
+ *             'orphans': self.orphans,
+ *             'rename_map': self.rename_map             # <<<<<<<<<<<<<<
+ *         }
+ *     getstate = __getstate__
+ */
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_rename_map, __pyx_v_self->rename_map) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":308
+ *         self.optimal_clusters = num_clusters
+ * 
+ *     def __getstate__(self):             # <<<<<<<<<<<<<<
+ *         return {
+ *             'optimal_clusters': self.optimal_clusters,
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("hac.cluster.Dendrogram.__getstate__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":320
+ *     getstate = __getstate__
+ * 
+ *     def __setstate__(self, state):             # <<<<<<<<<<<<<<
+ *         self.optimal_clusters = state['optimal_clusters']
+ *         self.quality_history = state['quality_history']
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_5__setstate__(PyObject *__pyx_v_self, PyObject *__pyx_v_state); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_5__setstate__(PyObject *__pyx_v_self, PyObject *__pyx_v_state) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__setstate__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_4__setstate__(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), ((PyObject *)__pyx_v_state));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4__setstate__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_state) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  __Pyx_RefNannySetupContext("__setstate__", 0);
+
+  /* "hac/cluster.pyx":321
+ * 
+ *     def __setstate__(self, state):
+ *         self.optimal_clusters = state['optimal_clusters']             # <<<<<<<<<<<<<<
+ *         self.quality_history = state['quality_history']
+ *         self.max_clusters = state['max_clusters']
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 321, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_self->optimal_clusters = __pyx_t_2;
+
+  /* "hac/cluster.pyx":322
+ *     def __setstate__(self, state):
+ *         self.optimal_clusters = state['optimal_clusters']
+ *         self.quality_history = state['quality_history']             # <<<<<<<<<<<<<<
+ *         self.max_clusters = state['max_clusters']
+ *         self.graph = state['graph']
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_quality_history); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (!(likely(PyList_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->quality_history);
+  __Pyx_DECREF(__pyx_v_self->quality_history);
+  __pyx_v_self->quality_history = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "hac/cluster.pyx":323
+ *         self.optimal_clusters = state['optimal_clusters']
+ *         self.quality_history = state['quality_history']
+ *         self.max_clusters = state['max_clusters']             # <<<<<<<<<<<<<<
+ *         self.graph = state['graph']
+ *         self.original_nodes = state['original_nodes']
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_max_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 323, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 323, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_self->max_clusters = __pyx_t_2;
+
+  /* "hac/cluster.pyx":324
+ *         self.quality_history = state['quality_history']
+ *         self.max_clusters = state['max_clusters']
+ *         self.graph = state['graph']             # <<<<<<<<<<<<<<
+ *         self.original_nodes = state['original_nodes']
+ *         self.orphans = state['orphans']
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_graph); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 324, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->graph);
+  __Pyx_DECREF(__pyx_v_self->graph);
+  __pyx_v_self->graph = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "hac/cluster.pyx":325
+ *         self.max_clusters = state['max_clusters']
+ *         self.graph = state['graph']
+ *         self.original_nodes = state['original_nodes']             # <<<<<<<<<<<<<<
+ *         self.orphans = state['orphans']
+ *         self.rename_map = state['rename_map']
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_original_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (!(likely(PySet_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 325, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->original_nodes);
+  __Pyx_DECREF(__pyx_v_self->original_nodes);
+  __pyx_v_self->original_nodes = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "hac/cluster.pyx":326
+ *         self.graph = state['graph']
+ *         self.original_nodes = state['original_nodes']
+ *         self.orphans = state['orphans']             # <<<<<<<<<<<<<<
+ *         self.rename_map = state['rename_map']
+ *     setstate = __setstate__
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_orphans); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 326, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (!(likely(PySet_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(0, 326, __pyx_L1_error)
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->orphans);
+  __Pyx_DECREF(__pyx_v_self->orphans);
+  __pyx_v_self->orphans = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "hac/cluster.pyx":327
+ *         self.original_nodes = state['original_nodes']
+ *         self.orphans = state['orphans']
+ *         self.rename_map = state['rename_map']             # <<<<<<<<<<<<<<
+ *     setstate = __setstate__
+ * 
+ */
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_state, __pyx_n_s_rename_map); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 327, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __Pyx_GOTREF(__pyx_v_self->rename_map);
+  __Pyx_DECREF(__pyx_v_self->rename_map);
+  __pyx_v_self->rename_map = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "hac/cluster.pyx":320
+ *     getstate = __getstate__
+ * 
+ *     def __setstate__(self, state):             # <<<<<<<<<<<<<<
+ *         self.optimal_clusters = state['optimal_clusters']
+ *         self.quality_history = state['quality_history']
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("hac.cluster.Dendrogram.__setstate__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":330
+ *     setstate = __setstate__
+ * 
+ *     def __reduce__(self):             # <<<<<<<<<<<<<<
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.graph, self.quality_history,
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_7__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_7__reduce__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__reduce__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_6__reduce__(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6__reduce__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  __Pyx_RefNannySetupContext("__reduce__", 0);
+
+  /* "hac/cluster.pyx":332
+ *     def __reduce__(self):
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.graph, self.quality_history,             # <<<<<<<<<<<<<<
+ *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_class); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+
+  /* "hac/cluster.pyx":333
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.graph, self.quality_history,
+ *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))             # <<<<<<<<<<<<<<
+ * 
+ *     def __hash__(self):
+ */
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+
+  /* "hac/cluster.pyx":332
+ *     def __reduce__(self):
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.graph, self.quality_history,             # <<<<<<<<<<<<<<
+ *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))
+ * 
+ */
+  __pyx_t_3 = PyTuple_New(6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_self->graph);
+  __Pyx_GIVEREF(__pyx_v_self->graph);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_self->graph);
+  __Pyx_INCREF(__pyx_v_self->quality_history);
+  __Pyx_GIVEREF(__pyx_v_self->quality_history);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_self->quality_history);
+  __Pyx_INCREF(__pyx_v_self->original_nodes);
+  __Pyx_GIVEREF(__pyx_v_self->original_nodes);
+  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_v_self->original_nodes);
+  __Pyx_INCREF(__pyx_v_self->orphans);
+  __Pyx_GIVEREF(__pyx_v_self->orphans);
+  PyTuple_SET_ITEM(__pyx_t_3, 3, __pyx_v_self->orphans);
+  __Pyx_INCREF(__pyx_v_self->rename_map);
+  __Pyx_GIVEREF(__pyx_v_self->rename_map);
+  PyTuple_SET_ITEM(__pyx_t_3, 4, __pyx_v_self->rename_map);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_3, 5, __pyx_t_2);
+  __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+  __pyx_t_1 = 0;
+  __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":330
+ *     setstate = __setstate__
+ * 
+ *     def __reduce__(self):             # <<<<<<<<<<<<<<
+ *         # Python 2 insists on using __reduce__ for cython objects...
+ *         return (self.__class__, (self.graph, self.quality_history,
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("hac.cluster.Dendrogram.__reduce__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":335
+ *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))
+ * 
+ *     def __hash__(self):             # <<<<<<<<<<<<<<
+ *         return hash(self.graph)
+ * 
+ */
+
+/* Python wrapper */
+static Py_hash_t __pyx_pw_3hac_7cluster_10Dendrogram_9__hash__(PyObject *__pyx_v_self); /*proto*/
+static Py_hash_t __pyx_pw_3hac_7cluster_10Dendrogram_9__hash__(PyObject *__pyx_v_self) {
+  Py_hash_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__hash__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_8__hash__(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static Py_hash_t __pyx_pf_3hac_7cluster_10Dendrogram_8__hash__(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self) {
+  Py_hash_t __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  Py_hash_t __pyx_t_2;
+  __Pyx_RefNannySetupContext("__hash__", 0);
+
+  /* "hac/cluster.pyx":336
+ * 
+ *     def __hash__(self):
+ *         return hash(self.graph)             # <<<<<<<<<<<<<<
+ * 
+ *     def __richcmp__(self, other, cmp_op):
+ */
+  __pyx_t_1 = __pyx_v_self->graph;
+  __Pyx_INCREF(__pyx_t_1);
+  __pyx_t_2 = PyObject_Hash(__pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_r = __pyx_t_2;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":335
+ *             self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))
+ * 
+ *     def __hash__(self):             # <<<<<<<<<<<<<<
+ *         return hash(self.graph)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("hac.cluster.Dendrogram.__hash__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  if (unlikely(__pyx_r == -1) && !PyErr_Occurred()) __pyx_r = -2;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":338
+ *         return hash(self.graph)
+ * 
+ *     def __richcmp__(self, other, cmp_op):             # <<<<<<<<<<<<<<
+ *         if self is other:
+ *             return True
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_11__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_cmp_op); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_11__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, int __pyx_arg_cmp_op) {
+  PyObject *__pyx_v_cmp_op = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__richcmp__ (wrapper)", 0);
+  __pyx_v_cmp_op = __Pyx_PyInt_From_int(__pyx_arg_cmp_op); if (unlikely(!__pyx_v_cmp_op)) __PYX_ERR(0, 338, __pyx_L3_error)
+  __Pyx_GOTREF(__pyx_v_cmp_op);
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("hac.cluster.Dendrogram.__richcmp__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_10__richcmp__(((PyObject *)__pyx_v_self), ((PyObject *)__pyx_v_other), ((PyObject *)__pyx_v_cmp_op));
+
+  /* function exit code */
+  __Pyx_XDECREF(__pyx_v_cmp_op);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10__richcmp__(PyObject *__pyx_v_self, PyObject *__pyx_v_other, PyObject *__pyx_v_cmp_op) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  __Pyx_RefNannySetupContext("__richcmp__", 0);
+
+  /* "hac/cluster.pyx":339
+ * 
+ *     def __richcmp__(self, other, cmp_op):
+ *         if self is other:             # <<<<<<<<<<<<<<
+ *             return True
+ *         elif not isinstance(other, Dendrogram):
+ */
+  __pyx_t_1 = (__pyx_v_self == __pyx_v_other);
+  __pyx_t_2 = (__pyx_t_1 != 0);
+  if (__pyx_t_2) {
+
+    /* "hac/cluster.pyx":340
+ *     def __richcmp__(self, other, cmp_op):
+ *         if self is other:
+ *             return True             # <<<<<<<<<<<<<<
+ *         elif not isinstance(other, Dendrogram):
+ *             return False
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(Py_True);
+    __pyx_r = Py_True;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":339
+ * 
+ *     def __richcmp__(self, other, cmp_op):
+ *         if self is other:             # <<<<<<<<<<<<<<
+ *             return True
+ *         elif not isinstance(other, Dendrogram):
+ */
+  }
+
+  /* "hac/cluster.pyx":341
+ *         if self is other:
+ *             return True
+ *         elif not isinstance(other, Dendrogram):             # <<<<<<<<<<<<<<
+ *             return False
+ *         elif cmp_op == 2:
+ */
+  __pyx_t_2 = __Pyx_TypeCheck(__pyx_v_other, __pyx_ptype_3hac_7cluster_Dendrogram); 
+  __pyx_t_1 = ((!(__pyx_t_2 != 0)) != 0);
+  if (__pyx_t_1) {
+
+    /* "hac/cluster.pyx":342
+ *             return True
+ *         elif not isinstance(other, Dendrogram):
+ *             return False             # <<<<<<<<<<<<<<
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __Pyx_INCREF(Py_False);
+    __pyx_r = Py_False;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":341
+ *         if self is other:
+ *             return True
+ *         elif not isinstance(other, Dendrogram):             # <<<<<<<<<<<<<<
+ *             return False
+ *         elif cmp_op == 2:
+ */
+  }
+
+  /* "hac/cluster.pyx":343
+ *         elif not isinstance(other, Dendrogram):
+ *             return False
+ *         elif cmp_op == 2:             # <<<<<<<<<<<<<<
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:
+ */
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_cmp_op, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__pyx_t_1) {
+
+    /* "hac/cluster.pyx":344
+ *             return False
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)             # <<<<<<<<<<<<<<
+ *         elif cmp_op == 3:
+ *             return not self.__eq(other)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_eq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 344, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
+      }
+    }
+    if (!__pyx_t_5) {
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_other); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      {
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 344, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_6);
+        __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
+        __Pyx_INCREF(__pyx_v_other);
+        __Pyx_GIVEREF(__pyx_v_other);
+        PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_other);
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_r = __pyx_t_3;
+    __pyx_t_3 = 0;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":343
+ *         elif not isinstance(other, Dendrogram):
+ *             return False
+ *         elif cmp_op == 2:             # <<<<<<<<<<<<<<
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:
+ */
+  }
+
+  /* "hac/cluster.pyx":345
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:             # <<<<<<<<<<<<<<
+ *             return not self.__eq(other)
+ *         return False
+ */
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_cmp_op, __pyx_int_3, 3, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__pyx_t_1) {
+
+    /* "hac/cluster.pyx":346
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:
+ *             return not self.__eq(other)             # <<<<<<<<<<<<<<
+ *         return False
+ * 
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_eq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_6)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_6);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
+      }
+    }
+    if (!__pyx_t_6) {
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_other); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_other};
+        __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+        __Pyx_GOTREF(__pyx_t_3);
+      } else
+      #endif
+      {
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 346, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_6); __pyx_t_6 = NULL;
+        __Pyx_INCREF(__pyx_v_other);
+        __Pyx_GIVEREF(__pyx_v_other);
+        PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_other);
+        __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_3);
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyBool_FromLong((!__pyx_t_1)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_r = __pyx_t_3;
+    __pyx_t_3 = 0;
+    goto __pyx_L0;
+
+    /* "hac/cluster.pyx":345
+ *         elif cmp_op == 2:
+ *             return self.__eq(other)
+ *         elif cmp_op == 3:             # <<<<<<<<<<<<<<
+ *             return not self.__eq(other)
+ *         return False
+ */
+  }
+
+  /* "hac/cluster.pyx":347
+ *         elif cmp_op == 3:
+ *             return not self.__eq(other)
+ *         return False             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __eq(self, Dendrogram other):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(Py_False);
+  __pyx_r = Py_False;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":338
+ *         return hash(self.graph)
+ * 
+ *     def __richcmp__(self, other, cmp_op):             # <<<<<<<<<<<<<<
+ *         if self is other:
+ *             return True
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_AddTraceback("hac.cluster.Dendrogram.__richcmp__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":349
+ *         return False
+ * 
+ *     cdef bint __eq(self, Dendrogram other):             # <<<<<<<<<<<<<<
+ *         return self.get_state() == other.get_state()
+ * 
+ */
+
+static int __pyx_f_3hac_7cluster_10Dendrogram___eq(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_other) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  __Pyx_RefNannySetupContext("__eq", 0);
+
+  /* "hac/cluster.pyx":350
+ * 
+ *     cdef bint __eq(self, Dendrogram other):
+ *         return self.get_state() == other.get_state()             # <<<<<<<<<<<<<<
+ * 
+ *     def crawl(self, start, priors=None, max_fringe_size=None):
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_get_state); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+    }
+  }
+  if (__pyx_t_3) {
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  } else {
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
+  }
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_other), __pyx_n_s_get_state); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 350, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_4)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  if (__pyx_t_4) {
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  } else {
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 350, __pyx_L1_error)
+  }
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 350, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 350, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_5;
+  goto __pyx_L0;
+
+  /* "hac/cluster.pyx":349
+ *         return False
+ * 
+ *     cdef bint __eq(self, Dendrogram other):             # <<<<<<<<<<<<<<
+ *         return self.get_state() == other.get_state()
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_WriteUnraisable("hac.cluster.Dendrogram.__eq", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "hac/cluster.pyx":352
+ *         return self.get_state() == other.get_state()
  * 
  *     def crawl(self, start, priors=None, max_fringe_size=None):             # <<<<<<<<<<<<<<
  *         if priors is None:
@@ -7999,8 +9590,8 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram___init__(struct __pyx_obj_3hac_7c
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_3crawl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_3crawl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_13crawl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_13crawl(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_start = 0;
   PyObject *__pyx_v_priors = 0;
   PyObject *__pyx_v_max_fringe_size = 0;
@@ -8039,7 +9630,7 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_3crawl(PyObject *__pyx_v_se
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "crawl") < 0)) __PYX_ERR(0, 282, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "crawl") < 0)) __PYX_ERR(0, 352, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -8056,20 +9647,20 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_3crawl(PyObject *__pyx_v_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("crawl", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 282, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("crawl", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 352, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.Dendrogram.crawl", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_2crawl(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_start, __pyx_v_priors, __pyx_v_max_fringe_size);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_12crawl(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_start, __pyx_v_priors, __pyx_v_max_fringe_size);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_start, PyObject *__pyx_v_priors, PyObject *__pyx_v_max_fringe_size) {
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_12crawl(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_start, PyObject *__pyx_v_priors, PyObject *__pyx_v_max_fringe_size) {
   PyObject *__pyx_v_fringe = NULL;
   PyObject *__pyx_v_node = NULL;
   PyObject *__pyx_v_inode = NULL;
@@ -8089,7 +9680,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   __Pyx_RefNannySetupContext("crawl", 0);
   __Pyx_INCREF(__pyx_v_priors);
 
-  /* "hac/cluster.pyx":283
+  /* "hac/cluster.pyx":353
  * 
  *     def crawl(self, start, priors=None, max_fringe_size=None):
  *         if priors is None:             # <<<<<<<<<<<<<<
@@ -8100,19 +9691,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "hac/cluster.pyx":284
+    /* "hac/cluster.pyx":354
  *     def crawl(self, start, priors=None, max_fringe_size=None):
  *         if priors is None:
  *             priors = set()             # <<<<<<<<<<<<<<
  *         fringe = []
  *         priors.add(start)
  */
-    __pyx_t_3 = PySet_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 284, __pyx_L1_error)
+    __pyx_t_3 = PySet_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 354, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_priors, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":283
+    /* "hac/cluster.pyx":353
  * 
  *     def crawl(self, start, priors=None, max_fringe_size=None):
  *         if priors is None:             # <<<<<<<<<<<<<<
@@ -8121,26 +9712,26 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
  */
   }
 
-  /* "hac/cluster.pyx":285
+  /* "hac/cluster.pyx":355
  *         if priors is None:
  *             priors = set()
  *         fringe = []             # <<<<<<<<<<<<<<
  *         priors.add(start)
  *         heapq.heappush(fringe, -start)
  */
-  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 285, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_fringe = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":286
+  /* "hac/cluster.pyx":356
  *             priors = set()
  *         fringe = []
  *         priors.add(start)             # <<<<<<<<<<<<<<
  *         heapq.heappush(fringe, -start)
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_priors, __pyx_n_s_add); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 286, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_priors, __pyx_n_s_add); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 356, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
@@ -8153,13 +9744,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
     }
   }
   if (!__pyx_t_5) {
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_start); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_start); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_start};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 286, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_3);
     } else
@@ -8167,19 +9758,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
       PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_start};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 286, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_3);
     } else
     #endif
     {
-      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 286, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 356, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
       __Pyx_INCREF(__pyx_v_start);
       __Pyx_GIVEREF(__pyx_v_start);
       PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_start);
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 286, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 356, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
@@ -8187,19 +9778,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":287
+  /* "hac/cluster.pyx":357
  *         fringe = []
  *         priors.add(start)
  *         heapq.heappush(fringe, -start)             # <<<<<<<<<<<<<<
  * 
  *         while len(fringe) > 0 and (max_fringe_size == None or len(fringe) < max_fringe_size):
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 287, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 357, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_heappush); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 287, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_heappush); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 357, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyNumber_Negative(__pyx_v_start); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 287, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Negative(__pyx_v_start); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 357, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = NULL;
   __pyx_t_7 = 0;
@@ -8216,7 +9807,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_6)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_fringe, __pyx_t_4};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 287, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -8225,14 +9816,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_fringe, __pyx_t_4};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 287, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 287, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -8243,14 +9834,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_7, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 287, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":289
+  /* "hac/cluster.pyx":359
  *         heapq.heappush(fringe, -start)
  * 
  *         while len(fringe) > 0 and (max_fringe_size == None or len(fringe) < max_fringe_size):             # <<<<<<<<<<<<<<
@@ -8258,42 +9849,42 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
  *             priors.add(node)
  */
   while (1) {
-    __pyx_t_9 = PyList_GET_SIZE(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_9 = PyList_GET_SIZE(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 359, __pyx_L1_error)
     __pyx_t_1 = ((__pyx_t_9 > 0) != 0);
     if (__pyx_t_1) {
     } else {
       __pyx_t_2 = __pyx_t_1;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_3 = PyObject_RichCompare(__pyx_v_max_fringe_size, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_3 = PyObject_RichCompare(__pyx_v_max_fringe_size, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 359, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 359, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (!__pyx_t_1) {
     } else {
       __pyx_t_2 = __pyx_t_1;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_9 = PyList_GET_SIZE(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 289, __pyx_L1_error)
-    __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_9 = PyList_GET_SIZE(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 359, __pyx_L1_error)
+    __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 359, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = PyObject_RichCompare(__pyx_t_3, __pyx_v_max_fringe_size, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_6 = PyObject_RichCompare(__pyx_t_3, __pyx_v_max_fringe_size, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 359, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 289, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 359, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_2 = __pyx_t_1;
     __pyx_L6_bool_binop_done:;
     if (!__pyx_t_2) break;
 
-    /* "hac/cluster.pyx":290
+    /* "hac/cluster.pyx":360
  * 
  *         while len(fringe) > 0 and (max_fringe_size == None or len(fringe) < max_fringe_size):
  *             node = -heapq.heappop(fringe)             # <<<<<<<<<<<<<<
  *             priors.add(node)
  *             for inode in self.graph[node]:
  */
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 360, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_heappop); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_heappop); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 360, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -8307,13 +9898,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
       }
     }
     if (!__pyx_t_3) {
-      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_v_fringe); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_v_fringe); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 360, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_8)) {
         PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_fringe};
-        __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 360, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_6);
       } else
@@ -8321,38 +9912,38 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_8)) {
         PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_fringe};
-        __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_8, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 360, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_6);
       } else
       #endif
       {
-        __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 290, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 360, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
         __Pyx_INCREF(__pyx_v_fringe);
         __Pyx_GIVEREF(__pyx_v_fringe);
         PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_fringe);
-        __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_4, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_t_4, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 360, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       }
     }
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PyNumber_Negative(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 290, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Negative(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 360, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF_SET(__pyx_v_node, __pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "hac/cluster.pyx":291
+    /* "hac/cluster.pyx":361
  *         while len(fringe) > 0 and (max_fringe_size == None or len(fringe) < max_fringe_size):
  *             node = -heapq.heappop(fringe)
  *             priors.add(node)             # <<<<<<<<<<<<<<
  *             for inode in self.graph[node]:
  *                 if inode not in priors:
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_priors, __pyx_n_s_add); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 291, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_priors, __pyx_n_s_add); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 361, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __pyx_t_4 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -8365,13 +9956,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
       }
     }
     if (!__pyx_t_4) {
-      __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_node); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 291, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_node); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 361, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_6)) {
         PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_node};
-        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 291, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 361, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
@@ -8379,19 +9970,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
         PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_node};
-        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 291, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 361, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_GOTREF(__pyx_t_8);
       } else
       #endif
       {
-        __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 291, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 361, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_node);
         __Pyx_GIVEREF(__pyx_v_node);
         PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_node);
-        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 291, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 361, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
@@ -8399,22 +9990,22 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-    /* "hac/cluster.pyx":292
+    /* "hac/cluster.pyx":362
  *             node = -heapq.heappop(fringe)
  *             priors.add(node)
  *             for inode in self.graph[node]:             # <<<<<<<<<<<<<<
  *                 if inode not in priors:
  *                     heapq.heappush(fringe, -inode)
  */
-    __pyx_t_8 = PyObject_GetItem(__pyx_v_self->graph, __pyx_v_node); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 292, __pyx_L1_error)
+    __pyx_t_8 = PyObject_GetItem(__pyx_v_self->graph, __pyx_v_node); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 362, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (likely(PyList_CheckExact(__pyx_t_8)) || PyTuple_CheckExact(__pyx_t_8)) {
       __pyx_t_6 = __pyx_t_8; __Pyx_INCREF(__pyx_t_6); __pyx_t_9 = 0;
       __pyx_t_10 = NULL;
     } else {
-      __pyx_t_9 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 292, __pyx_L1_error)
+      __pyx_t_9 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 362, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_10 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 292, __pyx_L1_error)
+      __pyx_t_10 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 362, __pyx_L1_error)
     }
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     for (;;) {
@@ -8422,17 +10013,17 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
         if (likely(PyList_CheckExact(__pyx_t_6))) {
           if (__pyx_t_9 >= PyList_GET_SIZE(__pyx_t_6)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_8 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_9); __Pyx_INCREF(__pyx_t_8); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 292, __pyx_L1_error)
+          __pyx_t_8 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_9); __Pyx_INCREF(__pyx_t_8); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 362, __pyx_L1_error)
           #else
-          __pyx_t_8 = PySequence_ITEM(__pyx_t_6, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 292, __pyx_L1_error)
+          __pyx_t_8 = PySequence_ITEM(__pyx_t_6, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 362, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
           #endif
         } else {
           if (__pyx_t_9 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_8 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_9); __Pyx_INCREF(__pyx_t_8); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 292, __pyx_L1_error)
+          __pyx_t_8 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_9); __Pyx_INCREF(__pyx_t_8); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 362, __pyx_L1_error)
           #else
-          __pyx_t_8 = PySequence_ITEM(__pyx_t_6, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 292, __pyx_L1_error)
+          __pyx_t_8 = PySequence_ITEM(__pyx_t_6, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 362, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
           #endif
         }
@@ -8442,7 +10033,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 292, __pyx_L1_error)
+            else __PYX_ERR(0, 362, __pyx_L1_error)
           }
           break;
         }
@@ -8451,30 +10042,30 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
       __Pyx_XDECREF_SET(__pyx_v_inode, __pyx_t_8);
       __pyx_t_8 = 0;
 
-      /* "hac/cluster.pyx":293
+      /* "hac/cluster.pyx":363
  *             priors.add(node)
  *             for inode in self.graph[node]:
  *                 if inode not in priors:             # <<<<<<<<<<<<<<
  *                     heapq.heappush(fringe, -inode)
  * 
  */
-      __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_v_inode, __pyx_v_priors, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 293, __pyx_L1_error)
+      __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_v_inode, __pyx_v_priors, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 363, __pyx_L1_error)
       __pyx_t_1 = (__pyx_t_2 != 0);
       if (__pyx_t_1) {
 
-        /* "hac/cluster.pyx":294
+        /* "hac/cluster.pyx":364
  *             for inode in self.graph[node]:
  *                 if inode not in priors:
  *                     heapq.heappush(fringe, -inode)             # <<<<<<<<<<<<<<
  * 
  *         return priors, fringe
  */
-        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_heapq); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 364, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_heappush); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_heappush); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 364, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = PyNumber_Negative(__pyx_v_inode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_3 = PyNumber_Negative(__pyx_v_inode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 364, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __pyx_t_5 = NULL;
         __pyx_t_7 = 0;
@@ -8491,7 +10082,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_4)) {
           PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_fringe, __pyx_t_3};
-          __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 294, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 364, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -8500,14 +10091,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
           PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_fringe, __pyx_t_3};
-          __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 294, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 364, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         } else
         #endif
         {
-          __pyx_t_11 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 294, __pyx_L1_error)
+          __pyx_t_11 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 364, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_11);
           if (__pyx_t_5) {
             __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -8518,14 +10109,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
           __Pyx_GIVEREF(__pyx_t_3);
           PyTuple_SET_ITEM(__pyx_t_11, 1+__pyx_t_7, __pyx_t_3);
           __pyx_t_3 = 0;
-          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_11, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 294, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_11, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 364, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         }
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "hac/cluster.pyx":293
+        /* "hac/cluster.pyx":363
  *             priors.add(node)
  *             for inode in self.graph[node]:
  *                 if inode not in priors:             # <<<<<<<<<<<<<<
@@ -8534,7 +10125,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
  */
       }
 
-      /* "hac/cluster.pyx":292
+      /* "hac/cluster.pyx":362
  *             node = -heapq.heappop(fringe)
  *             priors.add(node)
  *             for inode in self.graph[node]:             # <<<<<<<<<<<<<<
@@ -8545,7 +10136,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
 
-  /* "hac/cluster.pyx":296
+  /* "hac/cluster.pyx":366
  *                     heapq.heappush(fringe, -inode)
  * 
  *         return priors, fringe             # <<<<<<<<<<<<<<
@@ -8553,7 +10144,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
  *     def clusters(self, num_clusters=None):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 296, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 366, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_v_priors);
   __Pyx_GIVEREF(__pyx_v_priors);
@@ -8565,8 +10156,8 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   __pyx_t_6 = 0;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":282
- *         self.optimal_clusters = num_clusters
+  /* "hac/cluster.pyx":352
+ *         return self.get_state() == other.get_state()
  * 
  *     def crawl(self, start, priors=None, max_fringe_size=None):             # <<<<<<<<<<<<<<
  *         if priors is None:
@@ -8593,7 +10184,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":298
+/* "hac/cluster.pyx":368
  *         return priors, fringe
  * 
  *     def clusters(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -8602,8 +10193,8 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_2crawl(struct __pyx_obj_3ha
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_5clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_5clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_15clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_15clusters(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_num_clusters = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -8629,7 +10220,7 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_5clusters(PyObject *__pyx_v
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "clusters") < 0)) __PYX_ERR(0, 298, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "clusters") < 0)) __PYX_ERR(0, 368, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -8642,20 +10233,20 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_5clusters(PyObject *__pyx_v
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("clusters", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 298, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("clusters", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 368, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.Dendrogram.clusters", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_4clusters(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_num_clusters);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_14clusters(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_num_clusters);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":302
+/* "hac/cluster.pyx":372
  *             num_clusters = self.optimal_clusters
  *         if num_clusters is None:
  *             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])             # <<<<<<<<<<<<<<
@@ -8683,7 +10274,7 @@ static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("lambda1", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_iv, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 302, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_iv, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -8700,7 +10291,7 @@ static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":332
+/* "hac/cluster.pyx":402
  *             finally:
  *                 nx.relabel_nodes(self.graph, self.rename_map.original, copy=False)
  *         return sorted(clusters, key=lambda c: -len(c))             # <<<<<<<<<<<<<<
@@ -8729,8 +10320,8 @@ static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("lambda2", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyObject_Length(__pyx_v_c); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 332, __pyx_L1_error)
-  __pyx_t_2 = PyInt_FromSsize_t((-__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_c); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_t_2 = PyInt_FromSsize_t((-__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -8747,7 +10338,7 @@ static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":298
+/* "hac/cluster.pyx":368
  *         return priors, fringe
  * 
  *     def clusters(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -8755,7 +10346,7 @@ static PyObject *__pyx_lambda_funcdef_lambda2(CYTHON_UNUSED PyObject *__pyx_self
  *             num_clusters = self.optimal_clusters
  */
 
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters) {
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_14clusters(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters) {
   PyObject *__pyx_v_index = NULL;
   CYTHON_UNUSED PyObject *__pyx_v_value = NULL;
   PyObject *__pyx_v_clusters = 0;
@@ -8799,7 +10390,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __Pyx_RefNannySetupContext("clusters", 0);
   __Pyx_INCREF(__pyx_v_num_clusters);
 
-  /* "hac/cluster.pyx":299
+  /* "hac/cluster.pyx":369
  * 
  *     def clusters(self, num_clusters=None):
  *         if num_clusters is None and self.optimal_clusters > 0:             # <<<<<<<<<<<<<<
@@ -8818,19 +10409,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "hac/cluster.pyx":300
+    /* "hac/cluster.pyx":370
  *     def clusters(self, num_clusters=None):
  *         if num_clusters is None and self.optimal_clusters > 0:
  *             num_clusters = self.optimal_clusters             # <<<<<<<<<<<<<<
  *         if num_clusters is None:
  *             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 300, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 370, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF_SET(__pyx_v_num_clusters, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "hac/cluster.pyx":299
+    /* "hac/cluster.pyx":369
  * 
  *     def clusters(self, num_clusters=None):
  *         if num_clusters is None and self.optimal_clusters > 0:             # <<<<<<<<<<<<<<
@@ -8839,7 +10430,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
   }
 
-  /* "hac/cluster.pyx":301
+  /* "hac/cluster.pyx":371
  *         if num_clusters is None and self.optimal_clusters > 0:
  *             num_clusters = self.optimal_clusters
  *         if num_clusters is None:             # <<<<<<<<<<<<<<
@@ -8850,33 +10441,33 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __pyx_t_3 = (__pyx_t_1 != 0);
   if (__pyx_t_3) {
 
-    /* "hac/cluster.pyx":302
+    /* "hac/cluster.pyx":372
  *             num_clusters = self.optimal_clusters
  *         if num_clusters is None:
  *             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])             # <<<<<<<<<<<<<<
  *             num_clusters = len(self.quality_history) - index
  *         num_clusters = max(min(num_clusters, self.max_clusters), 0)
  */
-    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 302, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_INCREF(__pyx_v_self->quality_history);
     __Pyx_GIVEREF(__pyx_v_self->quality_history);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_self->quality_history);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_enumerate, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 302, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_enumerate, __pyx_t_4, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 302, __pyx_L1_error)
+    __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_5);
     __pyx_t_5 = 0;
-    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 302, __pyx_L1_error)
+    __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3hac_7cluster_10Dendrogram_8clusters_lambda1, 0, __pyx_n_s_clusters_locals_lambda, NULL, __pyx_n_s_hac_cluster, __pyx_d, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 302, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3hac_7cluster_10Dendrogram_8clusters_lambda1, 0, __pyx_n_s_clusters_locals_lambda, NULL, __pyx_n_s_hac_cluster, __pyx_d, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_key, __pyx_t_6) < 0) __PYX_ERR(0, 302, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_key, __pyx_t_6) < 0) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 302, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 372, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -8890,7 +10481,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       if (unlikely(size != 2)) {
         if (size > 2) __Pyx_RaiseTooManyValuesError(2);
         else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-        __PYX_ERR(0, 302, __pyx_L1_error)
+        __PYX_ERR(0, 372, __pyx_L1_error)
       }
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
       if (likely(PyTuple_CheckExact(sequence))) {
@@ -8903,15 +10494,15 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(__pyx_t_4);
       #else
-      __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 302, __pyx_L1_error)
+      __pyx_t_5 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 372, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 302, __pyx_L1_error)
+      __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 372, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       #endif
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
       Py_ssize_t index = -1;
-      __pyx_t_7 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 302, __pyx_L1_error)
+      __pyx_t_7 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 372, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_8 = Py_TYPE(__pyx_t_7)->tp_iternext;
@@ -8919,7 +10510,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       __Pyx_GOTREF(__pyx_t_5);
       index = 1; __pyx_t_4 = __pyx_t_8(__pyx_t_7); if (unlikely(!__pyx_t_4)) goto __pyx_L7_unpacking_failed;
       __Pyx_GOTREF(__pyx_t_4);
-      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 2) < 0) __PYX_ERR(0, 302, __pyx_L1_error)
+      if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_7), 2) < 0) __PYX_ERR(0, 372, __pyx_L1_error)
       __pyx_t_8 = NULL;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       goto __pyx_L8_unpacking_done;
@@ -8927,7 +10518,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_8 = NULL;
       if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-      __PYX_ERR(0, 302, __pyx_L1_error)
+      __PYX_ERR(0, 372, __pyx_L1_error)
       __pyx_L8_unpacking_done:;
     }
     __pyx_v_index = __pyx_t_5;
@@ -8935,7 +10526,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
     __pyx_v_value = __pyx_t_4;
     __pyx_t_4 = 0;
 
-    /* "hac/cluster.pyx":303
+    /* "hac/cluster.pyx":373
  *         if num_clusters is None:
  *             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
  *             num_clusters = len(self.quality_history) - index             # <<<<<<<<<<<<<<
@@ -8946,19 +10537,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
     __Pyx_INCREF(__pyx_t_6);
     if (unlikely(__pyx_t_6 == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 303, __pyx_L1_error)
+      __PYX_ERR(0, 373, __pyx_L1_error)
     }
-    __pyx_t_9 = PyList_GET_SIZE(__pyx_t_6); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 303, __pyx_L1_error)
+    __pyx_t_9 = PyList_GET_SIZE(__pyx_t_6); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 373, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 303, __pyx_L1_error)
+    __pyx_t_6 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 373, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = PyNumber_Subtract(__pyx_t_6, __pyx_v_index); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 303, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Subtract(__pyx_t_6, __pyx_v_index); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 373, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF_SET(__pyx_v_num_clusters, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "hac/cluster.pyx":301
+    /* "hac/cluster.pyx":371
  *         if num_clusters is None and self.optimal_clusters > 0:
  *             num_clusters = self.optimal_clusters
  *         if num_clusters is None:             # <<<<<<<<<<<<<<
@@ -8967,7 +10558,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
   }
 
-  /* "hac/cluster.pyx":304
+  /* "hac/cluster.pyx":374
  *             index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
  *             num_clusters = len(self.quality_history) - index
  *         num_clusters = max(min(num_clusters, self.max_clusters), 0)             # <<<<<<<<<<<<<<
@@ -8978,14 +10569,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __pyx_t_11 = __pyx_v_self->max_clusters;
   __Pyx_INCREF(__pyx_v_num_clusters);
   __pyx_t_4 = __pyx_v_num_clusters;
-  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = PyObject_RichCompare(__pyx_t_5, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_7 = PyObject_RichCompare(__pyx_t_5, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   if (__pyx_t_3) {
-    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 304, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_t_11); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 374, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_6 = __pyx_t_7;
     __pyx_t_7 = 0;
@@ -8997,14 +10588,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __Pyx_INCREF(__pyx_t_6);
   __pyx_t_4 = __pyx_t_6;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_7 = __Pyx_PyInt_From_long(__pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_long(__pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = PyObject_RichCompare(__pyx_t_7, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_5 = PyObject_RichCompare(__pyx_t_7, __pyx_t_4, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (__pyx_t_3) {
-    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 304, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 374, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = __pyx_t_5;
     __pyx_t_5 = 0;
@@ -9019,18 +10610,18 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __Pyx_DECREF_SET(__pyx_v_num_clusters, __pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":306
+  /* "hac/cluster.pyx":376
  *         num_clusters = max(min(num_clusters, self.max_clusters), 0)
  * 
  *         cdef list clusters = [set([n]) for n in self.orphans]             # <<<<<<<<<<<<<<
  *         if self.graph and num_clusters:
  *             nx.relabel_nodes(self.graph, self.rename_map.integer, copy=False)
  */
-  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 376, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = PyObject_GetIter(__pyx_v_self->orphans); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_6 = PyObject_GetIter(__pyx_v_self->orphans); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 376, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_12 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_12 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 376, __pyx_L1_error)
   for (;;) {
     {
       __pyx_t_5 = __pyx_t_12(__pyx_t_6);
@@ -9038,7 +10629,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 306, __pyx_L1_error)
+          else __PYX_ERR(0, 376, __pyx_L1_error)
         }
         break;
       }
@@ -9046,49 +10637,49 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
     }
     __Pyx_XDECREF_SET(__pyx_v_n, __pyx_t_5);
     __pyx_t_5 = 0;
-    __pyx_t_5 = PySet_New(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 306, __pyx_L1_error)
+    __pyx_t_5 = PySet_New(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (PySet_Add(__pyx_t_5, __pyx_v_n) < 0) __PYX_ERR(0, 306, __pyx_L1_error)
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 306, __pyx_L1_error)
+    if (PySet_Add(__pyx_t_5, __pyx_v_n) < 0) __PYX_ERR(0, 376, __pyx_L1_error)
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_4, (PyObject*)__pyx_t_5))) __PYX_ERR(0, 376, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_v_clusters = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":307
+  /* "hac/cluster.pyx":377
  * 
  *         cdef list clusters = [set([n]) for n in self.orphans]
  *         if self.graph and num_clusters:             # <<<<<<<<<<<<<<
  *             nx.relabel_nodes(self.graph, self.rename_map.integer, copy=False)
  *             try:
  */
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_self->graph); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 307, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_self->graph); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 377, __pyx_L1_error)
   if (__pyx_t_1) {
   } else {
     __pyx_t_3 = __pyx_t_1;
     goto __pyx_L12_bool_binop_done;
   }
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_num_clusters); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 307, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_num_clusters); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 377, __pyx_L1_error)
   __pyx_t_3 = __pyx_t_1;
   __pyx_L12_bool_binop_done:;
   if (__pyx_t_3) {
 
-    /* "hac/cluster.pyx":308
+    /* "hac/cluster.pyx":378
  *         cdef list clusters = [set([n]) for n in self.orphans]
  *         if self.graph and num_clusters:
  *             nx.relabel_nodes(self.graph, self.rename_map.integer, copy=False)             # <<<<<<<<<<<<<<
  *             try:
  *                 start_node = max(self.graph)
  */
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_integer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_INCREF(__pyx_v_self->graph);
     __Pyx_GIVEREF(__pyx_v_self->graph);
@@ -9096,17 +10687,17 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 308, __pyx_L1_error)
+    __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 308, __pyx_L1_error)
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 308, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 378, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 378, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "hac/cluster.pyx":309
+    /* "hac/cluster.pyx":379
  *         if self.graph and num_clusters:
  *             nx.relabel_nodes(self.graph, self.rename_map.integer, copy=False)
  *             try:             # <<<<<<<<<<<<<<
@@ -9115,38 +10706,38 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
     /*try:*/ {
 
-      /* "hac/cluster.pyx":310
+      /* "hac/cluster.pyx":380
  *             nx.relabel_nodes(self.graph, self.rename_map.integer, copy=False)
  *             try:
  *                 start_node = max(self.graph)             # <<<<<<<<<<<<<<
  *                 priors, fringe = self.crawl(start=start_node, max_fringe_size=num_clusters)
  * 
  */
-      __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 310, __pyx_L15_error)
+      __pyx_t_7 = PyTuple_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 380, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_v_self->graph);
       __Pyx_GIVEREF(__pyx_v_self->graph);
       PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_v_self->graph);
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 310, __pyx_L15_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_max, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 380, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_v_start_node = __pyx_t_4;
       __pyx_t_4 = 0;
 
-      /* "hac/cluster.pyx":311
+      /* "hac/cluster.pyx":381
  *             try:
  *                 start_node = max(self.graph)
  *                 priors, fringe = self.crawl(start=start_node, max_fringe_size=num_clusters)             # <<<<<<<<<<<<<<
  * 
  *                 # Double check we got the right number of values
  */
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_crawl); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L15_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_crawl); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 381, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_7 = PyDict_New(); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L15_error)
+      __pyx_t_7 = PyDict_New(); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 381, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_7);
-      if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_start, __pyx_v_start_node) < 0) __PYX_ERR(0, 311, __pyx_L15_error)
-      if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_max_fringe_size, __pyx_v_num_clusters) < 0) __PYX_ERR(0, 311, __pyx_L15_error)
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L15_error)
+      if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_start, __pyx_v_start_node) < 0) __PYX_ERR(0, 381, __pyx_L15_error)
+      if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_max_fringe_size, __pyx_v_num_clusters) < 0) __PYX_ERR(0, 381, __pyx_L15_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 381, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -9160,7 +10751,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         if (unlikely(size != 2)) {
           if (size > 2) __Pyx_RaiseTooManyValuesError(2);
           else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-          __PYX_ERR(0, 311, __pyx_L15_error)
+          __PYX_ERR(0, 381, __pyx_L15_error)
         }
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
         if (likely(PyTuple_CheckExact(sequence))) {
@@ -9173,15 +10764,15 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_INCREF(__pyx_t_7);
         __Pyx_INCREF(__pyx_t_4);
         #else
-        __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L15_error)
+        __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 381, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L15_error)
+        __pyx_t_4 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 381, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       } else {
         Py_ssize_t index = -1;
-        __pyx_t_6 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 311, __pyx_L15_error)
+        __pyx_t_6 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 381, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __pyx_t_8 = Py_TYPE(__pyx_t_6)->tp_iternext;
@@ -9189,7 +10780,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_GOTREF(__pyx_t_7);
         index = 1; __pyx_t_4 = __pyx_t_8(__pyx_t_6); if (unlikely(!__pyx_t_4)) goto __pyx_L17_unpacking_failed;
         __Pyx_GOTREF(__pyx_t_4);
-        if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_6), 2) < 0) __PYX_ERR(0, 311, __pyx_L15_error)
+        if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_6), 2) < 0) __PYX_ERR(0, 381, __pyx_L15_error)
         __pyx_t_8 = NULL;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         goto __pyx_L18_unpacking_done;
@@ -9197,7 +10788,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __pyx_t_8 = NULL;
         if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-        __PYX_ERR(0, 311, __pyx_L15_error)
+        __PYX_ERR(0, 381, __pyx_L15_error)
         __pyx_L18_unpacking_done:;
       }
       __pyx_v_priors = __pyx_t_7;
@@ -9205,33 +10796,33 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       __pyx_v_fringe = __pyx_t_4;
       __pyx_t_4 = 0;
 
-      /* "hac/cluster.pyx":314
+      /* "hac/cluster.pyx":384
  * 
  *                 # Double check we got the right number of values
  *                 if len(fringe) != num_clusters:             # <<<<<<<<<<<<<<
  *                     raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)"
  *                         % (num_clusters, len(fringe)))
  */
-      __pyx_t_9 = PyObject_Length(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 314, __pyx_L15_error)
-      __pyx_t_5 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 314, __pyx_L15_error)
+      __pyx_t_9 = PyObject_Length(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 384, __pyx_L15_error)
+      __pyx_t_5 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 384, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_4 = PyObject_RichCompare(__pyx_t_5, __pyx_v_num_clusters, Py_NE); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 314, __pyx_L15_error)
+      __pyx_t_4 = PyObject_RichCompare(__pyx_t_5, __pyx_v_num_clusters, Py_NE); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 384, __pyx_L15_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 314, __pyx_L15_error)
+      __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 384, __pyx_L15_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (__pyx_t_3) {
 
-        /* "hac/cluster.pyx":316
+        /* "hac/cluster.pyx":386
  *                 if len(fringe) != num_clusters:
  *                     raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)"
  *                         % (num_clusters, len(fringe)))             # <<<<<<<<<<<<<<
  * 
  *                 for neg_clust_start in fringe:
  */
-        __pyx_t_9 = PyObject_Length(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 316, __pyx_L15_error)
-        __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 316, __pyx_L15_error)
+        __pyx_t_9 = PyObject_Length(__pyx_v_fringe); if (unlikely(__pyx_t_9 == -1)) __PYX_ERR(0, 386, __pyx_L15_error)
+        __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 386, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 316, __pyx_L15_error)
+        __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 386, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_INCREF(__pyx_v_num_clusters);
         __Pyx_GIVEREF(__pyx_v_num_clusters);
@@ -9239,30 +10830,30 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Failed_to_retrieve_d_clusters_co, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 316, __pyx_L15_error)
+        __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Failed_to_retrieve_d_clusters_co, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 386, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-        /* "hac/cluster.pyx":315
+        /* "hac/cluster.pyx":385
  *                 # Double check we got the right number of values
  *                 if len(fringe) != num_clusters:
  *                     raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)"             # <<<<<<<<<<<<<<
  *                         % (num_clusters, len(fringe)))
  * 
  */
-        __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 315, __pyx_L15_error)
+        __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 385, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 315, __pyx_L15_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_ValueError, __pyx_t_5, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 385, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_Raise(__pyx_t_4, 0, 0, 0);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __PYX_ERR(0, 315, __pyx_L15_error)
+        __PYX_ERR(0, 385, __pyx_L15_error)
 
-        /* "hac/cluster.pyx":314
+        /* "hac/cluster.pyx":384
  * 
  *                 # Double check we got the right number of values
  *                 if len(fringe) != num_clusters:             # <<<<<<<<<<<<<<
@@ -9271,7 +10862,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
       }
 
-      /* "hac/cluster.pyx":318
+      /* "hac/cluster.pyx":388
  *                         % (num_clusters, len(fringe)))
  * 
  *                 for neg_clust_start in fringe:             # <<<<<<<<<<<<<<
@@ -9282,26 +10873,26 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __pyx_t_4 = __pyx_v_fringe; __Pyx_INCREF(__pyx_t_4); __pyx_t_9 = 0;
         __pyx_t_12 = NULL;
       } else {
-        __pyx_t_9 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_fringe); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 318, __pyx_L15_error)
+        __pyx_t_9 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_fringe); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 388, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_12 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 318, __pyx_L15_error)
+        __pyx_t_12 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 388, __pyx_L15_error)
       }
       for (;;) {
         if (likely(!__pyx_t_12)) {
           if (likely(PyList_CheckExact(__pyx_t_4))) {
             if (__pyx_t_9 >= PyList_GET_SIZE(__pyx_t_4)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_5 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_9); __Pyx_INCREF(__pyx_t_5); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 318, __pyx_L15_error)
+            __pyx_t_5 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_9); __Pyx_INCREF(__pyx_t_5); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 388, __pyx_L15_error)
             #else
-            __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 318, __pyx_L15_error)
+            __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 388, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_5);
             #endif
           } else {
             if (__pyx_t_9 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_9); __Pyx_INCREF(__pyx_t_5); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 318, __pyx_L15_error)
+            __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_9); __Pyx_INCREF(__pyx_t_5); __pyx_t_9++; if (unlikely(0 < 0)) __PYX_ERR(0, 388, __pyx_L15_error)
             #else
-            __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 318, __pyx_L15_error)
+            __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 388, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_5);
             #endif
           }
@@ -9311,7 +10902,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 318, __pyx_L15_error)
+              else __PYX_ERR(0, 388, __pyx_L15_error)
             }
             break;
           }
@@ -9320,31 +10911,31 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_XDECREF_SET(__pyx_v_neg_clust_start, __pyx_t_5);
         __pyx_t_5 = 0;
 
-        /* "hac/cluster.pyx":319
+        /* "hac/cluster.pyx":389
  * 
  *                 for neg_clust_start in fringe:
  *                     clust_start = -neg_clust_start             # <<<<<<<<<<<<<<
  *                     cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())
  *                     cluster_set = set()
  */
-        __pyx_t_5 = PyNumber_Negative(__pyx_v_neg_clust_start); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 319, __pyx_L15_error)
+        __pyx_t_5 = PyNumber_Negative(__pyx_v_neg_clust_start); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 389, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_XDECREF_SET(__pyx_v_clust_start, __pyx_t_5);
         __pyx_t_5 = 0;
 
-        /* "hac/cluster.pyx":320
+        /* "hac/cluster.pyx":390
  *                 for neg_clust_start in fringe:
  *                     clust_start = -neg_clust_start
  *                     cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())             # <<<<<<<<<<<<<<
  *                     cluster_set = set()
  *                     for node in cprior:
  */
-        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_crawl); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 320, __pyx_L15_error)
+        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_crawl); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 390, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_7 = PyDict_New(); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 320, __pyx_L15_error)
+        __pyx_t_7 = PyDict_New(); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 390, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_7);
-        if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_start, __pyx_v_clust_start) < 0) __PYX_ERR(0, 320, __pyx_L15_error)
-        __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_v_priors, __pyx_n_s_copy); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 320, __pyx_L15_error)
+        if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_start, __pyx_v_clust_start) < 0) __PYX_ERR(0, 390, __pyx_L15_error)
+        __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_v_priors, __pyx_n_s_copy); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 390, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_13);
         __pyx_t_14 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_13))) {
@@ -9357,16 +10948,16 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           }
         }
         if (__pyx_t_14) {
-          __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 320, __pyx_L15_error)
+          __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_13, __pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 390, __pyx_L15_error)
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         } else {
-          __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 320, __pyx_L15_error)
+          __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_t_13); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 390, __pyx_L15_error)
         }
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_priors, __pyx_t_6) < 0) __PYX_ERR(0, 320, __pyx_L15_error)
+        if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_priors, __pyx_t_6) < 0) __PYX_ERR(0, 390, __pyx_L15_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 320, __pyx_L15_error)
+        __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_empty_tuple, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 390, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -9380,7 +10971,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           if (unlikely(size != 2)) {
             if (size > 2) __Pyx_RaiseTooManyValuesError(2);
             else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-            __PYX_ERR(0, 320, __pyx_L15_error)
+            __PYX_ERR(0, 390, __pyx_L15_error)
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
           if (likely(PyTuple_CheckExact(sequence))) {
@@ -9393,15 +10984,15 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           __Pyx_INCREF(__pyx_t_7);
           __Pyx_INCREF(__pyx_t_5);
           #else
-          __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 320, __pyx_L15_error)
+          __pyx_t_7 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 390, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 320, __pyx_L15_error)
+          __pyx_t_5 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 390, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         } else {
           Py_ssize_t index = -1;
-          __pyx_t_13 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 320, __pyx_L15_error)
+          __pyx_t_13 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 390, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_13);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_t_8 = Py_TYPE(__pyx_t_13)->tp_iternext;
@@ -9409,7 +11000,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           __Pyx_GOTREF(__pyx_t_7);
           index = 1; __pyx_t_5 = __pyx_t_8(__pyx_t_13); if (unlikely(!__pyx_t_5)) goto __pyx_L22_unpacking_failed;
           __Pyx_GOTREF(__pyx_t_5);
-          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_13), 2) < 0) __PYX_ERR(0, 320, __pyx_L15_error)
+          if (__Pyx_IternextUnpackEndCheck(__pyx_t_8(__pyx_t_13), 2) < 0) __PYX_ERR(0, 390, __pyx_L15_error)
           __pyx_t_8 = NULL;
           __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
           goto __pyx_L23_unpacking_done;
@@ -9417,7 +11008,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
           __pyx_t_8 = NULL;
           if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-          __PYX_ERR(0, 320, __pyx_L15_error)
+          __PYX_ERR(0, 390, __pyx_L15_error)
           __pyx_L23_unpacking_done:;
         }
         __Pyx_XDECREF_SET(__pyx_v_cprior, __pyx_t_7);
@@ -9425,19 +11016,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_XDECREF_SET(__pyx_v_cfringe, __pyx_t_5);
         __pyx_t_5 = 0;
 
-        /* "hac/cluster.pyx":321
+        /* "hac/cluster.pyx":391
  *                     clust_start = -neg_clust_start
  *                     cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())
  *                     cluster_set = set()             # <<<<<<<<<<<<<<
  *                     for node in cprior:
  *                         if (node <= clust_start and
  */
-        __pyx_t_6 = PySet_New(0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 321, __pyx_L15_error)
+        __pyx_t_6 = PySet_New(0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 391, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_XDECREF_SET(__pyx_v_cluster_set, ((PyObject*)__pyx_t_6));
         __pyx_t_6 = 0;
 
-        /* "hac/cluster.pyx":322
+        /* "hac/cluster.pyx":392
  *                     cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())
  *                     cluster_set = set()
  *                     for node in cprior:             # <<<<<<<<<<<<<<
@@ -9448,26 +11039,26 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           __pyx_t_6 = __pyx_v_cprior; __Pyx_INCREF(__pyx_t_6); __pyx_t_15 = 0;
           __pyx_t_16 = NULL;
         } else {
-          __pyx_t_15 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_cprior); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 322, __pyx_L15_error)
+          __pyx_t_15 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_cprior); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 392, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_16 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 322, __pyx_L15_error)
+          __pyx_t_16 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 392, __pyx_L15_error)
         }
         for (;;) {
           if (likely(!__pyx_t_16)) {
             if (likely(PyList_CheckExact(__pyx_t_6))) {
               if (__pyx_t_15 >= PyList_GET_SIZE(__pyx_t_6)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_5 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_15); __Pyx_INCREF(__pyx_t_5); __pyx_t_15++; if (unlikely(0 < 0)) __PYX_ERR(0, 322, __pyx_L15_error)
+              __pyx_t_5 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_15); __Pyx_INCREF(__pyx_t_5); __pyx_t_15++; if (unlikely(0 < 0)) __PYX_ERR(0, 392, __pyx_L15_error)
               #else
-              __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_15); __pyx_t_15++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 322, __pyx_L15_error)
+              __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_15); __pyx_t_15++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 392, __pyx_L15_error)
               __Pyx_GOTREF(__pyx_t_5);
               #endif
             } else {
               if (__pyx_t_15 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_15); __Pyx_INCREF(__pyx_t_5); __pyx_t_15++; if (unlikely(0 < 0)) __PYX_ERR(0, 322, __pyx_L15_error)
+              __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_15); __Pyx_INCREF(__pyx_t_5); __pyx_t_15++; if (unlikely(0 < 0)) __PYX_ERR(0, 392, __pyx_L15_error)
               #else
-              __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_15); __pyx_t_15++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 322, __pyx_L15_error)
+              __pyx_t_5 = PySequence_ITEM(__pyx_t_6, __pyx_t_15); __pyx_t_15++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 392, __pyx_L15_error)
               __Pyx_GOTREF(__pyx_t_5);
               #endif
             }
@@ -9477,7 +11068,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
               PyObject* exc_type = PyErr_Occurred();
               if (exc_type) {
                 if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                else __PYX_ERR(0, 322, __pyx_L15_error)
+                else __PYX_ERR(0, 392, __pyx_L15_error)
               }
               break;
             }
@@ -9486,15 +11077,15 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           __Pyx_XDECREF_SET(__pyx_v_node, __pyx_t_5);
           __pyx_t_5 = 0;
 
-          /* "hac/cluster.pyx":323
+          /* "hac/cluster.pyx":393
  *                     cluster_set = set()
  *                     for node in cprior:
  *                         if (node <= clust_start and             # <<<<<<<<<<<<<<
  *                             node in self.original_nodes and
  *                             node not in self.orphans and
  */
-          __pyx_t_5 = PyObject_RichCompare(__pyx_v_node, __pyx_v_clust_start, Py_LE); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 323, __pyx_L15_error)
-          __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 323, __pyx_L15_error)
+          __pyx_t_5 = PyObject_RichCompare(__pyx_v_node, __pyx_v_clust_start, Py_LE); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 393, __pyx_L15_error)
+          __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 393, __pyx_L15_error)
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           if (__pyx_t_1) {
           } else {
@@ -9502,14 +11093,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
             goto __pyx_L27_bool_binop_done;
           }
 
-          /* "hac/cluster.pyx":324
+          /* "hac/cluster.pyx":394
  *                     for node in cprior:
  *                         if (node <= clust_start and
  *                             node in self.original_nodes and             # <<<<<<<<<<<<<<
  *                             node not in self.orphans and
  *                             node in self.rename_map.original):
  */
-          __pyx_t_1 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_self->original_nodes, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 324, __pyx_L15_error)
+          __pyx_t_1 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_self->original_nodes, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 394, __pyx_L15_error)
           __pyx_t_2 = (__pyx_t_1 != 0);
           if (__pyx_t_2) {
           } else {
@@ -9517,14 +11108,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
             goto __pyx_L27_bool_binop_done;
           }
 
-          /* "hac/cluster.pyx":325
+          /* "hac/cluster.pyx":395
  *                         if (node <= clust_start and
  *                             node in self.original_nodes and
  *                             node not in self.orphans and             # <<<<<<<<<<<<<<
  *                             node in self.rename_map.original):
  *                             cluster_set.add(self.rename_map.original[node])
  */
-          __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_self->orphans, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 325, __pyx_L15_error)
+          __pyx_t_2 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_v_self->orphans, Py_NE)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 395, __pyx_L15_error)
           __pyx_t_1 = (__pyx_t_2 != 0);
           if (__pyx_t_1) {
           } else {
@@ -9532,22 +11123,22 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
             goto __pyx_L27_bool_binop_done;
           }
 
-          /* "hac/cluster.pyx":326
+          /* "hac/cluster.pyx":396
  *                             node in self.original_nodes and
  *                             node not in self.orphans and
  *                             node in self.rename_map.original):             # <<<<<<<<<<<<<<
  *                             cluster_set.add(self.rename_map.original[node])
  *                     if cluster_set:
  */
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 326, __pyx_L15_error)
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 396, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_1 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_t_5, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 326, __pyx_L15_error)
+          __pyx_t_1 = (__Pyx_PySequence_ContainsTF(__pyx_v_node, __pyx_t_5, Py_EQ)); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 396, __pyx_L15_error)
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __pyx_t_2 = (__pyx_t_1 != 0);
           __pyx_t_3 = __pyx_t_2;
           __pyx_L27_bool_binop_done:;
 
-          /* "hac/cluster.pyx":323
+          /* "hac/cluster.pyx":393
  *                     cluster_set = set()
  *                     for node in cprior:
  *                         if (node <= clust_start and             # <<<<<<<<<<<<<<
@@ -9556,22 +11147,22 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
           if (__pyx_t_3) {
 
-            /* "hac/cluster.pyx":327
+            /* "hac/cluster.pyx":397
  *                             node not in self.orphans and
  *                             node in self.rename_map.original):
  *                             cluster_set.add(self.rename_map.original[node])             # <<<<<<<<<<<<<<
  *                     if cluster_set:
  *                         clusters.append(cluster_set)
  */
-            __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 327, __pyx_L15_error)
+            __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 397, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_5);
-            __pyx_t_7 = PyObject_GetItem(__pyx_t_5, __pyx_v_node); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 327, __pyx_L15_error)
+            __pyx_t_7 = PyObject_GetItem(__pyx_t_5, __pyx_v_node); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 397, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_7);
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-            __pyx_t_17 = PySet_Add(__pyx_v_cluster_set, __pyx_t_7); if (unlikely(__pyx_t_17 == -1)) __PYX_ERR(0, 327, __pyx_L15_error)
+            __pyx_t_17 = PySet_Add(__pyx_v_cluster_set, __pyx_t_7); if (unlikely(__pyx_t_17 == -1)) __PYX_ERR(0, 397, __pyx_L15_error)
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-            /* "hac/cluster.pyx":323
+            /* "hac/cluster.pyx":393
  *                     cluster_set = set()
  *                     for node in cprior:
  *                         if (node <= clust_start and             # <<<<<<<<<<<<<<
@@ -9580,7 +11171,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
           }
 
-          /* "hac/cluster.pyx":322
+          /* "hac/cluster.pyx":392
  *                     cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())
  *                     cluster_set = set()
  *                     for node in cprior:             # <<<<<<<<<<<<<<
@@ -9590,7 +11181,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         }
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "hac/cluster.pyx":328
+        /* "hac/cluster.pyx":398
  *                             node in self.rename_map.original):
  *                             cluster_set.add(self.rename_map.original[node])
  *                     if cluster_set:             # <<<<<<<<<<<<<<
@@ -9600,16 +11191,16 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __pyx_t_3 = (__pyx_v_cluster_set != Py_None) && (PySet_GET_SIZE(__pyx_v_cluster_set) != 0);
         if (__pyx_t_3) {
 
-          /* "hac/cluster.pyx":329
+          /* "hac/cluster.pyx":399
  *                             cluster_set.add(self.rename_map.original[node])
  *                     if cluster_set:
  *                         clusters.append(cluster_set)             # <<<<<<<<<<<<<<
  *             finally:
  *                 nx.relabel_nodes(self.graph, self.rename_map.original, copy=False)
  */
-          __pyx_t_17 = __Pyx_PyList_Append(__pyx_v_clusters, __pyx_v_cluster_set); if (unlikely(__pyx_t_17 == -1)) __PYX_ERR(0, 329, __pyx_L15_error)
+          __pyx_t_17 = __Pyx_PyList_Append(__pyx_v_clusters, __pyx_v_cluster_set); if (unlikely(__pyx_t_17 == -1)) __PYX_ERR(0, 399, __pyx_L15_error)
 
-          /* "hac/cluster.pyx":328
+          /* "hac/cluster.pyx":398
  *                             node in self.rename_map.original):
  *                             cluster_set.add(self.rename_map.original[node])
  *                     if cluster_set:             # <<<<<<<<<<<<<<
@@ -9618,7 +11209,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
         }
 
-        /* "hac/cluster.pyx":318
+        /* "hac/cluster.pyx":388
  *                         % (num_clusters, len(fringe)))
  * 
  *                 for neg_clust_start in fringe:             # <<<<<<<<<<<<<<
@@ -9629,7 +11220,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
 
-    /* "hac/cluster.pyx":331
+    /* "hac/cluster.pyx":401
  *                         clusters.append(cluster_set)
  *             finally:
  *                 nx.relabel_nodes(self.graph, self.rename_map.original, copy=False)             # <<<<<<<<<<<<<<
@@ -9638,14 +11229,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
     /*finally:*/ {
       /*normal exit:*/{
-        __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 401, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 331, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 401, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 401, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 331, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 401, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_INCREF(__pyx_v_self->graph);
         __Pyx_GIVEREF(__pyx_v_self->graph);
@@ -9653,10 +11244,10 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L1_error)
+        __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 401, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 331, __pyx_L1_error)
-        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 401, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 401, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -9685,14 +11276,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
         __Pyx_XGOTREF(__pyx_t_25);
         __pyx_t_11 = __pyx_lineno; __pyx_t_18 = __pyx_clineno; __pyx_t_19 = __pyx_filename;
         {
-          __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L33_error)
+          __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 401, __pyx_L33_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 331, __pyx_L33_error)
+          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_relabel_nodes); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 401, __pyx_L33_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L33_error)
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self->rename_map, __pyx_n_s_original); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 401, __pyx_L33_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 331, __pyx_L33_error)
+          __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 401, __pyx_L33_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_INCREF(__pyx_v_self->graph);
           __Pyx_GIVEREF(__pyx_v_self->graph);
@@ -9700,10 +11291,10 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
           __Pyx_GIVEREF(__pyx_t_5);
           PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_5);
           __pyx_t_5 = 0;
-          __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 331, __pyx_L33_error)
+          __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 401, __pyx_L33_error)
           __Pyx_GOTREF(__pyx_t_5);
-          if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 331, __pyx_L33_error)
-          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 331, __pyx_L33_error)
+          if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_copy, Py_False) < 0) __PYX_ERR(0, 401, __pyx_L33_error)
+          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 401, __pyx_L33_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -9741,7 +11332,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
       __pyx_L16:;
     }
 
-    /* "hac/cluster.pyx":307
+    /* "hac/cluster.pyx":377
  * 
  *         cdef list clusters = [set([n]) for n in self.orphans]
  *         if self.graph and num_clusters:             # <<<<<<<<<<<<<<
@@ -9750,7 +11341,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
   }
 
-  /* "hac/cluster.pyx":332
+  /* "hac/cluster.pyx":402
  *             finally:
  *                 nx.relabel_nodes(self.graph, self.rename_map.original, copy=False)
  *         return sorted(clusters, key=lambda c: -len(c))             # <<<<<<<<<<<<<<
@@ -9758,18 +11349,18 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  *     def labels(self, num_clusters=None):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_INCREF(__pyx_v_clusters);
   __Pyx_GIVEREF(__pyx_v_clusters);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_clusters);
-  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_5 = PyDict_New(); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3hac_7cluster_10Dendrogram_8clusters_1lambda2, 0, __pyx_n_s_clusters_locals_lambda, NULL, __pyx_n_s_hac_cluster, __pyx_d, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3hac_7cluster_10Dendrogram_8clusters_1lambda2, 0, __pyx_n_s_clusters_locals_lambda, NULL, __pyx_n_s_hac_cluster, __pyx_d, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_key, __pyx_t_7) < 0) __PYX_ERR(0, 332, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_key, __pyx_t_7) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 332, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -9777,7 +11368,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   __pyx_t_7 = 0;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":298
+  /* "hac/cluster.pyx":368
  *         return priors, fringe
  * 
  *     def clusters(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -9815,7 +11406,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":334
+/* "hac/cluster.pyx":404
  *         return sorted(clusters, key=lambda c: -len(c))
  * 
  *     def labels(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -9824,8 +11415,8 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_4clusters(struct __pyx_obj_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_7labels(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_7labels(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_17labels(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_17labels(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_num_clusters = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -9851,7 +11442,7 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_7labels(PyObject *__pyx_v_s
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "labels") < 0)) __PYX_ERR(0, 334, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "labels") < 0)) __PYX_ERR(0, 404, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -9864,20 +11455,20 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_7labels(PyObject *__pyx_v_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("labels", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 334, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("labels", 0, 0, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 404, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.Dendrogram.labels", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_6labels(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_num_clusters);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_16labels(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_num_clusters);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters) {
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_16labels(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_num_clusters) {
   PyObject *__pyx_v_labels = 0;
   PyObject *__pyx_v_label = NULL;
   PyObject *__pyx_v_nodes = NULL;
@@ -9895,19 +11486,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
   PyObject *(*__pyx_t_9)(PyObject *);
   __Pyx_RefNannySetupContext("labels", 0);
 
-  /* "hac/cluster.pyx":335
+  /* "hac/cluster.pyx":405
  * 
  *     def labels(self, num_clusters=None):
  *         cdef dict labels = {}             # <<<<<<<<<<<<<<
  *         for label, nodes in enumerate(self.clusters(num_clusters)):
  *             for node in nodes:
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 335, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 405, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_labels = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":336
+  /* "hac/cluster.pyx":406
  *     def labels(self, num_clusters=None):
  *         cdef dict labels = {}
  *         for label, nodes in enumerate(self.clusters(num_clusters)):             # <<<<<<<<<<<<<<
@@ -9916,7 +11507,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
  */
   __Pyx_INCREF(__pyx_int_0);
   __pyx_t_1 = __pyx_int_0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_clusters); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_clusters); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 406, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -9929,13 +11520,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
     }
   }
   if (!__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_num_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_num_clusters); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_num_clusters};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -9943,19 +11534,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_num_clusters};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 406, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
       __Pyx_INCREF(__pyx_v_num_clusters);
       __Pyx_GIVEREF(__pyx_v_num_clusters);
       PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_num_clusters);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
@@ -9965,9 +11556,9 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
     __pyx_t_3 = __pyx_t_2; __Pyx_INCREF(__pyx_t_3); __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __pyx_t_6 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 406, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __pyx_t_7 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 406, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -9975,17 +11566,17 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 336, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 406, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 336, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_6); __Pyx_INCREF(__pyx_t_2); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 406, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -9995,7 +11586,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 336, __pyx_L1_error)
+          else __PYX_ERR(0, 406, __pyx_L1_error)
         }
         break;
       }
@@ -10005,13 +11596,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
     __pyx_t_2 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_label, __pyx_t_1);
-    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 406, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "hac/cluster.pyx":337
+    /* "hac/cluster.pyx":407
  *         cdef dict labels = {}
  *         for label, nodes in enumerate(self.clusters(num_clusters)):
  *             for node in nodes:             # <<<<<<<<<<<<<<
@@ -10022,26 +11613,26 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
       __pyx_t_2 = __pyx_v_nodes; __Pyx_INCREF(__pyx_t_2); __pyx_t_8 = 0;
       __pyx_t_9 = NULL;
     } else {
-      __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 337, __pyx_L1_error)
+      __pyx_t_8 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_nodes); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 407, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 337, __pyx_L1_error)
+      __pyx_t_9 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 407, __pyx_L1_error)
     }
     for (;;) {
       if (likely(!__pyx_t_9)) {
         if (likely(PyList_CheckExact(__pyx_t_2))) {
           if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_5); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 337, __pyx_L1_error)
+          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_5); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 407, __pyx_L1_error)
           #else
-          __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 337, __pyx_L1_error)
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 407, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
         } else {
           if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_5); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 337, __pyx_L1_error)
+          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_5); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 407, __pyx_L1_error)
           #else
-          __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 337, __pyx_L1_error)
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 407, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
         }
@@ -10051,7 +11642,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 337, __pyx_L1_error)
+            else __PYX_ERR(0, 407, __pyx_L1_error)
           }
           break;
         }
@@ -10060,16 +11651,16 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
       __Pyx_XDECREF_SET(__pyx_v_node, __pyx_t_5);
       __pyx_t_5 = 0;
 
-      /* "hac/cluster.pyx":338
+      /* "hac/cluster.pyx":408
  *         for label, nodes in enumerate(self.clusters(num_clusters)):
  *             for node in nodes:
  *                 labels[node] = label             # <<<<<<<<<<<<<<
  *         return labels
  * 
  */
-      if (unlikely(PyDict_SetItem(__pyx_v_labels, __pyx_v_node, __pyx_v_label) < 0)) __PYX_ERR(0, 338, __pyx_L1_error)
+      if (unlikely(PyDict_SetItem(__pyx_v_labels, __pyx_v_node, __pyx_v_label) < 0)) __PYX_ERR(0, 408, __pyx_L1_error)
 
-      /* "hac/cluster.pyx":337
+      /* "hac/cluster.pyx":407
  *         cdef dict labels = {}
  *         for label, nodes in enumerate(self.clusters(num_clusters)):
  *             for node in nodes:             # <<<<<<<<<<<<<<
@@ -10079,7 +11670,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "hac/cluster.pyx":336
+    /* "hac/cluster.pyx":406
  *     def labels(self, num_clusters=None):
  *         cdef dict labels = {}
  *         for label, nodes in enumerate(self.clusters(num_clusters)):             # <<<<<<<<<<<<<<
@@ -10090,7 +11681,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":339
+  /* "hac/cluster.pyx":409
  *             for node in nodes:
  *                 labels[node] = label
  *         return labels             # <<<<<<<<<<<<<<
@@ -10102,7 +11693,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
   __pyx_r = __pyx_v_labels;
   goto __pyx_L0;
 
-  /* "hac/cluster.pyx":334
+  /* "hac/cluster.pyx":404
  *         return sorted(clusters, key=lambda c: -len(c))
  * 
  *     def labels(self, num_clusters=None):             # <<<<<<<<<<<<<<
@@ -10129,7 +11720,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":341
+/* "hac/cluster.pyx":411
  *         return labels
  * 
  *     def plot_quality_history(self, plot_name, out_file_name, show=True):             # <<<<<<<<<<<<<<
@@ -10138,8 +11729,8 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_6labels(struct __pyx_obj_3h
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_9plot_quality_history(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_9plot_quality_history(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_19plot_quality_history(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_19plot_quality_history(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_plot_name = 0;
   PyObject *__pyx_v_out_file_name = 0;
   PyObject *__pyx_v_show = 0;
@@ -10168,7 +11759,7 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_9plot_quality_history(PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_out_file_name)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("plot_quality_history", 0, 2, 3, 1); __PYX_ERR(0, 341, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("plot_quality_history", 0, 2, 3, 1); __PYX_ERR(0, 411, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -10177,7 +11768,7 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_9plot_quality_history(PyObj
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "plot_quality_history") < 0)) __PYX_ERR(0, 341, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "plot_quality_history") < 0)) __PYX_ERR(0, 411, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -10194,20 +11785,20 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_9plot_quality_history(PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("plot_quality_history", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 341, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("plot_quality_history", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 411, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.Dendrogram.plot_quality_history", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_plot_name, __pyx_v_out_file_name, __pyx_v_show);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_18plot_quality_history(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_plot_name, __pyx_v_out_file_name, __pyx_v_show);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_plot_name, PyObject *__pyx_v_out_file_name, PyObject *__pyx_v_show) {
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_18plot_quality_history(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_plot_name, PyObject *__pyx_v_out_file_name, PyObject *__pyx_v_show) {
   PyObject *__pyx_v_fig = NULL;
   PyObject *__pyx_v_ax = NULL;
   PyObject *__pyx_r = NULL;
@@ -10222,16 +11813,16 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("plot_quality_history", 0);
 
-  /* "hac/cluster.pyx":342
+  /* "hac/cluster.pyx":412
  * 
  *     def plot_quality_history(self, plot_name, out_file_name, show=True):
  *         fig = plt.figure()             # <<<<<<<<<<<<<<
  *         ax = fig.add_subplot(111)
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_figure); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_figure); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 412, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -10245,51 +11836,51 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
     }
   }
   if (__pyx_t_2) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 342, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else {
-    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 342, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_fig = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":343
+  /* "hac/cluster.pyx":413
  *     def plot_quality_history(self, plot_name, out_file_name, show=True):
  *         fig = plt.figure()
  *         ax = fig.add_subplot(111)             # <<<<<<<<<<<<<<
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_fig, __pyx_n_s_add_subplot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_fig, __pyx_n_s_add_subplot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 413, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_ax = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":344
+  /* "hac/cluster.pyx":414
  *         fig = plt.figure()
  *         ax = fig.add_subplot(111)
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)             # <<<<<<<<<<<<<<
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  *         ax.set_xlabel('Number of Clusters')
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ax, __pyx_n_s_plot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_ax, __pyx_n_s_plot); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __pyx_v_self->quality_history;
   __Pyx_INCREF(__pyx_t_2);
   if (unlikely(__pyx_t_2 == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 344, __pyx_L1_error)
+    __PYX_ERR(0, 414, __pyx_L1_error)
   }
-  __pyx_t_4 = PyList_GET_SIZE(__pyx_t_2); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_4 = PyList_GET_SIZE(__pyx_t_2); if (unlikely(__pyx_t_4 == -1)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
@@ -10300,7 +11891,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   __Pyx_GIVEREF(__pyx_int_neg_1);
   PyTuple_SET_ITEM(__pyx_t_5, 2, __pyx_int_neg_1);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_range, __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -10318,7 +11909,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_2, __pyx_v_self->quality_history};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 414, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -10327,14 +11918,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
     PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_t_2, __pyx_v_self->quality_history};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 414, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 344, __pyx_L1_error)
+    __pyx_t_7 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 414, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (__pyx_t_5) {
       __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_5); __pyx_t_5 = NULL;
@@ -10345,26 +11936,26 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
     __Pyx_GIVEREF(__pyx_v_self->quality_history);
     PyTuple_SET_ITEM(__pyx_t_7, 1+__pyx_t_6, __pyx_v_self->quality_history);
     __pyx_t_2 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 344, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 414, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":345
+  /* "hac/cluster.pyx":415
  *         ax = fig.add_subplot(111)
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)             # <<<<<<<<<<<<<<
  *         ax.set_xlabel('Number of Clusters')
  *         ax.set_ylabel('Modularity Score')
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_title); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_title); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 415, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyString_Format(__pyx_kp_s_Number_of_Clusters_vs_Modularity, __pyx_v_plot_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyString_Format(__pyx_kp_s_Number_of_Clusters_vs_Modularity, __pyx_v_plot_name); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
@@ -10377,14 +11968,14 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
     }
   }
   if (!__pyx_t_2) {
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_GOTREF(__pyx_t_3);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_1};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -10393,20 +11984,20 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_1};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     } else
     #endif
     {
-      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 345, __pyx_L1_error)
+      __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 415, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
       __Pyx_GIVEREF(__pyx_t_1);
       PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_t_1);
       __pyx_t_1 = 0;
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
@@ -10414,44 +12005,44 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":346
+  /* "hac/cluster.pyx":416
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  *         ax.set_xlabel('Number of Clusters')             # <<<<<<<<<<<<<<
  *         ax.set_ylabel('Modularity Score')
  *         plt.savefig(out_file_name)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_ax, __pyx_n_s_set_xlabel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_ax, __pyx_n_s_set_xlabel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 346, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "hac/cluster.pyx":347
+  /* "hac/cluster.pyx":417
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  *         ax.set_xlabel('Number of Clusters')
  *         ax.set_ylabel('Modularity Score')             # <<<<<<<<<<<<<<
  *         plt.savefig(out_file_name)
  *         if show:
  */
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_ax, __pyx_n_s_set_ylabel); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_ax, __pyx_n_s_set_ylabel); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":348
+  /* "hac/cluster.pyx":418
  *         ax.set_xlabel('Number of Clusters')
  *         ax.set_ylabel('Modularity Score')
  *         plt.savefig(out_file_name)             # <<<<<<<<<<<<<<
  *         if show:
  *             plt.show()
  */
-  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 348, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_savefig); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 348, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_savefig); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_t_7 = NULL;
@@ -10465,13 +12056,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
     }
   }
   if (!__pyx_t_7) {
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_out_file_name); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 348, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_out_file_name); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_out_file_name};
-      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 348, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_3);
     } else
@@ -10479,19 +12070,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_out_file_name};
-      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 348, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_3);
     } else
     #endif
     {
-      __pyx_t_1 = PyTuple_New(1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 348, __pyx_L1_error)
+      __pyx_t_1 = PyTuple_New(1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_7); __pyx_t_7 = NULL;
       __Pyx_INCREF(__pyx_v_out_file_name);
       __Pyx_GIVEREF(__pyx_v_out_file_name);
       PyTuple_SET_ITEM(__pyx_t_1, 0+1, __pyx_v_out_file_name);
-      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 348, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     }
@@ -10499,26 +12090,26 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "hac/cluster.pyx":349
+  /* "hac/cluster.pyx":419
  *         ax.set_ylabel('Modularity Score')
  *         plt.savefig(out_file_name)
  *         if show:             # <<<<<<<<<<<<<<
  *             plt.show()
  * 
  */
-  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_v_show); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 349, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_v_show); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 419, __pyx_L1_error)
   if (__pyx_t_8) {
 
-    /* "hac/cluster.pyx":350
+    /* "hac/cluster.pyx":420
  *         plt.savefig(out_file_name)
  *         if show:
  *             plt.show()             # <<<<<<<<<<<<<<
  * 
  *     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):
  */
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 350, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 420, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_show); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 350, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_show); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_5 = NULL;
@@ -10532,16 +12123,16 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
       }
     }
     if (__pyx_t_5) {
-      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     } else {
-      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 350, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 420, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "hac/cluster.pyx":349
+    /* "hac/cluster.pyx":419
  *         ax.set_ylabel('Modularity Score')
  *         plt.savefig(out_file_name)
  *         if show:             # <<<<<<<<<<<<<<
@@ -10550,7 +12141,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
  */
   }
 
-  /* "hac/cluster.pyx":341
+  /* "hac/cluster.pyx":411
  *         return labels
  * 
  *     def plot_quality_history(self, plot_name, out_file_name, show=True):             # <<<<<<<<<<<<<<
@@ -10577,7 +12168,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":352
+/* "hac/cluster.pyx":422
  *             plt.show()
  * 
  *     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):             # <<<<<<<<<<<<<<
@@ -10586,8 +12177,8 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_8plot_quality_history(struc
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_11plot(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_11plot(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_21plot(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_21plot(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_filename = 0;
   PyObject *__pyx_v_figure_size = 0;
   PyObject *__pyx_v_font_size = 0;
@@ -10634,7 +12225,7 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_11plot(PyObject *__pyx_v_se
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "plot") < 0)) __PYX_ERR(0, 352, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "plot") < 0)) __PYX_ERR(0, 422, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -10653,20 +12244,20 @@ static PyObject *__pyx_pw_3hac_7cluster_10Dendrogram_11plot(PyObject *__pyx_v_se
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("plot", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 352, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("plot", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 422, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("hac.cluster.Dendrogram.plot", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_10plot(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_filename, __pyx_v_figure_size, __pyx_v_font_size, __pyx_v_show);
+  __pyx_r = __pyx_pf_3hac_7cluster_10Dendrogram_20plot(((struct __pyx_obj_3hac_7cluster_Dendrogram *)__pyx_v_self), __pyx_v_filename, __pyx_v_figure_size, __pyx_v_font_size, __pyx_v_show);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_filename, PyObject *__pyx_v_figure_size, PyObject *__pyx_v_font_size, PyObject *__pyx_v_show) {
+static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_20plot(struct __pyx_obj_3hac_7cluster_Dendrogram *__pyx_v_self, PyObject *__pyx_v_filename, PyObject *__pyx_v_figure_size, PyObject *__pyx_v_font_size, PyObject *__pyx_v_show) {
   PyObject *__pyx_v_pos = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -10677,25 +12268,25 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("plot", 0);
 
-  /* "hac/cluster.pyx":353
+  /* "hac/cluster.pyx":423
  * 
  *     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):
  *         pos = graphviz_layout(self.graph, prog='twopi', args='')             # <<<<<<<<<<<<<<
  *         plt.figure(figsize=figure_size)
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_graphviz_layout); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_graphviz_layout); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 353, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_self->graph);
   __Pyx_GIVEREF(__pyx_v_self->graph);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_self->graph);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 353, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_prog, __pyx_n_s_twopi) < 0) __PYX_ERR(0, 353, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_args, __pyx_kp_s__7) < 0) __PYX_ERR(0, 353, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 353, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_prog, __pyx_n_s_twopi) < 0) __PYX_ERR(0, 423, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_args, __pyx_kp_s__7) < 0) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -10703,40 +12294,40 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
   __pyx_v_pos = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "hac/cluster.pyx":354
+  /* "hac/cluster.pyx":424
  *     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):
  *         pos = graphviz_layout(self.graph, prog='twopi', args='')
  *         plt.figure(figsize=figure_size)             # <<<<<<<<<<<<<<
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,
  *                 node_color="blue", with_labels=True)
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 424, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_figure); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_figure); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 424, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 424, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_figsize, __pyx_v_figure_size) < 0) __PYX_ERR(0, 354, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 354, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_figsize, __pyx_v_figure_size) < 0) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 424, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":355
+  /* "hac/cluster.pyx":425
  *         pos = graphviz_layout(self.graph, prog='twopi', args='')
  *         plt.figure(figsize=figure_size)
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,             # <<<<<<<<<<<<<<
  *                 node_color="blue", with_labels=True)
  *         plt.axis('equal')
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_nx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_draw); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_draw); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_self->graph);
   __Pyx_GIVEREF(__pyx_v_self->graph);
@@ -10744,63 +12335,63 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
   __Pyx_INCREF(__pyx_v_pos);
   __Pyx_GIVEREF(__pyx_v_pos);
   PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_pos);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_node_size, __pyx_int_10) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_font_size, __pyx_v_font_size) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_alpha, __pyx_float_0_5) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_node_color, __pyx_n_s_blue) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_node_size, __pyx_int_10) < 0) __PYX_ERR(0, 425, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_font_size, __pyx_v_font_size) < 0) __PYX_ERR(0, 425, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_alpha, __pyx_float_0_5) < 0) __PYX_ERR(0, 425, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_node_color, __pyx_n_s_blue) < 0) __PYX_ERR(0, 425, __pyx_L1_error)
 
-  /* "hac/cluster.pyx":356
+  /* "hac/cluster.pyx":426
  *         plt.figure(figsize=figure_size)
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,
  *                 node_color="blue", with_labels=True)             # <<<<<<<<<<<<<<
  *         plt.axis('equal')
  *         plt.savefig(filename)
  */
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_with_labels, Py_True) < 0) __PYX_ERR(0, 355, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_with_labels, Py_True) < 0) __PYX_ERR(0, 425, __pyx_L1_error)
 
-  /* "hac/cluster.pyx":355
+  /* "hac/cluster.pyx":425
  *         pos = graphviz_layout(self.graph, prog='twopi', args='')
  *         plt.figure(figsize=figure_size)
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,             # <<<<<<<<<<<<<<
  *                 node_color="blue", with_labels=True)
  *         plt.axis('equal')
  */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 425, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":357
+  /* "hac/cluster.pyx":427
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,
  *                 node_color="blue", with_labels=True)
  *         plt.axis('equal')             # <<<<<<<<<<<<<<
  *         plt.savefig(filename)
  *         if show:
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_axis); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 357, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_axis); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 427, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":358
+  /* "hac/cluster.pyx":428
  *                 node_color="blue", with_labels=True)
  *         plt.axis('equal')
  *         plt.savefig(filename)             # <<<<<<<<<<<<<<
  *         if show:
  *             plt.show()
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 358, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 428, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_savefig); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 358, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_savefig); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 428, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -10814,13 +12405,13 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_filename); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_filename); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_filename};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -10828,19 +12419,19 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_filename};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 358, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 428, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_filename);
       __Pyx_GIVEREF(__pyx_v_filename);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_filename);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 428, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -10848,23 +12439,23 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "hac/cluster.pyx":359
+  /* "hac/cluster.pyx":429
  *         plt.axis('equal')
  *         plt.savefig(filename)
  *         if show:             # <<<<<<<<<<<<<<
  *             plt.show()
  */
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_show); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 359, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_show); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 429, __pyx_L1_error)
   if (__pyx_t_5) {
 
-    /* "hac/cluster.pyx":360
+    /* "hac/cluster.pyx":430
  *         plt.savefig(filename)
  *         if show:
  *             plt.show()             # <<<<<<<<<<<<<<
  */
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 360, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_plt); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 430, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_show); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 360, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_show); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 430, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_2 = NULL;
@@ -10878,16 +12469,16 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
       }
     }
     if (__pyx_t_2) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 360, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else {
-      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 360, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":359
+    /* "hac/cluster.pyx":429
  *         plt.axis('equal')
  *         plt.savefig(filename)
  *         if show:             # <<<<<<<<<<<<<<
@@ -10895,7 +12486,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
  */
   }
 
-  /* "hac/cluster.pyx":352
+  /* "hac/cluster.pyx":422
  *             plt.show()
  * 
  *     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):             # <<<<<<<<<<<<<<
@@ -10920,7 +12511,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_10plot(struct __pyx_obj_3ha
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":264
+/* "hac/cluster.pyx":290
  * 
  * cdef class Dendrogram(object):
  *     cdef public int optimal_clusters             # <<<<<<<<<<<<<<
@@ -10947,7 +12538,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_16optimal_clusters___get__(
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 264, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->optimal_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -10982,7 +12573,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_16optimal_clusters_2__set__(struc
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 264, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 290, __pyx_L1_error)
   __pyx_v_self->optimal_clusters = __pyx_t_1;
 
   /* function exit code */
@@ -10996,7 +12587,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_16optimal_clusters_2__set__(struc
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":265
+/* "hac/cluster.pyx":291
  * cdef class Dendrogram(object):
  *     cdef public int optimal_clusters
  *     cdef public list quality_history             # <<<<<<<<<<<<<<
@@ -11051,7 +12642,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_15quality_history_2__set__(struct
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__set__", 0);
-  if (!(likely(PyList_CheckExact(__pyx_v_value))||((__pyx_v_value) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_value)->tp_name), 0))) __PYX_ERR(0, 265, __pyx_L1_error)
+  if (!(likely(PyList_CheckExact(__pyx_v_value))||((__pyx_v_value) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_value)->tp_name), 0))) __PYX_ERR(0, 291, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_value;
   __Pyx_INCREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_1);
@@ -11101,7 +12692,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_15quality_history_4__del__(struct
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":266
+/* "hac/cluster.pyx":292
  *     cdef public int optimal_clusters
  *     cdef public list quality_history
  *     cdef public int max_clusters             # <<<<<<<<<<<<<<
@@ -11128,7 +12719,7 @@ static PyObject *__pyx_pf_3hac_7cluster_10Dendrogram_12max_clusters___get__(stru
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->max_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 266, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->max_clusters); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -11163,7 +12754,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_12max_clusters_2__set__(struct __
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 266, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L1_error)
   __pyx_v_self->max_clusters = __pyx_t_1;
 
   /* function exit code */
@@ -11177,7 +12768,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_12max_clusters_2__set__(struct __
   return __pyx_r;
 }
 
-/* "hac/cluster.pyx":267
+/* "hac/cluster.pyx":293
  *     cdef public list quality_history
  *     cdef public int max_clusters
  *     cdef public object graph             # <<<<<<<<<<<<<<
@@ -11271,6 +12862,7 @@ static int __pyx_pf_3hac_7cluster_10Dendrogram_5graph_4__del__(struct __pyx_obj_
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
+static struct __pyx_vtabstruct_3hac_7cluster_GreedyAgglomerativeClusterer __pyx_vtable_3hac_7cluster_GreedyAgglomerativeClusterer;
 
 static PyObject *__pyx_tp_new_3hac_7cluster_GreedyAgglomerativeClusterer(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *p;
@@ -11282,6 +12874,7 @@ static PyObject *__pyx_tp_new_3hac_7cluster_GreedyAgglomerativeClusterer(PyTypeO
   }
   if (unlikely(!o)) return 0;
   p = ((struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *)o);
+  p->__pyx_vtab = __pyx_vtabptr_3hac_7cluster_GreedyAgglomerativeClusterer;
   p->forced_clusters = ((PyObject*)Py_None); Py_INCREF(Py_None);
   p->original_nodes = ((PyObject*)Py_None); Py_INCREF(Py_None);
   p->ignored_nodes = ((PyObject*)Py_None); Py_INCREF(Py_None);
@@ -11395,13 +12988,16 @@ static int __pyx_setprop_3hac_7cluster_28GreedyAgglomerativeClusterer_optimal_cl
 }
 
 static PyMethodDef __pyx_methods_3hac_7cluster_GreedyAgglomerativeClusterer[] = {
-  {"cluster", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3cluster, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3hac_7cluster_28GreedyAgglomerativeClusterer_2cluster},
-  {"build_forced_clusters", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_5build_forced_clusters, METH_NOARGS, 0},
-  {"reheapify", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_7reheapify, METH_NOARGS, 0},
-  {"run_greedy_clustering", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9run_greedy_clustering, METH_VARARGS|METH_KEYWORDS, 0},
-  {"add_pair_to_cost_heap", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11add_pair_to_cost_heap, METH_VARARGS|METH_KEYWORDS, 0},
-  {"quality_difference", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13quality_difference, METH_VARARGS|METH_KEYWORDS, 0},
-  {"combine_clusters", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15combine_clusters, METH_VARARGS|METH_KEYWORDS, 0},
+  {"__getstate__", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_3__getstate__, METH_NOARGS, 0},
+  {"__setstate__", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_5__setstate__, METH_O, 0},
+  {"__reduce__", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_7__reduce__, METH_NOARGS, 0},
+  {"cluster", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_13cluster, METH_VARARGS|METH_KEYWORDS, __pyx_doc_3hac_7cluster_28GreedyAgglomerativeClusterer_12cluster},
+  {"build_forced_clusters", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_15build_forced_clusters, METH_NOARGS, 0},
+  {"reheapify", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_17reheapify, METH_NOARGS, 0},
+  {"run_greedy_clustering", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_19run_greedy_clustering, METH_VARARGS|METH_KEYWORDS, 0},
+  {"add_pair_to_cost_heap", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_21add_pair_to_cost_heap, METH_VARARGS|METH_KEYWORDS, 0},
+  {"quality_difference", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_23quality_difference, METH_VARARGS|METH_KEYWORDS, 0},
+  {"combine_clusters", (PyCFunction)__pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_25combine_clusters, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -11429,7 +13025,7 @@ static PyTypeObject __pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer = {
   0, /*tp_as_number*/
   0, /*tp_as_sequence*/
   0, /*tp_as_mapping*/
-  0, /*tp_hash*/
+  __pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_9__hash__, /*tp_hash*/
   0, /*tp_call*/
   0, /*tp_str*/
   0, /*tp_getattro*/
@@ -11439,7 +13035,7 @@ static PyTypeObject __pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer = {
   "\n    Greedy Agglomerative Clustering\n    This is a greedy agglomerative hierarchical clustering algorithm.\n    The algorithm efficiently clusters large number of nodes and is one of the best scaling\n    clustering algorithms available. It relies on building and slicing a dendrogram of potential\n    clusters from the base of a networkx graph. Each possible pairing of elements is evaluated\n    and clustering in quality (see paper reference) increasing order. The greedy aspect of this\n    approach is in the avoidance of backtracking. Each pass on the dengrogram assume prior passes\n    were the global minimum for overall quality. Given decent edge associations, this is a\n    relatively safe assumption to make and vastly increases the speed of the algorithm.\n\n    See papers on scaling and accuracy questions regarding greedy Newman.\n    ", /*tp_doc*/
   __pyx_tp_traverse_3hac_7cluster_GreedyAgglomerativeClusterer, /*tp_traverse*/
   __pyx_tp_clear_3hac_7cluster_GreedyAgglomerativeClusterer, /*tp_clear*/
-  0, /*tp_richcompare*/
+  __pyx_pw_3hac_7cluster_28GreedyAgglomerativeClusterer_11__richcmp__, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
@@ -11467,6 +13063,7 @@ static PyTypeObject __pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer = {
   0, /*tp_finalize*/
   #endif
 };
+static struct __pyx_vtabstruct_3hac_7cluster_Dendrogram __pyx_vtable_3hac_7cluster_Dendrogram;
 
 static PyObject *__pyx_tp_new_3hac_7cluster_Dendrogram(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   struct __pyx_obj_3hac_7cluster_Dendrogram *p;
@@ -11478,6 +13075,7 @@ static PyObject *__pyx_tp_new_3hac_7cluster_Dendrogram(PyTypeObject *t, CYTHON_U
   }
   if (unlikely(!o)) return 0;
   p = ((struct __pyx_obj_3hac_7cluster_Dendrogram *)o);
+  p->__pyx_vtab = __pyx_vtabptr_3hac_7cluster_Dendrogram;
   p->quality_history = ((PyObject*)Py_None); Py_INCREF(Py_None);
   p->graph = Py_None; Py_INCREF(Py_None);
   p->original_nodes = ((PyObject*)Py_None); Py_INCREF(Py_None);
@@ -11599,11 +13197,14 @@ static int __pyx_setprop_3hac_7cluster_10Dendrogram_graph(PyObject *o, PyObject 
 }
 
 static PyMethodDef __pyx_methods_3hac_7cluster_Dendrogram[] = {
-  {"crawl", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_3crawl, METH_VARARGS|METH_KEYWORDS, 0},
-  {"clusters", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_5clusters, METH_VARARGS|METH_KEYWORDS, 0},
-  {"labels", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_7labels, METH_VARARGS|METH_KEYWORDS, 0},
-  {"plot_quality_history", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_9plot_quality_history, METH_VARARGS|METH_KEYWORDS, 0},
-  {"plot", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_11plot, METH_VARARGS|METH_KEYWORDS, 0},
+  {"__getstate__", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_3__getstate__, METH_NOARGS, 0},
+  {"__setstate__", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_5__setstate__, METH_O, 0},
+  {"__reduce__", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_7__reduce__, METH_NOARGS, 0},
+  {"crawl", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_13crawl, METH_VARARGS|METH_KEYWORDS, 0},
+  {"clusters", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_15clusters, METH_VARARGS|METH_KEYWORDS, 0},
+  {"labels", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_17labels, METH_VARARGS|METH_KEYWORDS, 0},
+  {"plot_quality_history", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_19plot_quality_history, METH_VARARGS|METH_KEYWORDS, 0},
+  {"plot", (PyCFunction)__pyx_pw_3hac_7cluster_10Dendrogram_21plot, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -11634,7 +13235,7 @@ static PyTypeObject __pyx_type_3hac_7cluster_Dendrogram = {
   0, /*tp_as_number*/
   0, /*tp_as_sequence*/
   0, /*tp_as_mapping*/
-  0, /*tp_hash*/
+  __pyx_pw_3hac_7cluster_10Dendrogram_9__hash__, /*tp_hash*/
   0, /*tp_call*/
   0, /*tp_str*/
   0, /*tp_getattro*/
@@ -11644,7 +13245,7 @@ static PyTypeObject __pyx_type_3hac_7cluster_Dendrogram = {
   0, /*tp_doc*/
   __pyx_tp_traverse_3hac_7cluster_Dendrogram, /*tp_traverse*/
   __pyx_tp_clear_3hac_7cluster_Dendrogram, /*tp_clear*/
-  0, /*tp_richcompare*/
+  __pyx_pw_3hac_7cluster_10Dendrogram_11__richcmp__, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
@@ -11946,13 +13547,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_axis, __pyx_k_axis, sizeof(__pyx_k_axis), 0, 0, 1, 1},
   {&__pyx_n_s_blue, __pyx_k_blue, sizeof(__pyx_k_blue), 0, 0, 1, 1},
   {&__pyx_n_s_build_forced_clusters, __pyx_k_build_forced_clusters, sizeof(__pyx_k_build_forced_clusters), 0, 0, 1, 1},
+  {&__pyx_n_s_class, __pyx_k_class, sizeof(__pyx_k_class), 0, 0, 1, 1},
   {&__pyx_n_s_close, __pyx_k_close, sizeof(__pyx_k_close), 0, 0, 1, 1},
   {&__pyx_n_s_cluster_id1, __pyx_k_cluster_id1, sizeof(__pyx_k_cluster_id1), 0, 0, 1, 1},
   {&__pyx_n_s_cluster_id2, __pyx_k_cluster_id2, sizeof(__pyx_k_cluster_id2), 0, 0, 1, 1},
   {&__pyx_n_s_cluster_locals_genexpr, __pyx_k_cluster_locals_genexpr, sizeof(__pyx_k_cluster_locals_genexpr), 0, 0, 1, 1},
   {&__pyx_n_s_clusters, __pyx_k_clusters, sizeof(__pyx_k_clusters), 0, 0, 1, 1},
   {&__pyx_n_s_clusters_locals_lambda, __pyx_k_clusters_locals_lambda, sizeof(__pyx_k_clusters_locals_lambda), 0, 0, 1, 1},
-  {&__pyx_n_s_collections, __pyx_k_collections, sizeof(__pyx_k_collections), 0, 0, 1, 1},
   {&__pyx_n_s_combine_clusters, __pyx_k_combine_clusters, sizeof(__pyx_k_combine_clusters), 0, 0, 1, 1},
   {&__pyx_n_s_copy, __pyx_k_copy, sizeof(__pyx_k_copy), 0, 0, 1, 1},
   {&__pyx_n_s_crawl, __pyx_k_crawl, sizeof(__pyx_k_crawl), 0, 0, 1, 1},
@@ -11964,6 +13565,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_edges, __pyx_k_edges, sizeof(__pyx_k_edges), 0, 0, 1, 1},
   {&__pyx_n_s_edges_iter, __pyx_k_edges_iter, sizeof(__pyx_k_edges_iter), 0, 0, 1, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
+  {&__pyx_n_s_eq, __pyx_k_eq, sizeof(__pyx_k_eq), 0, 0, 1, 1},
   {&__pyx_n_s_equal, __pyx_k_equal, sizeof(__pyx_k_equal), 0, 0, 1, 1},
   {&__pyx_n_s_exception, __pyx_k_exception, sizeof(__pyx_k_exception), 0, 0, 1, 1},
   {&__pyx_n_s_figsize, __pyx_k_figsize, sizeof(__pyx_k_figsize), 0, 0, 1, 1},
@@ -11974,6 +13576,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_forced_clusters, __pyx_k_forced_clusters, sizeof(__pyx_k_forced_clusters), 0, 0, 1, 1},
   {&__pyx_n_s_genexpr, __pyx_k_genexpr, sizeof(__pyx_k_genexpr), 0, 0, 1, 1},
   {&__pyx_n_s_get, __pyx_k_get, sizeof(__pyx_k_get), 0, 0, 1, 1},
+  {&__pyx_n_s_get_state, __pyx_k_get_state, sizeof(__pyx_k_get_state), 0, 0, 1, 1},
+  {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
+  {&__pyx_n_s_getstate_2, __pyx_k_getstate_2, sizeof(__pyx_k_getstate_2), 0, 0, 1, 1},
   {&__pyx_n_s_graph, __pyx_k_graph, sizeof(__pyx_k_graph), 0, 0, 1, 1},
   {&__pyx_n_s_graphviz_layout, __pyx_k_graphviz_layout, sizeof(__pyx_k_graphviz_layout), 0, 0, 1, 1},
   {&__pyx_n_s_hac_cluster, __pyx_k_hac_cluster, sizeof(__pyx_k_hac_cluster), 0, 0, 1, 1},
@@ -11998,9 +13603,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_mapping_to_orig, __pyx_k_mapping_to_orig, sizeof(__pyx_k_mapping_to_orig), 0, 0, 1, 1},
   {&__pyx_n_s_matplotlib_pyplot, __pyx_k_matplotlib_pyplot, sizeof(__pyx_k_matplotlib_pyplot), 0, 0, 1, 1},
   {&__pyx_n_s_max, __pyx_k_max, sizeof(__pyx_k_max), 0, 0, 1, 1},
+  {&__pyx_n_s_max_clusters, __pyx_k_max_clusters, sizeof(__pyx_k_max_clusters), 0, 0, 1, 1},
   {&__pyx_n_s_max_fringe_size, __pyx_k_max_fringe_size, sizeof(__pyx_k_max_fringe_size), 0, 0, 1, 1},
-  {&__pyx_n_s_max_node, __pyx_k_max_node, sizeof(__pyx_k_max_node), 0, 0, 1, 1},
-  {&__pyx_n_s_namedtuple, __pyx_k_namedtuple, sizeof(__pyx_k_namedtuple), 0, 0, 1, 1},
   {&__pyx_n_s_networkx, __pyx_k_networkx, sizeof(__pyx_k_networkx), 0, 0, 1, 1},
   {&__pyx_n_s_node, __pyx_k_node, sizeof(__pyx_k_node), 0, 0, 1, 1},
   {&__pyx_n_s_node_color, __pyx_k_node_color, sizeof(__pyx_k_node_color), 0, 0, 1, 1},
@@ -12012,18 +13616,18 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_number_of_edges, __pyx_k_number_of_edges, sizeof(__pyx_k_number_of_edges), 0, 0, 1, 1},
   {&__pyx_n_s_number_of_nodes, __pyx_k_number_of_nodes, sizeof(__pyx_k_number_of_nodes), 0, 0, 1, 1},
   {&__pyx_n_s_nx, __pyx_k_nx, sizeof(__pyx_k_nx), 0, 0, 1, 1},
+  {&__pyx_n_s_optimal_clusters, __pyx_k_optimal_clusters, sizeof(__pyx_k_optimal_clusters), 0, 0, 1, 1},
   {&__pyx_n_s_original, __pyx_k_original, sizeof(__pyx_k_original), 0, 0, 1, 1},
   {&__pyx_n_s_original_nodes, __pyx_k_original_nodes, sizeof(__pyx_k_original_nodes), 0, 0, 1, 1},
   {&__pyx_n_s_orphans, __pyx_k_orphans, sizeof(__pyx_k_orphans), 0, 0, 1, 1},
-  {&__pyx_n_s_os, __pyx_k_os, sizeof(__pyx_k_os), 0, 0, 1, 1},
   {&__pyx_n_s_out_file_name, __pyx_k_out_file_name, sizeof(__pyx_k_out_file_name), 0, 0, 1, 1},
-  {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
   {&__pyx_n_s_plot, __pyx_k_plot, sizeof(__pyx_k_plot), 0, 0, 1, 1},
   {&__pyx_n_s_plot_name, __pyx_k_plot_name, sizeof(__pyx_k_plot_name), 0, 0, 1, 1},
   {&__pyx_n_s_plt, __pyx_k_plt, sizeof(__pyx_k_plt), 0, 0, 1, 1},
   {&__pyx_n_s_pop, __pyx_k_pop, sizeof(__pyx_k_pop), 0, 0, 1, 1},
   {&__pyx_n_s_priors, __pyx_k_priors, sizeof(__pyx_k_priors), 0, 0, 1, 1},
   {&__pyx_n_s_prog, __pyx_k_prog, sizeof(__pyx_k_prog), 0, 0, 1, 1},
+  {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
   {&__pyx_n_s_quality, __pyx_k_quality, sizeof(__pyx_k_quality), 0, 0, 1, 1},
   {&__pyx_n_s_quality_difference, __pyx_k_quality_difference, sizeof(__pyx_k_quality_difference), 0, 0, 1, 1},
   {&__pyx_n_s_quality_history, __pyx_k_quality_history, sizeof(__pyx_k_quality_history), 0, 0, 1, 1},
@@ -12034,16 +13638,18 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_remove_node, __pyx_k_remove_node, sizeof(__pyx_k_remove_node), 0, 0, 1, 1},
   {&__pyx_n_s_remove_nodes_from, __pyx_k_remove_nodes_from, sizeof(__pyx_k_remove_nodes_from), 0, 0, 1, 1},
   {&__pyx_n_s_rename_map, __pyx_k_rename_map, sizeof(__pyx_k_rename_map), 0, 0, 1, 1},
+  {&__pyx_n_s_renamemap, __pyx_k_renamemap, sizeof(__pyx_k_renamemap), 0, 0, 1, 1},
   {&__pyx_n_s_run_greedy_clustering, __pyx_k_run_greedy_clustering, sizeof(__pyx_k_run_greedy_clustering), 0, 0, 1, 1},
   {&__pyx_n_s_savefig, __pyx_k_savefig, sizeof(__pyx_k_savefig), 0, 0, 1, 1},
   {&__pyx_n_s_send, __pyx_k_send, sizeof(__pyx_k_send), 0, 0, 1, 1},
   {&__pyx_n_s_set_xlabel, __pyx_k_set_xlabel, sizeof(__pyx_k_set_xlabel), 0, 0, 1, 1},
   {&__pyx_n_s_set_ylabel, __pyx_k_set_ylabel, sizeof(__pyx_k_set_ylabel), 0, 0, 1, 1},
   {&__pyx_n_s_setify, __pyx_k_setify, sizeof(__pyx_k_setify), 0, 0, 1, 1},
+  {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
+  {&__pyx_n_s_setstate_2, __pyx_k_setstate_2, sizeof(__pyx_k_setstate_2), 0, 0, 1, 1},
   {&__pyx_n_s_show, __pyx_k_show, sizeof(__pyx_k_show), 0, 0, 1, 1},
   {&__pyx_n_s_sorted, __pyx_k_sorted, sizeof(__pyx_k_sorted), 0, 0, 1, 1},
   {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
-  {&__pyx_n_s_sys, __pyx_k_sys, sizeof(__pyx_k_sys), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_throw, __pyx_k_throw, sizeof(__pyx_k_throw), 0, 0, 1, 1},
   {&__pyx_n_s_title, __pyx_k_title, sizeof(__pyx_k_title), 0, 0, 1, 1},
@@ -12054,13 +13660,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(0, 11, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 65, __pyx_L1_error)
-  __pyx_builtin_map = __Pyx_GetBuiltinName(__pyx_n_s_map); if (!__pyx_builtin_map) __PYX_ERR(0, 118, __pyx_L1_error)
-  __pyx_builtin_max = __Pyx_GetBuiltinName(__pyx_n_s_max); if (!__pyx_builtin_max) __PYX_ERR(0, 195, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 315, __pyx_L1_error)
-  __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 332, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 344, __pyx_L1_error)
+  __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_builtin_map = __Pyx_GetBuiltinName(__pyx_n_s_map); if (!__pyx_builtin_map) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_builtin_max = __Pyx_GetBuiltinName(__pyx_n_s_max); if (!__pyx_builtin_max) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 414, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -12070,118 +13676,118 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "hac/cluster.pyx":18
+  /* "hac/cluster.pyx":15
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):
  *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")             # <<<<<<<<<<<<<<
  * 
- * RenameMapping = namedtuple('RenameMapping', ['integer', 'original', 'max_node'])
+ * cpdef set setify(elems):
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_This_program_needs_Graphviz_and); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_This_program_needs_Graphviz_and); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "hac/cluster.pyx":31
+  /* "hac/cluster.pyx":26
  *         return edge
  *     elif isinstance(edge, dict):
  *         return edge.get('weight', 1.0)             # <<<<<<<<<<<<<<
  *     else:
  *         return 1.0
  */
-  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_n_s_weight, __pyx_float_1_0); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_n_s_weight, __pyx_float_1_0); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "hac/cluster.pyx":343
+  /* "hac/cluster.pyx":413
  *     def plot_quality_history(self, plot_name, out_file_name, show=True):
  *         fig = plt.figure()
  *         ax = fig.add_subplot(111)             # <<<<<<<<<<<<<<
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_int_111); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_int_111); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 413, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "hac/cluster.pyx":346
+  /* "hac/cluster.pyx":416
  *         ax.plot(range(len(self.quality_history), 0, -1), self.quality_history)
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  *         ax.set_xlabel('Number of Clusters')             # <<<<<<<<<<<<<<
  *         ax.set_ylabel('Modularity Score')
  *         plt.savefig(out_file_name)
  */
-  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_Number_of_Clusters); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 346, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_Number_of_Clusters); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 416, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "hac/cluster.pyx":347
+  /* "hac/cluster.pyx":417
  *         plt.title('Number of Clusters vs. Modularity for %s' % plot_name)
  *         ax.set_xlabel('Number of Clusters')
  *         ax.set_ylabel('Modularity Score')             # <<<<<<<<<<<<<<
  *         plt.savefig(out_file_name)
  *         if show:
  */
-  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_Modularity_Score); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 347, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(1, __pyx_kp_s_Modularity_Score); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "hac/cluster.pyx":352
+  /* "hac/cluster.pyx":422
  *             plt.show()
  * 
  *     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):             # <<<<<<<<<<<<<<
  *         pos = graphviz_layout(self.graph, prog='twopi', args='')
  *         plt.figure(figsize=figure_size)
  */
-  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_int_10, __pyx_int_10); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 352, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(2, __pyx_int_10, __pyx_int_10); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 422, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "hac/cluster.pyx":357
+  /* "hac/cluster.pyx":427
  *         nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,
  *                 node_color="blue", with_labels=True)
  *         plt.axis('equal')             # <<<<<<<<<<<<<<
  *         plt.savefig(filename)
  *         if show:
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_n_s_equal); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 357, __pyx_L1_error)
+  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_n_s_equal); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 427, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "hac/cluster.pyx":12
+  /* "hac/cluster.pyx":9
  *     import matplotlib.pyplot as plt
  * except ImportError, e:
  *     def plt(*args, **kwargs):             # <<<<<<<<<<<<<<
  *         raise e
  * try:
  */
-  __pyx_tuple__10 = PyTuple_Pack(2, __pyx_n_s_args, __pyx_n_s_kwargs); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(2, __pyx_n_s_args, __pyx_n_s_kwargs); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_VARARGS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_Matthew_Workspace_agglom, __pyx_n_s_plt, 12, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 12, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_VARARGS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_Matthew_Workspace_agglom, __pyx_n_s_plt, 9, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 9, __pyx_L1_error)
 
-  /* "hac/cluster.pyx":17
+  /* "hac/cluster.pyx":14
  *     from networkx import graphviz_layout
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):             # <<<<<<<<<<<<<<
  *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
  * 
  */
-  __pyx_tuple__12 = PyTuple_Pack(2, __pyx_n_s_args, __pyx_n_s_kwargs); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(2, __pyx_n_s_args, __pyx_n_s_kwargs); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_VARARGS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_Matthew_Workspace_agglom, __pyx_n_s_graphviz_layout, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(0, 0, 2, 0, CO_VARARGS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_Matthew_Workspace_agglom, __pyx_n_s_graphviz_layout, 14, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 14, __pyx_L1_error)
 
-  /* "hac/cluster.pyx":61
+  /* "hac/cluster.pyx":56
  *     return max_int
  * 
  * def int_graph_mapping(graph):             # <<<<<<<<<<<<<<
  *     cdef dict mapping_to_int = {}
  *     cdef dict mapping_to_orig = {}
  */
-  __pyx_tuple__14 = PyTuple_Pack(5, __pyx_n_s_graph, __pyx_n_s_mapping_to_int, __pyx_n_s_mapping_to_orig, __pyx_n_s_node_index, __pyx_n_s_node); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(5, __pyx_n_s_graph, __pyx_n_s_mapping_to_int, __pyx_n_s_mapping_to_orig, __pyx_n_s_node_index, __pyx_n_s_node); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_Matthew_Workspace_agglom, __pyx_n_s_int_graph_mapping, 61, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_C_Users_Matthew_Workspace_agglom, __pyx_n_s_int_graph_mapping, 56, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -12197,6 +13803,8 @@ static int __Pyx_InitGlobals(void) {
   __pyx_float_1_0 = PyFloat_FromDouble(1.0); if (unlikely(!__pyx_float_1_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_10 = PyInt_FromLong(10); if (unlikely(!__pyx_int_10)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_111 = PyInt_FromLong(111); if (unlikely(!__pyx_int_111)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_500 = PyInt_FromLong(500); if (unlikely(!__pyx_int_500)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -12222,7 +13830,6 @@ PyMODINIT_FUNC PyInit_cluster(void)
   int __pyx_t_6;
   PyObject *__pyx_t_7 = NULL;
   PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
   __Pyx_RefNannyDeclarations
   #if CYTHON_REFNANNY
   __Pyx_RefNanny = __Pyx_RefNannyImportAPI("refnanny");
@@ -12298,11 +13905,13 @@ PyMODINIT_FUNC PyInit_cluster(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_vtabptr_3hac_7cluster_GreedyAgglomerativeClusterer = &__pyx_vtable_3hac_7cluster_GreedyAgglomerativeClusterer;
+  __pyx_vtable_3hac_7cluster_GreedyAgglomerativeClusterer.__pyx___eq = (int (*)(struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *, struct __pyx_obj_3hac_7cluster_GreedyAgglomerativeClusterer *))__pyx_f_3hac_7cluster_28GreedyAgglomerativeClusterer___eq;
+  if (PyType_Ready(&__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
   __pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer.tp_print = 0;
   #if CYTHON_COMPILING_IN_CPYTHON
   {
-    PyObject *wrapper = PyObject_GetAttrString((PyObject *)&__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 70, __pyx_L1_error)
+    PyObject *wrapper = PyObject_GetAttrString((PyObject *)&__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer, "__init__"); if (unlikely(!wrapper)) __PYX_ERR(0, 65, __pyx_L1_error)
     if (Py_TYPE(wrapper) == &PyWrapperDescr_Type) {
       __pyx_wrapperbase_3hac_7cluster_28GreedyAgglomerativeClusterer___init__ = *((PyWrapperDescrObject *)wrapper)->d_base;
       __pyx_wrapperbase_3hac_7cluster_28GreedyAgglomerativeClusterer___init__.doc = __pyx_doc_3hac_7cluster_28GreedyAgglomerativeClusterer___init__;
@@ -12310,16 +13919,20 @@ PyMODINIT_FUNC PyInit_cluster(void)
     }
   }
   #endif
-  if (PyObject_SetAttrString(__pyx_m, "GreedyAgglomerativeClusterer", (PyObject *)&__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer.tp_dict, __pyx_vtabptr_3hac_7cluster_GreedyAgglomerativeClusterer) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "GreedyAgglomerativeClusterer", (PyObject *)&__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
   __pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer = &__pyx_type_3hac_7cluster_GreedyAgglomerativeClusterer;
-  if (PyType_Ready(&__pyx_type_3hac_7cluster_Dendrogram) < 0) __PYX_ERR(0, 263, __pyx_L1_error)
+  __pyx_vtabptr_3hac_7cluster_Dendrogram = &__pyx_vtable_3hac_7cluster_Dendrogram;
+  __pyx_vtable_3hac_7cluster_Dendrogram.__pyx___eq = (int (*)(struct __pyx_obj_3hac_7cluster_Dendrogram *, struct __pyx_obj_3hac_7cluster_Dendrogram *))__pyx_f_3hac_7cluster_10Dendrogram___eq;
+  if (PyType_Ready(&__pyx_type_3hac_7cluster_Dendrogram) < 0) __PYX_ERR(0, 289, __pyx_L1_error)
   __pyx_type_3hac_7cluster_Dendrogram.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Dendrogram", (PyObject *)&__pyx_type_3hac_7cluster_Dendrogram) < 0) __PYX_ERR(0, 263, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_3hac_7cluster_Dendrogram.tp_dict, __pyx_vtabptr_3hac_7cluster_Dendrogram) < 0) __PYX_ERR(0, 289, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "Dendrogram", (PyObject *)&__pyx_type_3hac_7cluster_Dendrogram) < 0) __PYX_ERR(0, 289, __pyx_L1_error)
   __pyx_ptype_3hac_7cluster_Dendrogram = &__pyx_type_3hac_7cluster_Dendrogram;
-  if (PyType_Ready(&__pyx_type_3hac_7cluster___pyx_scope_struct__cluster) < 0) __PYX_ERR(0, 106, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_3hac_7cluster___pyx_scope_struct__cluster) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
   __pyx_type_3hac_7cluster___pyx_scope_struct__cluster.tp_print = 0;
   __pyx_ptype_3hac_7cluster___pyx_scope_struct__cluster = &__pyx_type_3hac_7cluster___pyx_scope_struct__cluster;
-  if (PyType_Ready(&__pyx_type_3hac_7cluster___pyx_scope_struct_1_genexpr) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_3hac_7cluster___pyx_scope_struct_1_genexpr) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
   __pyx_type_3hac_7cluster___pyx_scope_struct_1_genexpr.tp_print = 0;
   __pyx_ptype_3hac_7cluster___pyx_scope_struct_1_genexpr = &__pyx_type_3hac_7cluster___pyx_scope_struct_1_genexpr;
   /*--- Type import code ---*/
@@ -12333,7 +13946,7 @@ PyMODINIT_FUNC PyInit_cluster(void)
   /* "hac/cluster.pyx":1
  * import networkx as nx             # <<<<<<<<<<<<<<
  * import heapq
- * import os
+ * from .renamemap import RenameMapping
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_networkx, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -12343,8 +13956,8 @@ PyMODINIT_FUNC PyInit_cluster(void)
   /* "hac/cluster.pyx":2
  * import networkx as nx
  * import heapq             # <<<<<<<<<<<<<<
- * import os
- * import sys
+ * from .renamemap import RenameMapping
+ * 
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_heapq, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -12354,61 +13967,25 @@ PyMODINIT_FUNC PyInit_cluster(void)
   /* "hac/cluster.pyx":3
  * import networkx as nx
  * import heapq
- * import os             # <<<<<<<<<<<<<<
- * import sys
- * import pickle
- */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_os, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_os, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "hac/cluster.pyx":4
- * import heapq
- * import os
- * import sys             # <<<<<<<<<<<<<<
- * import pickle
- * from collections import namedtuple
- */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_sys, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_sys, __pyx_t_1) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "hac/cluster.pyx":5
- * import os
- * import sys
- * import pickle             # <<<<<<<<<<<<<<
- * from collections import namedtuple
- * 
- */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_pickle, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pickle, __pyx_t_1) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "hac/cluster.pyx":6
- * import sys
- * import pickle
- * from collections import namedtuple             # <<<<<<<<<<<<<<
+ * from .renamemap import RenameMapping             # <<<<<<<<<<<<<<
  * 
  * # Use lazy errors that are PEP 8 compliant
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_n_s_namedtuple);
-  __Pyx_GIVEREF(__pyx_n_s_namedtuple);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_namedtuple);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_collections, __pyx_t_1, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __Pyx_INCREF(__pyx_n_s_RenameMapping);
+  __Pyx_GIVEREF(__pyx_n_s_RenameMapping);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_RenameMapping);
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_renamemap, __pyx_t_1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_namedtuple); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_RenameMapping); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_namedtuple, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RenameMapping, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "hac/cluster.pyx":9
+  /* "hac/cluster.pyx":6
  * 
  * # Use lazy errors that are PEP 8 compliant
  * try:             # <<<<<<<<<<<<<<
@@ -12424,25 +14001,25 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __Pyx_XGOTREF(__pyx_t_5);
     /*try:*/ {
 
-      /* "hac/cluster.pyx":10
+      /* "hac/cluster.pyx":7
  * # Use lazy errors that are PEP 8 compliant
  * try:
  *     import matplotlib.pyplot as plt             # <<<<<<<<<<<<<<
  * except ImportError, e:
  *     def plt(*args, **kwargs):
  */
-      __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L2_error)
+      __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L2_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_INCREF(__pyx_n_s__9);
       __Pyx_GIVEREF(__pyx_n_s__9);
       PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s__9);
-      __pyx_t_1 = __Pyx_Import(__pyx_n_s_matplotlib_pyplot, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L2_error)
+      __pyx_t_1 = __Pyx_Import(__pyx_n_s_matplotlib_pyplot, __pyx_t_2, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L2_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_plt, __pyx_t_1) < 0) __PYX_ERR(0, 10, __pyx_L2_error)
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_plt, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L2_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "hac/cluster.pyx":9
+      /* "hac/cluster.pyx":6
  * 
  * # Use lazy errors that are PEP 8 compliant
  * try:             # <<<<<<<<<<<<<<
@@ -12459,7 +14036,7 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "hac/cluster.pyx":11
+    /* "hac/cluster.pyx":8
  * try:
  *     import matplotlib.pyplot as plt
  * except ImportError, e:             # <<<<<<<<<<<<<<
@@ -12469,22 +14046,22 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __pyx_t_6 = __Pyx_PyErr_ExceptionMatches(__pyx_builtin_ImportError);
     if (__pyx_t_6) {
       __Pyx_AddTraceback("hac.cluster", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_2, &__pyx_t_7) < 0) __PYX_ERR(0, 11, __pyx_L4_except_error)
+      if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_2, &__pyx_t_7) < 0) __PYX_ERR(0, 8, __pyx_L4_except_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GOTREF(__pyx_t_7);
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_e, __pyx_t_2) < 0) __PYX_ERR(0, 11, __pyx_L4_except_error)
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_e, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L4_except_error)
 
-      /* "hac/cluster.pyx":12
+      /* "hac/cluster.pyx":9
  *     import matplotlib.pyplot as plt
  * except ImportError, e:
  *     def plt(*args, **kwargs):             # <<<<<<<<<<<<<<
  *         raise e
  * try:
  */
-      __pyx_t_8 = PyCFunction_NewEx(&__pyx_mdef_3hac_7cluster_1plt, NULL, __pyx_n_s_hac_cluster); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 12, __pyx_L4_except_error)
+      __pyx_t_8 = PyCFunction_NewEx(&__pyx_mdef_3hac_7cluster_1plt, NULL, __pyx_n_s_hac_cluster); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 9, __pyx_L4_except_error)
       __Pyx_GOTREF(__pyx_t_8);
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_plt, __pyx_t_8) < 0) __PYX_ERR(0, 12, __pyx_L4_except_error)
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_plt, __pyx_t_8) < 0) __PYX_ERR(0, 9, __pyx_L4_except_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -12494,7 +14071,7 @@ PyMODINIT_FUNC PyInit_cluster(void)
     goto __pyx_L4_except_error;
     __pyx_L4_except_error:;
 
-    /* "hac/cluster.pyx":9
+    /* "hac/cluster.pyx":6
  * 
  * # Use lazy errors that are PEP 8 compliant
  * try:             # <<<<<<<<<<<<<<
@@ -12516,7 +14093,7 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __pyx_L9_try_end:;
   }
 
-  /* "hac/cluster.pyx":14
+  /* "hac/cluster.pyx":11
  *     def plt(*args, **kwargs):
  *         raise e
  * try:             # <<<<<<<<<<<<<<
@@ -12532,28 +14109,28 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "hac/cluster.pyx":15
+      /* "hac/cluster.pyx":12
  *         raise e
  * try:
  *     from networkx import graphviz_layout             # <<<<<<<<<<<<<<
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):
  */
-      __pyx_t_7 = PyList_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 15, __pyx_L12_error)
+      __pyx_t_7 = PyList_New(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 12, __pyx_L12_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_INCREF(__pyx_n_s_graphviz_layout);
       __Pyx_GIVEREF(__pyx_n_s_graphviz_layout);
       PyList_SET_ITEM(__pyx_t_7, 0, __pyx_n_s_graphviz_layout);
-      __pyx_t_2 = __Pyx_Import(__pyx_n_s_networkx, __pyx_t_7, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L12_error)
+      __pyx_t_2 = __Pyx_Import(__pyx_n_s_networkx, __pyx_t_7, -1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 12, __pyx_L12_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_graphviz_layout); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 15, __pyx_L12_error)
+      __pyx_t_7 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_graphviz_layout); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 12, __pyx_L12_error)
       __Pyx_GOTREF(__pyx_t_7);
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_graphviz_layout, __pyx_t_7) < 0) __PYX_ERR(0, 15, __pyx_L12_error)
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_graphviz_layout, __pyx_t_7) < 0) __PYX_ERR(0, 12, __pyx_L12_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "hac/cluster.pyx":14
+      /* "hac/cluster.pyx":11
  *     def plt(*args, **kwargs):
  *         raise e
  * try:             # <<<<<<<<<<<<<<
@@ -12572,7 +14149,7 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "hac/cluster.pyx":16
+    /* "hac/cluster.pyx":13
  * try:
  *     from networkx import graphviz_layout
  * except ImportError:             # <<<<<<<<<<<<<<
@@ -12582,21 +14159,21 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __pyx_t_6 = __Pyx_PyErr_ExceptionMatches(__pyx_builtin_ImportError);
     if (__pyx_t_6) {
       __Pyx_AddTraceback("hac.cluster", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_7, &__pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L14_except_error)
+      if (__Pyx_GetException(&__pyx_t_2, &__pyx_t_7, &__pyx_t_1) < 0) __PYX_ERR(0, 13, __pyx_L14_except_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GOTREF(__pyx_t_1);
 
-      /* "hac/cluster.pyx":17
+      /* "hac/cluster.pyx":14
  *     from networkx import graphviz_layout
  * except ImportError:
  *     def graphviz_layout(*args, **kwargs):             # <<<<<<<<<<<<<<
  *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
  * 
  */
-      __pyx_t_8 = PyCFunction_NewEx(&__pyx_mdef_3hac_7cluster_3graphviz_layout, NULL, __pyx_n_s_hac_cluster); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 17, __pyx_L14_except_error)
+      __pyx_t_8 = PyCFunction_NewEx(&__pyx_mdef_3hac_7cluster_3graphviz_layout, NULL, __pyx_n_s_hac_cluster); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 14, __pyx_L14_except_error)
       __Pyx_GOTREF(__pyx_t_8);
-      if (PyDict_SetItem(__pyx_d, __pyx_n_s_graphviz_layout, __pyx_t_8) < 0) __PYX_ERR(0, 17, __pyx_L14_except_error)
+      if (PyDict_SetItem(__pyx_d, __pyx_n_s_graphviz_layout, __pyx_t_8) < 0) __PYX_ERR(0, 14, __pyx_L14_except_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -12606,7 +14183,7 @@ PyMODINIT_FUNC PyInit_cluster(void)
     goto __pyx_L14_except_error;
     __pyx_L14_except_error:;
 
-    /* "hac/cluster.pyx":14
+    /* "hac/cluster.pyx":11
  *     def plt(*args, **kwargs):
  *         raise e
  * try:             # <<<<<<<<<<<<<<
@@ -12628,92 +14205,74 @@ PyMODINIT_FUNC PyInit_cluster(void)
     __pyx_L19_try_end:;
   }
 
-  /* "hac/cluster.pyx":20
- *         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
- * 
- * RenameMapping = namedtuple('RenameMapping', ['integer', 'original', 'max_node'])             # <<<<<<<<<<<<<<
- * 
- * cpdef set setify(elems):
- */
-  __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_namedtuple); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_2 = PyList_New(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_n_s_integer);
-  __Pyx_GIVEREF(__pyx_n_s_integer);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_integer);
-  __Pyx_INCREF(__pyx_n_s_original);
-  __Pyx_GIVEREF(__pyx_n_s_original);
-  PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_original);
-  __Pyx_INCREF(__pyx_n_s_max_node);
-  __Pyx_GIVEREF(__pyx_n_s_max_node);
-  PyList_SET_ITEM(__pyx_t_2, 2, __pyx_n_s_max_node);
-  __pyx_t_8 = NULL;
-  __pyx_t_6 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_7))) {
-    __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_7);
-    if (likely(__pyx_t_8)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_7);
-      __Pyx_INCREF(__pyx_t_8);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_7, function);
-      __pyx_t_6 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_7)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_n_s_RenameMapping, __pyx_t_2};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_n_s_RenameMapping, __pyx_t_2};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  } else
-  #endif
-  {
-    __pyx_t_9 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    if (__pyx_t_8) {
-      __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8); __pyx_t_8 = NULL;
-    }
-    __Pyx_INCREF(__pyx_n_s_RenameMapping);
-    __Pyx_GIVEREF(__pyx_n_s_RenameMapping);
-    PyTuple_SET_ITEM(__pyx_t_9, 0+__pyx_t_6, __pyx_n_s_RenameMapping);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_6, __pyx_t_2);
-    __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_9, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_RenameMapping, __pyx_t_1) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "hac/cluster.pyx":61
+  /* "hac/cluster.pyx":56
  *     return max_int
  * 
  * def int_graph_mapping(graph):             # <<<<<<<<<<<<<<
  *     cdef dict mapping_to_int = {}
  *     cdef dict mapping_to_orig = {}
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3hac_7cluster_15int_graph_mapping, NULL, __pyx_n_s_hac_cluster); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3hac_7cluster_15int_graph_mapping, NULL, __pyx_n_s_hac_cluster); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_int_graph_mapping, __pyx_t_1) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_int_graph_mapping, __pyx_t_1) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "hac/cluster.pyx":105
+ *             'optimal_clusters': self.optimal_clusters
+ *         }
+ *     getstate = __getstate__             # <<<<<<<<<<<<<<
+ * 
+ *     def __setstate__(self, state):
+ */
+  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer, __pyx_n_s_getstate); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer->tp_dict, __pyx_n_s_getstate_2, __pyx_t_1) < 0) __PYX_ERR(0, 105, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  PyType_Modified(__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer);
+
+  /* "hac/cluster.pyx":109
+ *     def __setstate__(self, state):
+ *         self.optimal_clusters = state['optimal_clusters']
+ *     setstate = __setstate__             # <<<<<<<<<<<<<<
+ * 
+ *     def __reduce__(self):
+ */
+  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer, __pyx_n_s_setstate); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer->tp_dict, __pyx_n_s_setstate_2, __pyx_t_1) < 0) __PYX_ERR(0, 109, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  PyType_Modified(__pyx_ptype_3hac_7cluster_GreedyAgglomerativeClusterer);
+
+  /* "hac/cluster.pyx":318
+ *             'rename_map': self.rename_map
+ *         }
+ *     getstate = __getstate__             # <<<<<<<<<<<<<<
+ * 
+ *     def __setstate__(self, state):
+ */
+  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_3hac_7cluster_Dendrogram, __pyx_n_s_getstate); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_3hac_7cluster_Dendrogram->tp_dict, __pyx_n_s_getstate_2, __pyx_t_1) < 0) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  PyType_Modified(__pyx_ptype_3hac_7cluster_Dendrogram);
+
+  /* "hac/cluster.pyx":328
+ *         self.orphans = state['orphans']
+ *         self.rename_map = state['rename_map']
+ *     setstate = __setstate__             # <<<<<<<<<<<<<<
+ * 
+ *     def __reduce__(self):
+ */
+  __pyx_t_1 = __Pyx_GetNameInClass((PyObject *)__pyx_ptype_3hac_7cluster_Dendrogram, __pyx_n_s_setstate); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_3hac_7cluster_Dendrogram->tp_dict, __pyx_n_s_setstate_2, __pyx_t_1) < 0) __PYX_ERR(0, 328, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  PyType_Modified(__pyx_ptype_3hac_7cluster_Dendrogram);
 
   /* "hac/cluster.pyx":1
  * import networkx as nx             # <<<<<<<<<<<<<<
  * import heapq
- * import os
+ * from .renamemap import RenameMapping
  */
   __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -12728,7 +14287,6 @@ PyMODINIT_FUNC PyInit_cluster(void)
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_9);
   if (__pyx_m) {
     if (__pyx_d) {
       __Pyx_AddTraceback("init hac.cluster", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -13507,6 +15065,91 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallNoArg(PyObject *func) {
         }
     }
     return __Pyx_PyObject_Call(func, __pyx_empty_tuple, NULL);
+}
+#endif
+
+/* PyIntBinop */
+        #if !CYTHON_COMPILING_IN_PYPY
+static PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED long intval, CYTHON_UNUSED int inplace) {
+    if (op1 == op2) {
+        Py_RETURN_TRUE;
+    }
+    #if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_CheckExact(op1))) {
+        const long b = intval;
+        long a = PyInt_AS_LONG(op1);
+        if (a == b) {
+            Py_RETURN_TRUE;
+        } else {
+            Py_RETURN_FALSE;
+        }
+    }
+    #endif
+    #if CYTHON_USE_PYLONG_INTERNALS
+    if (likely(PyLong_CheckExact(op1))) {
+        const long b = intval;
+        long a;
+        const digit* digits = ((PyLongObject*)op1)->ob_digit;
+        const Py_ssize_t size = Py_SIZE(op1);
+        if (likely(__Pyx_sst_abs(size) <= 1)) {
+            a = likely(size) ? digits[0] : 0;
+            if (size == -1) a = -a;
+        } else {
+            switch (size) {
+                case -2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    }
+                case 2:
+                    if (8 * sizeof(long) - 1 > 2 * PyLong_SHIFT) {
+                        a = (long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    }
+                case -3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    }
+                case 3:
+                    if (8 * sizeof(long) - 1 > 3 * PyLong_SHIFT) {
+                        a = (long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    }
+                case -4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    }
+                case 4:
+                    if (8 * sizeof(long) - 1 > 4 * PyLong_SHIFT) {
+                        a = (long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0]));
+                        break;
+                    }
+                #if PyLong_SHIFT < 30 && PyLong_SHIFT != 15
+                default: return PyLong_Type.tp_richcompare(op1, op2, Py_EQ);
+                #else
+                default: Py_RETURN_FALSE;
+                #endif
+            }
+        }
+            if (a == b) {
+                Py_RETURN_TRUE;
+            } else {
+                Py_RETURN_FALSE;
+            }
+    }
+    #endif
+    if (PyFloat_CheckExact(op1)) {
+        const long b = intval;
+        double a = PyFloat_AS_DOUBLE(op1);
+            if ((double)a == (double)b) {
+                Py_RETURN_TRUE;
+            } else {
+                Py_RETURN_FALSE;
+            }
+    }
+    return PyObject_RichCompare(op1, op2, Py_EQ);
 }
 #endif
 
@@ -14816,6 +16459,24 @@ static CYTHON_INLINE void __Pyx_ExceptionSwap(PyObject **type, PyObject **value,
 }
 #endif
 
+/* SetVTable */
+                static int __Pyx_SetVtable(PyObject *dict, void *vtable) {
+#if PY_VERSION_HEX >= 0x02070000
+    PyObject *ob = PyCapsule_New(vtable, 0, 0);
+#else
+    PyObject *ob = PyCObject_FromVoidPtr(vtable, 0);
+#endif
+    if (!ob)
+        goto bad;
+    if (PyDict_SetItem(dict, __pyx_n_s_pyx_vtable, ob) < 0)
+        goto bad;
+    Py_DECREF(ob);
+    return 0;
+bad:
+    Py_XDECREF(ob);
+    return -1;
+}
+
 /* Import */
                 static PyObject *__Pyx_Import(PyObject *name, PyObject *from_list, int level) {
     PyObject *empty_list = 0;
@@ -14902,6 +16563,15 @@ bad:
         #endif
     }
     return value;
+}
+
+/* GetNameInClass */
+                static PyObject *__Pyx_GetNameInClass(PyObject *nmspace, PyObject *name) {
+    PyObject *result;
+    result = __Pyx_PyObject_GetAttrStr(nmspace, name);
+    if (!result)
+        result = __Pyx_GetModuleGlobalName(name);
+    return result;
 }
 
 /* CodeObjectCache */

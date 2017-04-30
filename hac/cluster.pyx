@@ -1,9 +1,6 @@
 import networkx as nx
 import heapq
-import os
-import sys
-import pickle
-from collections import namedtuple
+from .renamemap import RenameMapping
 
 # Use lazy errors that are PEP 8 compliant
 try:
@@ -16,8 +13,6 @@ try:
 except ImportError:
     def graphviz_layout(*args, **kwargs):
         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
-
-RenameMapping = namedtuple('RenameMapping', ['integer', 'original', 'max_node'])
 
 cpdef set setify(elems):
     if isinstance(elems, set):
@@ -102,6 +97,37 @@ cdef class GreedyAgglomerativeClusterer(object):
             The number of clusters to compute. Default to auto-detection of optimal number.
         '''
         self.optimal_clusters = num_clusters or 0
+
+    def __getstate__(self):
+        return {
+            'optimal_clusters': self.optimal_clusters
+        }
+    getstate = __getstate__
+
+    def __setstate__(self, state):
+        self.optimal_clusters = state['optimal_clusters']
+    setstate = __setstate__
+
+    def __reduce__(self):
+        # Python 2 insists on using __reduce__ for cython objects...
+        return (self.__class__, (self.optimal_clusters, ))
+
+    def __hash__(self):
+        return hash(self.optimal_clusters)
+
+    def __richcmp__(self, other, cmp_op):
+        if self is other:
+            return True
+        elif not isinstance(other, GreedyAgglomerativeClusterer):
+            return False
+        elif cmp_op == 2:
+            return self.__eq(other)
+        elif cmp_op == 3:
+            return not self.__eq(other)
+        return False
+
+    cdef bint __eq(self, GreedyAgglomerativeClusterer other):
+        return self.get_state() == other.get_state()
 
     def cluster(self, graph, forced_clusters=None):
         '''
@@ -278,6 +304,50 @@ cdef class Dendrogram(object):
         self.rename_map = rename_map
         self.max_clusters = len(original_nodes) + len(orphans)
         self.optimal_clusters = num_clusters
+
+    def __getstate__(self):
+        return {
+            'optimal_clusters': self.optimal_clusters,
+            'quality_history': self.quality_history,
+            'max_clusters': self.max_clusters,
+            'graph': self.graph,
+            'original_nodes': self.original_nodes,
+            'orphans': self.orphans,
+            'rename_map': self.rename_map
+        }
+    getstate = __getstate__
+
+    def __setstate__(self, state):
+        self.optimal_clusters = state['optimal_clusters']
+        self.quality_history = state['quality_history']
+        self.max_clusters = state['max_clusters']
+        self.graph = state['graph']
+        self.original_nodes = state['original_nodes']
+        self.orphans = state['orphans']
+        self.rename_map = state['rename_map']
+    setstate = __setstate__
+
+    def __reduce__(self):
+        # Python 2 insists on using __reduce__ for cython objects...
+        return (self.__class__, (self.graph, self.quality_history,
+            self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))
+
+    def __hash__(self):
+        return hash(self.graph)
+
+    def __richcmp__(self, other, cmp_op):
+        if self is other:
+            return True
+        elif not isinstance(other, Dendrogram):
+            return False
+        elif cmp_op == 2:
+            return self.__eq(other)
+        elif cmp_op == 3:
+            return not self.__eq(other)
+        return False
+
+    cdef bint __eq(self, Dendrogram other):
+        return self.get_state() == other.get_state()
 
     def crawl(self, start, priors=None, max_fringe_size=None):
         if priors is None:
