@@ -1,5 +1,6 @@
 import networkx as nx
 import heapq
+import sys
 from .renamemap import RenameMapping
 
 # Use lazy errors that are PEP 8 compliant
@@ -13,6 +14,12 @@ try:
 except ImportError:
     def graphviz_layout(*args, **kwargs):
         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
+
+cdef tuple py_int_types():
+    if sys.version_info[0] == 2:
+        return (int, long,)
+    else:
+        return (int,)
 
 cpdef set setify(elems):
     if isinstance(elems, set):
@@ -78,8 +85,7 @@ cdef class GreedyAgglomerativeClusterer(object):
     '''
     cdef public int optimal_clusters
     cdef list forced_clusters
-    cdef set original_nodes
-    cdef set ignored_nodes
+    cdef set forced_nodes
     cdef set orphans
     cdef object rename_map
     cdef object super_graph
@@ -142,12 +148,11 @@ cdef class GreedyAgglomerativeClusterer(object):
             Useful for adding pre-computed clusters.
         '''
         self.forced_clusters = list(map(setify, forced_clusters or []))
-        self.original_nodes = set(graph.nodes_iter())
-        self.ignored_nodes = set(node for cluster in self.forced_clusters for node in cluster)
+        self.forced_nodes = set(node for cluster in self.forced_clusters for node in cluster)
         # TODO use sparse matrix representation?
         self.super_graph = graph.copy()
         # TODO change to separating into connected components
-        self.orphans = remove_orphans(self.super_graph, self.ignored_nodes)
+        self.orphans = remove_orphans(self.super_graph, self.forced_nodes)
         # TODO do better than remapping
         self.rename_map = int_graph_mapping(self.super_graph)
         nx.relabel_nodes(self.super_graph, self.rename_map.integer, copy=False)
@@ -180,10 +185,9 @@ cdef class GreedyAgglomerativeClusterer(object):
         if self.forced_clusters:
             self.build_forced_clusters()
         self.run_greedy_clustering(quality)
-        nx.relabel_nodes(self.dendrogram_graph, self.rename_map.original, copy=False)
 
-        return Dendrogram(self.dendrogram_graph, self.quality_history,
-            self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters)
+        return Dendrogram(self.dendrogram_graph, self.quality_history, self.orphans,
+            self.rename_map, self.optimal_clusters)
 
     def build_forced_clusters(self):
         # create a cluster from "unspecified" nodes
@@ -290,19 +294,17 @@ cdef class Dendrogram(object):
     cdef public int optimal_clusters
     cdef public list quality_history
     cdef public int max_clusters
-    cdef public object graph
-    cdef set original_nodes
+    cdef public object int_graph
     cdef set orphans
     cdef object rename_map
 
-    def __init__(self, dendrogram_graph, quality_history, original_nodes, orphans,
-            rename_map, num_clusters=None):
-        self.graph = dendrogram_graph
+    def __init__(self, dendrogram_graph, quality_history, orphans, rename_map,
+            num_clusters=None):
+        self.int_graph = dendrogram_graph
         self.quality_history = quality_history
         self.orphans = orphans
-        self.original_nodes = original_nodes
         self.rename_map = rename_map
-        self.max_clusters = len(original_nodes) + len(orphans)
+        self.max_clusters = rename_map.max_node + 1 + len(orphans)
         self.optimal_clusters = num_clusters
 
     def __getstate__(self):
@@ -310,8 +312,7 @@ cdef class Dendrogram(object):
             'optimal_clusters': self.optimal_clusters,
             'quality_history': self.quality_history,
             'max_clusters': self.max_clusters,
-            'graph': self.graph,
-            'original_nodes': self.original_nodes,
+            'int_graph': self.int_graph,
             'orphans': self.orphans,
             'rename_map': self.rename_map
         }
@@ -321,19 +322,18 @@ cdef class Dendrogram(object):
         self.optimal_clusters = state['optimal_clusters']
         self.quality_history = state['quality_history']
         self.max_clusters = state['max_clusters']
-        self.graph = state['graph']
-        self.original_nodes = state['original_nodes']
+        self.int_graph = state['int_graph']
         self.orphans = state['orphans']
         self.rename_map = state['rename_map']
     setstate = __setstate__
 
     def __reduce__(self):
         # Python 2 insists on using __reduce__ for cython objects...
-        return (self.__class__, (self.graph, self.quality_history,
-            self.original_nodes, self.orphans, self.rename_map, self.optimal_clusters))
+        return (self.__class__, (self.int_graph, self.quality_history,
+            self.orphans, self.rename_map, self.optimal_clusters))
 
     def __hash__(self):
-        return hash(self.graph)
+        return hash(self.int_graph)
 
     def __richcmp__(self, other, cmp_op):
         if self is other:
@@ -359,46 +359,45 @@ cdef class Dendrogram(object):
         while len(fringe) > 0 and (max_fringe_size == None or len(fringe) < max_fringe_size):
             node = -heapq.heappop(fringe)
             priors.add(node)
-            for inode in self.graph[node]:
+            for inode in self.int_graph[node]:
                 if inode not in priors:
                     heapq.heappush(fringe, -inode)
 
         return priors, fringe
 
+    cdef int choose_num_clusters(self, num_clusters):
+        cdef bint valid_choice = isinstance(num_clusters, py_int_types())
+        if not valid_choice:
+            if self.optimal_clusters > 0:
+                num_clusters = self.optimal_clusters
+            else:
+                index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
+                num_clusters = len(self.quality_history) - index
+        return max(min(num_clusters, self.max_clusters), 0)
+
     def clusters(self, num_clusters=None):
-        if num_clusters is None and self.optimal_clusters > 0:
-            num_clusters = self.optimal_clusters
-        if num_clusters is None:
-            index, value = max(enumerate(self.quality_history), key=lambda iv: iv[1])
-            num_clusters = len(self.quality_history) - index
-        num_clusters = max(min(num_clusters, self.max_clusters), 0)
-
+        cdef int picked_num_cluster = self.choose_num_clusters(num_clusters)
         cdef list clusters = [set([n]) for n in self.orphans]
-        if self.graph and num_clusters:
-            nx.relabel_nodes(self.graph, self.rename_map.integer, copy=False)
-            try:
-                start_node = max(self.graph)
-                priors, fringe = self.crawl(start=start_node, max_fringe_size=num_clusters)
+        if self.int_graph and picked_num_cluster > 0:
+            start_node = max(self.int_graph)
+            priors, fringe = self.crawl(start=start_node, max_fringe_size=picked_num_cluster)
 
-                # Double check we got the right number of values
-                if len(fringe) != num_clusters:
-                    raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)"
-                        % (num_clusters, len(fringe)))
+            # Double check we got the right number of values
+            if len(fringe) != picked_num_cluster:
+                raise ValueError("Failed to retrieve %d clusters correctly (got %d instead)"
+                    % (picked_num_cluster, len(fringe)))
 
-                for neg_clust_start in fringe:
-                    clust_start = -neg_clust_start
-                    cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())
-                    cluster_set = set()
-                    for node in cprior:
-                        if (node <= clust_start and
-                            node in self.original_nodes and
-                            node not in self.orphans and
-                            node in self.rename_map.original):
-                            cluster_set.add(self.rename_map.original[node])
-                    if cluster_set:
-                        clusters.append(cluster_set)
-            finally:
-                nx.relabel_nodes(self.graph, self.rename_map.original, copy=False)
+            for neg_clust_start in fringe:
+                clust_start = -neg_clust_start
+                cprior, cfringe = self.crawl(start=clust_start, priors=priors.copy())
+                cluster_set = set()
+                for node in cprior:
+                    if (node <= clust_start and
+                        node <= self.rename_map.max_node and
+                        node in self.rename_map.original):
+                        cluster_set.add(self.rename_map.original[node])
+                if cluster_set:
+                    clusters.append(cluster_set)
         return sorted(clusters, key=lambda c: -len(c))
 
     def labels(self, num_clusters=None):
@@ -420,9 +419,10 @@ cdef class Dendrogram(object):
             plt.show()
 
     def plot(self, filename, figure_size=(10,10), font_size=10, show=True):
-        pos = graphviz_layout(self.graph, prog='twopi', args='')
+        graph = nx.relabel_nodes(self.int_graph, self.rename_map.original, copy=False)
+        pos = graphviz_layout(graph, prog='twopi', args='')
         plt.figure(figsize=figure_size)
-        nx.draw(self.graph, pos, node_size=10, font_size=font_size, alpha=0.5,
+        nx.draw(graph, pos, node_size=10, font_size=font_size, alpha=0.5,
                 node_color="blue", with_labels=True)
         plt.axis('equal')
         plt.savefig(filename)
