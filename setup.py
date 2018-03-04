@@ -3,7 +3,6 @@ import sys
 from collections import defaultdict
 from setuptools import setup, find_packages, Extension
 
-VERSION = '2.0.4'
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 BUILD_ARGS = defaultdict(lambda: ['-O3', '-g0'])
 BUILD_ARGS['msvc'] = ['/EHsc']
@@ -26,6 +25,8 @@ python_2 = sys.version_info[0] == 2
 def read(fname):
     with open(fname, 'rU' if python_2 else 'r') as fhandle:
         return fhandle.read()
+
+VERSION = read(os.path.join(BASE_DIR, 'VERSION')).strip()
 
 def pandoc_read_md(fname):
     if 'PANDOC_PATH' not in os.environ:

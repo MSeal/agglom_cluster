@@ -1,0 +1,8 @@
+#!/bin/bash
+TAG="v$(head -n 1 VERSION)"
+git rev-parse "$TAG" >/dev/null 2>&1 && echo "$TAG already present; remember to bump tag first!" && exit 1
+git tag $TAG
+git push && git push --tags
+rm -rf dist/*
+python setup.py sdist
+twine upload dist/*

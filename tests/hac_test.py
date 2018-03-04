@@ -42,13 +42,13 @@ class GreedyAgglomTest(unittest.TestCase):
     def test_weighted_edge_count_weights(self):
         club = nx.karate_club_graph().copy()
         for index, (e1, e2) in enumerate(club.edges()):
-            club[e1][e2] = { 'weight': index }
+            club.add_edge(e1, e2, weight=index)
         self.assertEqual(weighted_edge_count(club), 6006.0)
 
     def test_weighted_edge_count_float_weights(self):
         club = nx.karate_club_graph().copy()
         for index, (e1, e2) in enumerate(club.edges()):
-            club[e1][e2] = float(index) + 0.5
+            club.add_edge(e1, e2, weight=float(index) + 0.5)
         self.assertEqual(weighted_edge_count(club), 6084.0)
 
     def test_remove_orphans(self):
@@ -66,7 +66,7 @@ class GreedyAgglomTest(unittest.TestCase):
 
     def test_int_map_graph(self):
         orig_club = nx.karate_club_graph()
-        club = nx.relabel_nodes(orig_club, { n: str(n) for n in orig_club.nodes_iter() })
+        club = nx.relabel_nodes(orig_club, { n: str(n) for n in orig_club.nodes() })
         remap = int_graph_mapping(club)
         self.assertEqual(remap.max_node, 33)
 
@@ -88,14 +88,14 @@ class GreedyAgglomTest(unittest.TestCase):
     def test_max_int_elem(self):
         orig_club = nx.karate_club_graph()
         self.assertEqual(max_int_elem(orig_club), 33)
-        club = nx.relabel_nodes(orig_club, { n: str(n) for n in orig_club.nodes_iter() })
+        club = nx.relabel_nodes(orig_club, { n: str(n) for n in orig_club.nodes() })
         self.assertEqual(max_int_elem(club), 0)
 
     def test_clustering_integer_nodes(self):
         # This tests an error that would happen when a node had an integer value
         # greater than the size of the graph
         orig_club = nx.karate_club_graph()
-        club = nx.relabel_nodes(orig_club, { n: n + 5 for n in orig_club.nodes_iter() })
+        club = nx.relabel_nodes(orig_club, { n: n + 5 for n in orig_club.nodes() })
         dendrogram = GreedyAgglomerativeClusterer().cluster(club)
         dendrogram.clusters() # This would crash
 

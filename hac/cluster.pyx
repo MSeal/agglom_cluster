@@ -15,6 +15,28 @@ except ImportError:
     def graphviz_layout(*args, **kwargs):
         raise ImportError("This program needs Graphviz and either PyGraphviz or Pydot")
 
+def nx_node_iter(graph, *args, **kwargs):
+    try:
+        return graph.nodes_iter(*args, **kwargs)
+    except AttributeError:
+        return graph.nodes(*args, **kwargs)
+
+def nx_edge_iter(graph, *args, **kwargs):
+    try:
+        return graph.edges_iter(*args, **kwargs)
+    except AttributeError:
+        return graph.edges(*args, **kwargs)
+
+def nx_values_iter(node):
+    try:
+        # Python 2 & 3
+        try:
+            return node.iter_values()
+        except AttributeError:
+            return node.values()
+    except AttributeError:
+        return node
+
 cdef tuple py_int_types():
     if sys.version_info[0] == 2:
         return (int, long,)
@@ -37,7 +59,7 @@ cpdef float weight(edge):
 cpdef float weighted_edge_count(graph):
     # 2 * graph.number_of_edges()
     cdef float edges = 0.0
-    for _e1, _e2, d in graph.edges_iter(data=True):
+    for _e1, _e2, d in nx_edge_iter(graph, data=True):
         edges += weight(d)
     if edges <= 0.00000001:
         return 1.0
@@ -54,7 +76,7 @@ cpdef set remove_orphans(graph, ignored=None):
 cpdef int max_int_elem(graph):
     # We just care about non-zero max values
     cdef int max_int = 0
-    for node in graph.nodes_iter():
+    for node in nx_node_iter(graph):
         if isinstance(node, int):
             if node > max_int:
                 max_int = node
@@ -64,7 +86,7 @@ def int_graph_mapping(graph):
     cdef dict mapping_to_int = {}
     cdef dict mapping_to_orig = {}
     cdef int node_index = 0
-    for node_index, node in enumerate(graph.nodes_iter()):
+    for node_index, node in enumerate(nx_node_iter(graph)):
         mapping_to_int[node] = node_index
         mapping_to_orig[node_index] = node
     return RenameMapping(mapping_to_int, mapping_to_orig, node_index)
@@ -167,19 +189,19 @@ cdef class GreedyAgglomerativeClusterer(object):
         for cluster_id, data in self.super_graph.nodes(data=True):
             # node_degree = self.super_graph.degree(cluster_id)
             node_degree = 0.0
-            for edge in self.super_graph[cluster_id].itervalues():
+            for edge in nx_values_iter(self.super_graph[cluster_id]):
                 node_degree += weight(edge)
 
             average_degree = float(node_degree) / (num_edges or 1.0)
             self.super_graph.add_node(cluster_id, degree=average_degree)
-            self.dendrogram_graph.add_node(cluster_id, data)
+            self.dendrogram_graph.add_node(cluster_id, **data)
             # From equation (1) in section II of the Newman paper
             quality -= float(node_degree * node_degree) / (num_edges * num_edges)
 
         for (cluster_id1, cluster_id2, edge) in self.super_graph.edges(data=True):
             edge_weight = weight(edge) / num_edges
-            self.super_graph[cluster_id1][cluster_id2] = edge_weight
-            self.super_graph[cluster_id2][cluster_id1] = edge_weight
+            self.super_graph[cluster_id1][cluster_id2]['weight'] = edge_weight
+            self.super_graph[cluster_id2][cluster_id1]['weight'] = edge_weight
 
         self.reheapify()
         if self.forced_clusters:
@@ -206,7 +228,7 @@ cdef class GreedyAgglomerativeClusterer(object):
 
     def reheapify(self):
         self.pair_cost_heap = []
-        for (id1, id2) in self.super_graph.edges_iter():
+        for (id1, id2) in nx_edge_iter(self.super_graph):
             self.add_pair_to_cost_heap(id1, id2)
 
     def run_greedy_clustering(self, quality, reheap_steps=500):
@@ -244,7 +266,7 @@ cdef class GreedyAgglomerativeClusterer(object):
         # The "Change in Q" as described by section II of the Newman paper
         cdef float degree_one = self.super_graph.node[cluster_id1]['degree']
         cdef float degree_two = self.super_graph.node[cluster_id2]['degree']
-        cdef float edge = self.super_graph[cluster_id1][cluster_id2]
+        cdef float edge = weight(self.super_graph[cluster_id1][cluster_id2])
         return 2.0 * (edge - degree_one * degree_two)
 
     def combine_clusters(self, cluster_id1, cluster_id2):
@@ -253,15 +275,15 @@ cdef class GreedyAgglomerativeClusterer(object):
         self.den_num += 1
 
         # Add combined node
-        cdef dict c1_con = self.super_graph[cluster_id1]
-        cdef dict c2_con = self.super_graph[cluster_id2]
+        c1_con = self.super_graph[cluster_id1]
+        c2_con = self.super_graph[cluster_id2]
         cdef set c12_nodes = set(c1_con.keys()).union(set(c2_con.keys()))
 
         self.rename_map.original[combine_id] = combine_id
         self.rename_map.integer[combine_id] = combine_id
 
-        degree_one = self.super_graph.node[cluster_id1]['degree']
-        degree_two = self.super_graph.node[cluster_id2]['degree']
+        cdef float degree_one = self.super_graph.node[cluster_id1]['degree']
+        cdef float degree_two = self.super_graph.node[cluster_id2]['degree']
         self.super_graph.add_node(combine_id, degree=degree_one + degree_two)
 
         for outer_node in c12_nodes:
@@ -271,11 +293,11 @@ cdef class GreedyAgglomerativeClusterer(object):
                 continue
             # sum edge weights to clusters that are reached by both clusters
             if outer_node in c1_con:
-                total += c1_con[outer_node]
+                total += weight(c1_con[outer_node])
             if outer_node in c2_con:
-                total += c2_con[outer_node]
-            self.super_graph[combine_id][outer_node] = total
-            self.super_graph[outer_node][combine_id] = total
+                total += weight(c2_con[outer_node])
+            self.super_graph.add_edge(combine_id, outer_node, weight=total)
+            self.super_graph.add_edge(outer_node, combine_id, weight=total)
             self.add_pair_to_cost_heap(combine_id, outer_node)
 
         # Remove old nodes
